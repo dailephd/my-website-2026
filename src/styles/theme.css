@@ -1,0 +1,29 @@
+:root {
+  color-scheme: light;
+}
+
+:root.dark,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --color-background: #1a1d23;
+  --color-surface: #1d222b;
+  --color-card: #232935;
+  --color-elevated: #2a3140;
+  --color-text-primary: #f1f3f7;
+  --color-text-secondary: #c5ccda;
+  --color-text-muted: #929db0;
+  --color-border: #384151;
+  --color-border-strong: #526077;
+  --color-accent-violet: #a98cf8;
+  --color-accent-cyan: #42cbe3;
+  --color-focus-ring: #42cbe3;
+  --color-focus: var(--color-focus-ring);
+  --color-on-accent: #171a21;
+  --color-selection: rgb(167 139 250 / 28%);
+  --color-glow: rgb(169 140 248 / 13%);
+  --color-glow-cyan: rgb(66 203 227 / 10%);
+  --color-highlight: rgb(255 255 255 / 6%);
+  --shadow-card: 0 22px 62px rgb(5 7 11 / 35%);
+  --shadow-card-hover: 0 28px 78px rgb(5 7 11 / 48%);
+  --shadow-control: 0 8px 26px rgb(5 7 11 / 30%);
+}

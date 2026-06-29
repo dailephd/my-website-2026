@@ -1,0 +1,144 @@
+my-website-2026 Claude Code quick instructions
+
+Project identity
+
+- `my-website-2026`
+- Root: `Z:\Users\newuser\Projects\my-website-2026`
+- Single Next.js website repository
+- Purpose: Dai Le personal website, portfolio, and product-lab site
+- Publish on GitHub
+- Deploy on Vercel
+- Docs live in `docs/`
+
+First steps
+
+1. Read:
+   - `docs/PROJECT_OVERVIEW.md`
+   - `docs/ARCHITECTURE.md`
+   - `docs/CONTRACT.md`
+   - `docs/DESIGN.md`
+   - `docs/CI_CD.md`
+   - `docs/ROADMAP.md`
+   - `docs/WORKFLOWS.md`
+   - `docs/milestones.json`
+   - `docs/project_tree.txt`
+2. Inspect `package.json` and only the files needed for the task.
+3. Confirm the current repo state before implementing.
+4. Do not implement production code before inspection.
+
+Tooling rule
+
+- Prefer graph-guided retrieval with the published package:
+  - `npx @dailephd/my-dev-kit`
+- Do not use local `Z:\Users\newuser\Projects\my-dev-kit-v1` unless the task explicitly targets local my-dev-kit development.
+- Retrieval order:
+  1. index
+  2. search
+  3. lookup
+  4. slice
+  5. exact source
+  6. line-range source
+  7. full-file read only if needed
+- If full-file reading is required, report what retrieval steps were attempted and why they were insufficient.
+
+Current website scope
+
+- Main routes: `/`, `/work`, `/products`, `/products/my-dev-kit`, `/writing`, `/about`, `/contact`
+- Local content source: `src/content`
+- Roadmap source: `src/content/roadmaps.ts`
+- Product-family story:
+  - `my-dev-kit` = Codebase Intelligence
+  - `my-dev-kit-orchestrator` = Workflow Orchestration
+  - `my-dev-kit-lab` = Validation Lab
+  - present them together as `my-dev-kit Ecosystem`
+
+Do-not-add guardrails
+
+- Do not convert this repo into a monorepo.
+- Do not add legacy multi-app directory splits for the website.
+- Do not add a separate backend or NLP-style service directory.
+- Do not add a standalone shared-contracts package.
+- Do not add Python, Postgres, Prisma, or backend services unless the architecture is explicitly changed.
+- Do not create a separate npm content package.
+- Do not duplicate roadmap text across pages.
+- Do not push, deploy, publish, tag, or release unless explicitly instructed.
+
+Content and design rules
+
+- Use `docs/`, not `doc/`.
+- Keep website-owned content in `src/content`.
+- Use `src/lib/content` for adapters and validation.
+- Do not hardcode structured content directly in page components.
+- Use semantic HTML, keyboard access, visible focus states, and reduced-motion-safe behavior.
+- Render roadmap status as text, not color alone.
+- Design target:
+  - premium independent product lab
+  - big-company polish
+  - personal technical founder ownership
+  - soft grey light mode, not pure white
+  - charcoal grey dark mode, not pure black
+  - violet/cyan accents
+  - solid premium cards
+  - restrained glow
+  - clean typography
+- Avoid heavy animation, WebGL, particle engines, and cursor gimmicks in v1.
+
+Milestone batch pattern
+
+1. Contract + current-state inspection + slice plan
+2. Content/data/domain layer
+3. Frontend/UI + wiring
+4. Tests + QA hardening
+5. Documentation + milestone closure
+
+Testing expectations
+
+- For code changes, identify assumptions and likely failure modes first.
+- Add unit, integration, and E2E coverage where appropriate.
+- Do not require internet access for normal tests.
+- Do not claim tests passed unless they were run.
+- For docs-only work, run the fastest available checks and avoid unnecessary code changes.
+
+Validation commands
+
+- `npm run typecheck`
+- `npm run lint`
+- `npm run validate:content`
+- `npm run validate:links`
+- `npm run test`
+- `npm run build`
+- `npm run ci`
+- `npm run check:release`
+
+Only run Docker commands when Docker work is in scope:
+
+- `npm run docker:ready`
+- `npm run dev:docker`
+- `npm run dev:docker:down`
+
+Report checklist
+
+1. Executive summary
+2. Branch
+3. Project root
+4. Files changed
+5. Behavior added, changed, or preserved
+6. Source docs and code anchors inspected
+7. my-dev-kit retrieval audit, if used
+8. Full-file read justification, if any
+9. Failure-mode audit and error-handling decisions, if code changed
+10. Validation commands run
+11. Tests run or not run, with reasons
+12. Runtime verification, if applicable
+13. Environment blockers, if any
+14. Remaining risks
+15. Next follow-up work
+16. Final git status
+
+Uncertainty rule
+
+- Stop and state the uncertainty.
+- Do not silently replace the architecture.
+- Do not broaden scope.
+- Do not invent project state.
+- Do not claim deployment, release, or publication readiness unless explicitly requested and verified.

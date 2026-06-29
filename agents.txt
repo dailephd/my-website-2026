@@ -1,0 +1,377 @@
+my-website-2026 coding-agent operating manual
+
+Project identity
+
+- Project name: `my-website-2026`
+- Project path: `Z:\Users\newuser\Projects\my-website-2026`
+- Repository type: single Next.js website repository
+- Purpose: build Dai Le's premium personal website, portfolio, and product-lab website
+- Publication target: GitHub
+- Deployment target: Vercel
+- Documentation folder: `docs/`
+
+Current repository shape
+
+- Main source folders:
+  - `src/app`
+  - `src/components`
+  - `src/content`
+  - `src/lib`
+  - `src/styles`
+  - `src/types`
+  - `public`
+  - `scripts`
+  - `tests`
+- This project is a website build, not a research-extraction workflow and not a source-repo/target-repo pipeline.
+- This project is not a monorepo and must remain a single website repository.
+
+Read first
+
+Before changing code, read the current project docs and inspect the live repo state:
+
+- `docs/PROJECT_OVERVIEW.md`
+- `docs/ARCHITECTURE.md`
+- `docs/CONTRACT.md`
+- `docs/DESIGN.md`
+- `docs/CI_CD.md`
+- `docs/ROADMAP.md`
+- `docs/WORKFLOWS.md`
+- `docs/milestones.json`
+- `docs/project_tree.txt`
+
+Then inspect:
+
+- `package.json`
+- relevant files under `src/`, `scripts/`, `tests/`, and `public/`
+- current git status and branch if git is initialized
+
+First-step checklist
+
+1. Confirm the task scope against the current repo state.
+2. Read the relevant docs listed above.
+3. Inspect only the files needed for the task.
+4. If code understanding is non-trivial, use graph-guided retrieval before broad file reads.
+5. State assumptions when the repo state does not fully answer the task.
+6. Do not implement production code before inspecting the current repo and relevant docs.
+
+Core project rules
+
+1. Use `docs/`, not `doc/`.
+2. Keep this as a single Next.js website repo.
+3. Do not convert it into a monorepo.
+4. Do not add legacy multi-app directory splits for the website.
+5. Do not add a separate service directory for backend or NLP-style processing.
+6. Do not add a standalone shared-contracts package.
+7. Do not add Python, Postgres, Prisma, or backend services unless the user explicitly changes the architecture.
+8. Do not create a separate npm content package.
+9. Store website content locally in `src/content`.
+10. Roadmaps must be structured content in `src/content/roadmaps.ts` and rendered by UI components.
+11. Do not duplicate roadmap text across pages.
+12. Do not copy old website design or architecture unless explicitly instructed.
+13. The previous website may be used only as a content or reference source if the user gives a path or asks for migration.
+14. Do not push, deploy, publish, tag, or create releases unless explicitly instructed.
+15. Do not claim deployment readiness unless a release or deployment workflow is explicitly requested and verified.
+
+Current website scope
+
+- Main routes:
+  - `/`
+  - `/work`
+  - `/products`
+  - `/products/my-dev-kit`
+  - `/writing`
+  - `/about`
+  - `/contact`
+- The site presents Dai Le as a software developer, AI builder, PhD-trained scientist, and product-focused technical founder.
+- The site showcases selected projects, product-lab work, roadmaps, publications, writing, resume/contact links, and gallery/media assets.
+
+Design direction
+
+- Premium independent product lab
+- Big-company polish
+- Personal technical founder ownership
+- Elegant, classy, modern, sophisticated, startup-like, lightly game-inspired
+- Light mode uses soft grey, not pure white
+- Dark mode uses charcoal grey, not pure black
+- Violet/cyan accents
+- Solid premium cards
+- Restrained glow
+- Clean typography
+- Fast, accessible, SEO-ready, responsive implementation
+
+Product story
+
+Present these as one connected product family:
+
+- `my-dev-kit`
+- `my-dev-kit-orchestrator`
+- `my-dev-kit-lab`
+
+Product-family name:
+
+- `my-dev-kit Ecosystem`
+
+Visual and semantic model:
+
+- `my-dev-kit` = Codebase Intelligence
+- `my-dev-kit-orchestrator` = Workflow Orchestration
+- `my-dev-kit-lab` = Validation Lab
+
+Roadmap model
+
+- Use one unified ecosystem roadmap with lanes for the three related projects.
+- Store roadmap data once in `src/content/roadmaps.ts`.
+- Render roadmap content through roadmap UI components.
+- Do not duplicate roadmap text across route pages or docs pretending to be source data.
+
+Architecture discipline
+
+- `src/types` defines shared types and interfaces.
+- `src/content` holds structured local content records.
+- `src/lib/content` adapts, normalizes, and validates content.
+- `src/lib/seo` builds metadata and structured data helpers.
+- `src/components/ui` contains reusable primitives.
+- Feature components render passed content through props.
+- `src/components/layout`, `src/components/theme`, and `src/styles` own shell and theme behavior.
+- `src/app` composes pages, metadata, sitemap, robots, and route-level behavior.
+- Lower layers must not import higher layers.
+- Content modules must not import React components.
+- UI primitives must not know about project-specific content records.
+
+my-dev-kit retrieval workflow
+
+Use the published npm package:
+
+`npx @dailephd/my-dev-kit`
+
+Do not use `Z:\Users\newuser\Projects\my-dev-kit-v1` unless the task is explicitly about local my-dev-kit development.
+
+Use source roots that actually exist. Expected roots after scaffold:
+
+- `src`
+- `tests`
+- `docs`
+- `scripts`
+
+Suggested index command:
+
+`npx @dailephd/my-dev-kit index --root "Z:\Users\newuser\Projects\my-website-2026" --src "src" --src "tests" --src "docs" --src "scripts" --out "Z:\Users\newuser\Projects\my-website-2026.my-dev-kit" --call-graph --json`
+
+If a source root does not exist yet, inspect the repo and adjust the command. Do not invent directories.
+
+Preferred retrieval order
+
+1. index
+2. search
+3. lookup
+4. slice
+5. exact source
+6. line-range source
+7. full-file read only if needed
+
+Examples
+
+Search:
+
+`npx @dailephd/my-dev-kit search --index "Z:\Users\newuser\Projects\my-website-2026.my-dev-kit" --query "RoadmapPreview roadmap status" --limit 20 --json`
+
+Lookup:
+
+`npx @dailephd/my-dev-kit lookup --index "Z:\Users\newuser\Projects\my-website-2026.my-dev-kit" --node "<node-id>" --depth 1 --json`
+
+Slice:
+
+`npx @dailephd/my-dev-kit slice --index "Z:\Users\newuser\Projects\my-website-2026.my-dev-kit" --node "<node-id>" --depth 2 --direction both --out "Z:\Users\newuser\Projects\my-website-2026.my-dev-kit\task-slice.json" --json`
+
+Source:
+
+`npx @dailephd/my-dev-kit source --index "Z:\Users\newuser\Projects\my-website-2026.my-dev-kit" --node "<symbol-node-id>" --max-lines 160 --format numbered`
+
+Full-file read rule
+
+Do not default to full-file reads. If a full-file read is necessary, report:
+
+- file path
+- searches attempted
+- lookups attempted
+- slices attempted
+- source retrieval attempted
+- line ranges attempted
+- why retrieval was insufficient
+- what the broad read clarified
+
+Milestone implementation pattern
+
+Each milestone should implement one complete vertical feature. Use this 5-prompt batch pattern:
+
+1. Contract + current-state inspection + slice plan
+2. Content/data/domain layer
+3. Frontend/UI + wiring
+4. Tests + QA hardening
+5. Documentation + milestone closure
+
+Do not skip current-state inspection.
+
+Branch discipline
+
+Use task-specific branches. Examples:
+
+- `feature/m1-content-powered-shell`
+- `feature/m2-premium-theme`
+- `feature/m3-selected-work-index`
+- `feature/m4-my-dev-kit-ecosystem`
+- `feature/m5-roadmap-system`
+- `feature/m6-product-lab-index`
+- `feature/m7-homepage-narrative`
+- `feature/m8-about-publications`
+- `feature/m9-gallery-media`
+- `feature/m10-writing-contact`
+- `feature/m11-seo-link-previews`
+- `feature/m12-premium-visual-polish`
+- `feature/m13-responsive-accessibility`
+- `feature/m14-performance-release-readiness`
+- `chore/ci-cd-docker`
+- `docs/agent-instructions`
+
+Common git commands:
+
+- `git branch --show-current`
+- `git status --short --untracked-files=all`
+- `git log -8 --oneline`
+
+Create from main:
+
+- `git switch main`
+- `git pull --ff-only`
+- `git switch -c <branch-name>`
+
+Do not push unless explicitly instructed.
+Do not merge unless explicitly instructed.
+Do not create release branches unless explicitly instructed.
+
+Scope control
+
+- Make the smallest coherent change that satisfies the request.
+- Preserve the single-repo website architecture.
+- Do not broaden a docs task into code implementation unless needed for consistency.
+- Do not add new dependencies unless the task requires them and the cost is justified.
+- Do not replace the project architecture on assumption.
+
+Content and UI rules
+
+- Do not hardcode structured content inside page components.
+- Use `src/content` for profile, links, projects, products, roadmaps, publications, gallery, writing, and resume metadata.
+- Use `src/lib/content` for adapters and normalization.
+- Use `src/types` for shared types.
+- Use `src/components/ui` for reusable primitives.
+- Use feature components for project, product, roadmap, publication, gallery, writing, and contact UI.
+- Pages in `src/app` should compose content and components.
+- Roadmap statuses must be rendered as text, not color alone.
+- Use polished empty states for optional missing content.
+- Every public page should have useful metadata.
+
+Accessibility and design rules
+
+- Use semantic HTML.
+- Maintain keyboard access.
+- Preserve visible focus states.
+- Do not communicate state by color alone.
+- Respect `prefers-reduced-motion`.
+- Keep mobile layouts clean.
+- Avoid unintended horizontal scroll.
+- Avoid pure white and pure black main backgrounds.
+- Avoid heavy animation, WebGL, particle engines, or cursor gimmicks for v1.
+
+Testing expectations
+
+For meaningful code changes:
+
+- identify assumptions before implementation
+- identify realistic failure modes
+- add unit tests for pure logic
+- add integration tests for content adapters, route/page composition, or contract boundaries where applicable
+- add E2E tests for user-visible workflow guarantees where applicable
+- do not require internet access in normal tests
+- do not claim tests passed unless they were run
+
+For documentation-only changes:
+
+- run `git status --short --untracked-files=all`
+- list changed files
+- run the fastest available checks
+- do not modify production code unless needed for documentation consistency
+
+For infrastructure or script changes:
+
+- verify scripts exist in `package.json`
+- verify documented commands match actual scripts
+- run `npm run dev:check` if available
+- do not leave long-running services running
+- document environment blockers separately from code failures
+
+Expected validation commands when relevant
+
+- `npm run typecheck`
+- `npm run lint`
+- `npm run validate:content`
+- `npm run validate:links`
+- `npm run test`
+- `npm run build`
+- `npm run ci`
+- `npm run check:release`
+
+Only run Docker commands when Docker work is in scope:
+
+- `npm run docker:ready`
+- `npm run dev:docker`
+- `npm run dev:docker:down`
+
+Do not claim Docker works unless verified.
+
+Validation and reporting integrity
+
+- Never claim a command passed unless it was run successfully.
+- Never claim a file, route, component, script, test, or environment variable exists unless the repo or docs show it.
+- Separate code defects from environment blockers.
+- Separate “not implemented yet” from “broken”.
+
+Final report structure
+
+Every task report must include:
+
+1. Executive summary
+2. Branch
+3. Project root
+4. Files changed
+5. Behavior added, changed, or preserved
+6. Source docs and code anchors inspected
+7. my-dev-kit retrieval audit, if used
+8. Full-file read justification, if any
+9. Failure-mode audit and error-handling decisions, if code changed
+10. Validation commands run
+11. Tests run or not run, with reasons
+12. Runtime verification, if applicable
+13. Environment blockers, if any
+14. Remaining risks
+15. Next follow-up work
+16. Final git status
+
+my-dev-kit retrieval audit must include:
+
+- index artifacts used
+- whether the index was refreshed or reused
+- search queries run and why
+- candidate nodes selected and why
+- source symbols retrieved and why
+- line-range fallbacks and why
+- full-file reads and why
+
+Uncertainty handling
+
+When uncertain:
+
+- stop and state the uncertainty
+- do not silently replace the architecture
+- do not broaden scope
+- do not invent project state
+- do not claim product completion, release readiness, publication readiness, or deployment readiness unless the task explicitly asks for that workflow and it was verified

@@ -1,0 +1,295 @@
+my-website-2026/
+M1 additions not represented in the original scaffold branches below:
+- src/components/sections/PlannedPage.tsx
+- src/lib/content/index.ts
+M2 additions:
+- src/types/theme.ts
+- src/lib/theme.ts
+M3 additions:
+- tests/content/projects.test.ts
+- tests/e2e/work.spec.ts
+M4 additions:
+- tests/content/products.test.ts
+- tests/e2e/ecosystem.spec.ts
+M6 additions:
+- tests/e2e/products.spec.ts
+
+├── .github/
+│   └── workflows/
+│       ├── ci.yml
+│       └── vercel-preview-checks.yml
+├── docs/
+│   ├── _template/
+│   │   ├── SPEC.md
+│   │   ├── PLAN.md
+│   │   └── PROMPT.txt
+│   ├── project_template/
+│   ├── components/
+│   │   ├── content/
+│   │   │   ├── PLAN.md
+│   │   │   └── SPEC.md
+│   │   ├── gallery/
+│   │   │   ├── PLAN.md
+│   │   │   └── SPEC.md
+│   │   ├── layout/
+│   │   │   ├── PLAN.md
+│   │   │   └── SPEC.md
+│   │   ├── product-cards/
+│   │   │   ├── PLAN.md
+│   │   │   └── SPEC.md
+│   │   ├── project-cards/
+│   │   │   ├── PLAN.md
+│   │   │   └── SPEC.md
+│   │   ├── publication-cards/
+│   │   │   ├── PLAN.md
+│   │   │   └── SPEC.md
+│   │   ├── roadmap/
+│   │   │   ├── PLAN.md
+│   │   │   └── SPEC.md
+│   │   ├── seo/
+│   │   │   ├── PLAN.md
+│   │   │   └── SPEC.md
+│   │   └── theme/
+│   │       ├── PLAN.md
+│   │       └── SPEC.md
+│   ├── ARCHITECTURE.md
+│   ├── CI_CD.md
+│   ├── COMPONENT_MAP.md
+│   ├── CONTRACT.md
+│   ├── DESIGN.md
+│   ├── DOMAIN_MODEL.md
+│   ├── PROJECT_OVERVIEW.md
+│   ├── PROJECT_PLAN.md
+│   ├── ROADMAP.md
+│   ├── WORKFLOWS.md
+│   ├── component_registry.md
+│   ├── dev_logging.md
+│   ├── lower_level_rules.md
+│   ├── milestones.json
+│   └── project_tree.txt
+├── public/
+│   ├── favicon.ico
+│   ├── files/
+│   │   ├── README.md
+│   │   └── resume.pdf
+│   ├── images/
+│   │   ├── gallery/
+│   │   │   └── README.md
+│   │   ├── og/
+│   │   │   ├── default-og.png
+│   │   │   ├── home-og.png
+│   │   │   ├── products-og.png
+│   │   │   └── work-og.png
+│   │   ├── profile/
+│   │   │   └── README.md
+│   │   └── projects/
+│   │       ├── README.md
+│   │       ├── biolit/
+│   │       └── my-dev-kit/
+│   ├── robots.txt
+│   └── site.webmanifest
+├── scripts/
+│   ├── Check-DevEnv.ps1
+│   ├── Start-Dev.ps1
+│   ├── Start-DockerDesktop.ps1
+│   ├── check-release-readiness.mjs
+│   ├── generate-og-images.ts
+│   ├── import-legacy-content.ts
+│   ├── lint.mjs
+│   ├── validate-content.mjs
+│   └── validate-links.mjs
+├── src/
+│   ├── app/
+│   │   ├── about/
+│   │   │   └── page.tsx
+│   │   ├── contact/
+│   │   │   └── page.tsx
+│   │   ├── products/
+│   │   │   ├── my-dev-kit/
+│   │   │   │   └── page.tsx
+│   │   │   └── page.tsx
+│   │   ├── work/
+│   │   │   └── page.tsx
+│   │   ├── writing/
+│   │   │   └── page.tsx
+│   │   ├── globals.css
+│   │   ├── layout.tsx
+│   │   ├── not-found.tsx
+│   │   ├── page.tsx
+│   │   ├── robots.ts
+│   │   └── sitemap.ts
+│   ├── components/
+│   │   ├── contact/
+│   │   │   ├── ContactCard.tsx
+│   │   │   └── ContactPanel.tsx
+│   │   ├── gallery/
+│   │   │   ├── GalleryGrid.tsx
+│   │   │   ├── MediaCard.tsx
+│   │   │   └── ProjectScreenshot.tsx
+│   │   ├── layout/
+│   │   │   ├── Footer.tsx
+│   │   │   ├── Header.tsx
+│   │   │   ├── MobileNav.tsx
+│   │   │   ├── PageContainer.tsx
+│   │   │   └── SiteShell.tsx
+│   │   ├── products/
+│   │   │   ├── EcosystemDiagram.tsx
+│   │   │   ├── EcosystemModuleCard.tsx
+│   │   │   ├── ProductCard.tsx
+│   │   │   ├── ProductFamilyHero.tsx
+│   │   │   └── ProductGrid.tsx
+│   │   ├── projects/
+│   │   │   ├── ProjectCard.tsx
+│   │   │   ├── ProjectGrid.tsx
+│   │   │   └── ProjectLinkList.tsx
+│   │   ├── publications/
+│   │   │   ├── PublicationCard.tsx
+│   │   │   └── PublicationList.tsx
+│   │   ├── roadmap/
+│   │   │   ├── RoadmapMilestoneList.tsx
+│   │   │   ├── RoadmapPhaseCard.tsx
+│   │   │   ├── RoadmapPreview.tsx
+│   │   │   ├── RoadmapProgressRail.tsx
+│   │   │   ├── RoadmapShowcase.tsx
+│   │   │   ├── RoadmapStatusBadge.tsx
+│   │   │   ├── RoadmapTimeline.tsx
+│   │   │   └── RoadmapUpdatedLabel.tsx
+│   │   ├── sections/
+│   │   │   ├── ContactCTASection.tsx
+│   │   │   ├── FeaturedWorkSection.tsx
+│   │   │   ├── HomeHero.tsx
+│   │   │   ├── ProductLabSection.tsx
+│   │   │   ├── PublicationsPreviewSection.tsx
+│   │   │   ├── SelectedRoadmapsSection.tsx
+│   │   │   └── TechnicalFocusSection.tsx
+│   │   ├── theme/
+│   │   │   ├── ThemeProvider.tsx
+│   │   │   ├── ThemeToggle.tsx
+│   │   │   └── theme-script.tsx
+│   │   ├── ui/
+│   │   │   ├── Badge.tsx
+│   │   │   ├── Button.tsx
+│   │   │   ├── Card.tsx
+│   │   │   ├── Container.tsx
+│   │   │   ├── LinkButton.tsx
+│   │   │   ├── SectionHeader.tsx
+│   │   │   └── VisuallyHidden.tsx
+│   │   └── writing/
+│   │       ├── WritingCard.tsx
+│   │       └── WritingEmptyState.tsx
+│   ├── content/
+│   │   ├── gallery.ts
+│   │   ├── index.ts
+│   │   ├── legacy-import-notes.md
+│   │   ├── links.ts
+│   │   ├── products.ts
+│   │   ├── profile.ts
+│   │   ├── projects.ts
+│   │   ├── publications.ts
+│   │   ├── resume.ts
+│   │   ├── roadmaps.ts
+│   │   └── writing.ts
+│   ├── lib/
+│   │   ├── content/
+│   │   │   ├── get-gallery.ts
+│   │   │   ├── get-links.ts
+│   │   │   ├── get-products.ts
+│   │   │   ├── get-profile.ts
+│   │   │   ├── get-projects.ts
+│   │   │   ├── get-publications.ts
+│   │   │   ├── get-roadmaps.ts
+│   │   │   └── validate-content.ts
+│   │   ├── seo/
+│   │   │   ├── metadata.ts
+│   │   │   ├── open-graph.ts
+│   │   │   ├── site-url.ts
+│   │   │   └── structured-data.ts
+│   │   ├── constants.ts
+│   │   ├── routes.ts
+│   │   └── utils.ts
+│   ├── styles/
+│   │   ├── theme.css
+│   │   ├── tokens.css
+│   │   └── utilities.css
+│   └── types/
+│       ├── content.ts
+│       ├── gallery.ts
+│       ├── product.ts
+│       ├── project.ts
+│       ├── publication.ts
+│       ├── roadmap.ts
+│       └── seo.ts
+├── tests/
+│   ├── accessibility/
+│   │   └── basic-a11y.test.ts
+│   ├── content/
+│   │   ├── content-validation.test.ts
+│   │   └── roadmap-validation.test.ts
+│   └── e2e/
+│       ├── homepage.spec.ts
+│       ├── navigation.spec.ts
+│       ├── roadmap.spec.ts
+│       └── theme.spec.ts
+├── .dockerignore
+├── .env.example
+├── .eslintrc.json
+├── .gitignore
+├── .prettierrc
+├── Dockerfile
+├── README.md
+├── docker-compose.yml
+├── next-env.d.ts
+├── next.config.ts
+├── package-lock.json
+├── package.json
+├── playwright.config.ts
+├── postcss.config.js
+├── tailwind.config.ts
+├── tsconfig.json
+├── vitest.config.ts
+└── vercel.json
+
+M7 additions:
+- src/content/home.ts
+- src/types/home.ts
+- src/lib/content/get-homepage.ts
+- tests/content/homepage.test.ts
+
+M8 additions:
+- src/types/resume.ts
+- src/lib/content/get-resume.ts
+- tests/content/publications.test.ts
+- tests/content/resume.test.ts
+- tests/content/publication-components.test.tsx
+- tests/e2e/about.spec.ts
+
+M9 additions:
+- src/components/gallery/GalleryEmptyState.tsx
+- src/components/sections/GalleryPreviewSection.tsx
+- public/images/projects/my-dev-kit/README.md
+- tests/content/gallery.test.ts
+- tests/content/gallery-components.test.tsx
+- tests/e2e/gallery.spec.ts
+
+M10 additions:
+- src/types/writing.ts
+- src/types/contact.ts
+- src/content/contact.ts
+- src/lib/content/get-writing.ts
+- src/lib/content/get-contact.ts
+- docs/components/writing/
+- docs/components/contact/
+- tests/content/writing.test.ts
+- tests/content/contact.test.ts
+- tests/content/writing-contact-components.test.tsx
+- tests/e2e/writing-contact.spec.ts
+
+M11 additions:
+- src/components/seo/JsonLd.tsx
+- public/images/og/README.md
+- tests/content/seo.test.ts
+- tests/content/seo-routes.test.ts
+- tests/e2e/seo.spec.ts
+
+M12 additions:
+- tests/content/visual-polish.test.ts

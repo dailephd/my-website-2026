@@ -1,0 +1,427 @@
+{
+"milestones": [
+{
+"title": "M1 — Content-Powered Website Shell",
+"goal": "Create the initial repository, local structured content foundation, and Next.js website shell so the site renders real profile identity content from src/content instead of hardcoded page text.",
+"scope": [
+"Create the my-website-2026 repository structure.",
+"Create local structured content files under src/content.",
+"Create the Next.js personal website app structure.",
+"Render profile/site identity data from src/content/profile.ts and src/content/links.ts.",
+"Implement the shared layout shell: root layout, page container, top navigation, footer, and homepage hero placeholder.",
+"Add docs/DESIGN.md and the generated project documentation scaffold.",
+"Wire the homepage hero to local content so the displayed name, positioning statement, and primary links come from structured content files."
+],
+"deliverables": [
+"Working repository scaffold.",
+"Initial local content files.",
+"Initial Next.js personal website structure.",
+"Homepage shell rendering local profile data.",
+"Navigation and footer shell.",
+"Initial docs folder with project overview, roadmap, workflows, project tree, and milestones."
+],
+"successCriteria": [
+"The website builds successfully.",
+"The homepage displays Dai Le's identity from local structured content.",
+"No profile identity text is duplicated directly in the website page component.",
+"The repo has a stable src/app, src/components, src/content, src/lib, docs, public, scripts, tests structure.",
+"The first visible page already looks like the beginning of the final website, not a throwaway scaffold."
+]
+},
+{
+"title": "M2 — Dual-Mode Premium Theme",
+"goal": "Implement the light/dark visual system as a complete user-facing feature, including theme state, persistence, accessible toggle UI, and design-token-driven surfaces.",
+"scope": [
+"Add CSS variables for soft grey light mode and charcoal grey dark mode.",
+"Add violet/cyan accent tokens, text tokens, border tokens, card tokens, and focus tokens.",
+"Create ThemeProvider and ThemeToggle components.",
+"Persist selected theme in local storage or an equivalent browser-safe preference layer.",
+"Respect system preference before the user selects a manual theme.",
+"Wire the theme toggle into the navigation.",
+"Apply theme tokens to the app shell, homepage hero, navigation, footer, cards, buttons, and links."
+],
+"deliverables": [
+"ThemeProvider.",
+"ThemeToggle.",
+"Global CSS token system.",
+"Light mode using soft grey, not pure white.",
+"Dark mode using charcoal grey, not pure black.",
+"Theme-aware app shell and hero."
+],
+"successCriteria": [
+"Users can switch between light and dark mode.",
+"The theme choice persists after reload.",
+"Theme switching does not cause layout shift.",
+"Light mode is visibly grey rather than white.",
+"Dark mode is visibly charcoal rather than black.",
+"The theme toggle is keyboard accessible and has an accessible label."
+]
+},
+{
+"title": "M3 — Selected Work Index",
+"goal": "Ship the Work page as a complete feature that renders selected project cards from local structured project content.",
+"scope": [
+"Add project types and project records to src/content/projects.ts.",
+"Add project fields for title, slug, summary, status, role, stack, links, featured flag, and display priority.",
+"Create website content adapters for projects.",
+"Create reusable ProjectCard and ProjectGrid components.",
+"Build the /work page using local structured project data.",
+"Add project links for GitHub, demo, case study, product page, or roadmap where available.",
+"Add unique SEO metadata for /work."
+],
+"deliverables": [
+"Typed project content in src/content/projects.ts.",
+"/work page.",
+"ProjectCard component.",
+"ProjectGrid component.",
+"Featured and standard project card layouts.",
+"SEO metadata for /work."
+],
+"successCriteria": [
+"The /work page renders selected projects from local structured content.",
+"Each project card has a clear title, summary, status, stack, and useful links.",
+"Featured projects are visually prioritized.",
+"No project card content is duplicated in page components.",
+"The page works in both themes and across mobile, tablet, and desktop layouts."
+]
+},
+{
+"title": "M4 — my-dev-kit Ecosystem Overview",
+"goal": "Ship the my-dev-kit Ecosystem product page as one connected product-family feature covering my-dev-kit, my-dev-kit-orchestrator, and my-dev-kit-lab.",
+"scope": [
+"Add product-family types to local content.",
+"Add my-dev-kit Ecosystem content as one product family.",
+"Add module records for my-dev-kit, my-dev-kit-orchestrator, and my-dev-kit-lab.",
+"Describe the ecosystem as Codebase Intelligence -> Workflow Orchestration -> Validation Lab.",
+"Create ProductFamilyHero, EcosystemModuleCard, and EcosystemDiagram components.",
+"Build /products/my-dev-kit using local ecosystem content.",
+"Add GitHub/package/docs links for each module where available.",
+"Add unique SEO metadata for the ecosystem page."
+],
+"deliverables": [
+"Typed product-family content.",
+"my-dev-kit Ecosystem product page.",
+"Three module cards.",
+"Ecosystem diagram.",
+"Product-family hero.",
+"SEO metadata for /products/my-dev-kit."
+],
+"successCriteria": [
+"The three related projects are presented as one coherent product ecosystem.",
+"Visitors can understand the role of each module within 10 seconds.",
+"The page does not make the projects look like unrelated GitHub repos.",
+"The ecosystem content comes from local structured content.",
+"The page looks premium and technical in both light and dark mode."
+]
+},
+{
+"title": "M5 — Roadmap Data Model and Renderer",
+"goal": "Ship the roadmap feature from data model to UI so selected project roadmaps are stored once in local structured content and rendered beautifully on the website.",
+"scope": [
+"Add roadmap types to src/types/roadmap.ts.",
+"Add roadmap data to src/content/roadmaps.ts.",
+"Support suite-level roadmaps and project-level roadmap lanes.",
+"Support statuses: shipped, active, planned, exploring, paused, and deferred.",
+"Add updatedAt, summary, phases, lanes, milestones, links, and display priority fields.",
+"Add my-dev-kit Ecosystem roadmap with lanes for my-dev-kit, my-dev-kit-orchestrator, and my-dev-kit-lab.",
+"Create website adapters for roadmap data.",
+"Create RoadmapPreview, RoadmapShowcase, RoadmapTimeline, RoadmapPhaseCard, RoadmapStatusBadge, RoadmapMilestoneList, RoadmapProgressRail, and RoadmapUpdatedLabel.",
+"Render the full roadmap on /products/my-dev-kit.",
+"Render a compact roadmap preview on the homepage or product preview section."
+],
+"deliverables": [
+"Roadmap types.",
+"my-dev-kit Ecosystem roadmap data.",
+"Roadmap UI component system.",
+"Full roadmap module on /products/my-dev-kit.",
+"Compact roadmap preview component.",
+"Status badge system."
+],
+"successCriteria": [
+"Roadmaps render from local structured content, not duplicated markdown.",
+"The roadmap looks like a premium product strategy dashboard, not a plain bullet list.",
+"The full roadmap works on desktop and mobile.",
+"Statuses are communicated with text, not color alone.",
+"The roadmap is readable in light mode and dark mode.",
+"The roadmap uses lightweight static/server-rendered content where possible."
+]
+},
+{
+"title": "M6 — Product Lab Index",
+"goal": "Ship the Products page as a complete feature that presents selected products and product families from local structured content.",
+"scope": [
+"Add product index data to src/content/products.ts.",
+"Create product cards for product families and standalone products.",
+"Build /products using local product data.",
+"Include my-dev-kit Ecosystem as the primary featured product family.",
+"Include BioLit or other selected products if content is ready.",
+"Add compact roadmap previews for products that have roadmap data.",
+"Add product status badges and clear CTAs.",
+"Add unique SEO metadata for /products."
+],
+"deliverables": [
+"Product index data.",
+"/products page.",
+"ProductCard component.",
+"FeaturedProductCard component.",
+"Product status badge integration.",
+"Compact roadmap preview integration."
+],
+"successCriteria": [
+"The /products page feels like a real product lab, not an empty company page.",
+"Products are rendered from local structured content.",
+"Products with roadmaps show polished roadmap previews.",
+"Product statuses are clear and not overhyped.",
+"The page guides visitors toward product details, GitHub, docs, or contact."
+]
+},
+{
+"title": "M7 — Homepage Product-Lab Narrative",
+"goal": "Ship the homepage as a polished landing page that combines identity, selected work, product lab previews, roadmap previews, publications, and contact CTAs.",
+"scope": [
+"Wire homepage sections to local structured content.",
+"Render hero identity from profile content.",
+"Render featured projects from project content.",
+"Render product lab preview from product content.",
+"Render selected roadmap previews from roadmap content.",
+"Render publication/research credibility summary from publication content.",
+"Render contact links from link content.",
+"Add polished homepage SEO metadata and Open Graph metadata.",
+"Apply the premium dual-mode design system across all homepage sections."
+],
+"deliverables": [
+"Final homepage composition.",
+"Hero section.",
+"Featured work section.",
+"Product lab preview section.",
+"Selected roadmap preview section.",
+"Technical focus section.",
+"Publications/research credibility section.",
+"Contact CTA section."
+],
+"successCriteria": [
+"A visitor understands who Dai is, what he builds, and why he is credible within a few seconds.",
+"The homepage creates the impression of a premium independent product lab.",
+"The homepage does not rely on hardcoded duplicated content.",
+"Roadmap previews look attractive but do not dominate the page.",
+"The homepage remains fast and responsive."
+]
+},
+{
+"title": "M8 — About and Publications",
+"goal": "Ship the About page as a complete credibility feature using local profile, education, publication, resume, and external-link data.",
+"scope": [
+"Add education, research background, resume metadata, and publication records to local structured content.",
+"Create publication types and validation.",
+"Create PublicationCard and CredibilitySection components.",
+"Build /about using local structured content.",
+"Show software identity first, with scientific background as credibility support.",
+"Add resume download/open link.",
+"Add GitHub, LinkedIn, publication, and contact links.",
+"Add unique SEO metadata for /about."
+],
+"deliverables": [
+"Profile and publication content records.",
+"/about page.",
+"PublicationCard component.",
+"Resume CTA.",
+"Technical focus and research background sections.",
+"SEO metadata for /about."
+],
+"successCriteria": [
+"The About page supports credibility without becoming a long autobiography.",
+"Publications are readable and linkable.",
+"The page reinforces Dai as a software developer, AI builder, scientist, and product-focused technical founder.",
+"All publication and profile data comes from local structured content.",
+"The page works well on mobile and desktop."
+]
+},
+{
+"title": "M9 — Gallery and Media Showcase",
+"goal": "Ship a media/gallery feature that displays selected images and project screenshots from local metadata while keeping actual media optimized and performant.",
+"scope": [
+"Add gallery metadata types and records.",
+"Add gallery records for selected personal/project/media images.",
+"Create optimized image handling in the website.",
+"Create GalleryGrid, MediaCard, and ProjectScreenshot components.",
+"Add gallery or media section to the appropriate page.",
+"Use thumbnails and responsive image sizes.",
+"Add meaningful alt text for content images.",
+"Prevent layout shift by defining image dimensions and aspect ratios."
+],
+"deliverables": [
+"Gallery metadata.",
+"Optimized media components.",
+"Gallery/media display section or page.",
+"Responsive image handling.",
+"Alt text and captions."
+],
+"successCriteria": [
+"Gallery metadata is locally structured.",
+"Media assets do not distort or cause layout shift.",
+"The homepage does not load full-resolution gallery images.",
+"The gallery looks premium in both themes.",
+"Images remain performant on mobile."
+]
+},
+{
+"title": "M10 — Writing and Contact",
+"goal": "Ship the writing/contact feature so visitors can read available notes or see a polished empty state, then contact Dai through local structured links.",
+"scope": [
+"Add writing metadata if writing posts are available.",
+"Add contact/link metadata to local structured content.",
+"Create WritingCard, WritingEmptyState, ContactCard, and ContactPanel components.",
+"Build /writing with article cards or a polished empty state.",
+"Build /contact with email, GitHub, LinkedIn, resume, and product links.",
+"Add unique SEO metadata for /writing and /contact."
+],
+"deliverables": [
+"/writing page.",
+"/contact page.",
+"WritingCard or WritingEmptyState component.",
+"ContactCard component.",
+"ContactPanel component.",
+"SEO metadata for both pages."
+],
+"successCriteria": [
+"The Writing page does not look abandoned if no posts are ready.",
+"The Contact page makes email and key links easy to find.",
+"Contact links come from local structured content.",
+"Both pages match the premium visual system.",
+"Both pages are responsive and accessible."
+]
+},
+{
+"title": "M11 — SEO and Link Preview System",
+"goal": "Ship the SEO feature across the whole website by generating page-specific metadata, Open Graph previews, sitemap, robots, and structured data from local content.",
+"scope": [
+"Create reusable metadata helpers.",
+"Generate page titles and descriptions from local structured content.",
+"Add canonical URL support.",
+"Add Open Graph defaults and page-specific overrides.",
+"Add Twitter/X card metadata.",
+"Add sitemap and robots generation.",
+"Add Person and WebSite structured data.",
+"Add SoftwareApplication structured data for product pages where appropriate.",
+"Add project/product-specific metadata for roadmap pages or sections."
+],
+"deliverables": [
+"SEO helper utilities.",
+"Canonical URL system.",
+"Open Graph metadata system.",
+"Twitter/X card metadata system.",
+"Sitemap.",
+"Robots file.",
+"Structured data helpers."
+],
+"successCriteria": [
+"Every public page has a unique title and description.",
+"Homepage and product pages have polished link previews.",
+"Sitemap and robots output correctly.",
+"Structured data is valid where included.",
+"SEO text is natural and not keyword-stuffed.",
+"The system uses local structured content where appropriate."
+]
+},
+{
+"title": "M12 — Premium Visual Polish",
+"goal": "Ship the premium visual layer as a controlled feature that improves brand perception without hurting readability, accessibility, or performance.",
+"scope": [
+"Add lightweight hero visual module.",
+"Add subtle technical dashboard motifs.",
+"Add radial glow and soft grid texture.",
+"Add premium hover states for cards and buttons.",
+"Add subtle roadmap rail and active-phase visual treatment.",
+"Add reduced-motion handling for all decorative motion.",
+"Simplify or disable decorative visuals on mobile when needed.",
+"Avoid heavy WebGL, particle engines, cursor gimmicks, or large animation dependencies."
+],
+"deliverables": [
+"Hero visual module.",
+"Premium background treatment.",
+"Enhanced card hover states.",
+"Enhanced roadmap visual states.",
+"Reduced-motion-safe animation rules.",
+"Mobile-safe visual simplification."
+],
+"successCriteria": [
+"The site feels more premium and product-like after the milestone.",
+"Visual polish does not hide or weaken the content.",
+"Roadmaps remain readable.",
+"Reduced-motion users are respected.",
+"The site remains fast after the visual layer is added.",
+"The design does not become noisy, cyberpunk, crypto-like, or overanimated."
+]
+},
+{
+"title": "M13 — Responsive and Accessibility Hardening",
+"goal": "Ship the cross-device and accessibility hardening feature so the website feels consistent across devices, browsers, screen resolutions, input modes, and both themes.",
+"scope": [
+"Audit and fix layouts at 360px, 390px, 768px, 1024px, 1280px, 1440px, and 1920px.",
+"Fix unintended horizontal scrolling.",
+"Fix card overflow, roadmap overflow, clipped text, and gallery distortion.",
+"Harden mobile navigation.",
+"Verify keyboard navigation.",
+"Verify focus states.",
+"Add or correct aria labels.",
+"Verify semantic HTML structure.",
+"Verify reduced-motion behavior.",
+"Check light and dark mode contrast."
+],
+"deliverables": [
+"Responsive layout fixes.",
+"Accessibility fixes.",
+"Mobile navigation hardening.",
+"Roadmap mobile layout fixes.",
+"Focus state improvements.",
+"Reduced-motion improvements."
+],
+"successCriteria": [
+"No unintended horizontal scrolling occurs at required viewport widths.",
+"Navigation remains usable on mobile and desktop.",
+"Roadmaps do not overflow on mobile.",
+"Keyboard navigation works for navigation, theme toggle, cards, and CTAs.",
+"Focus states are visible.",
+"Status is never communicated by color alone.",
+"The site feels like the same product across device sizes."
+]
+},
+{
+"title": "M14 — Performance and Release Readiness",
+"goal": "Ship the performance/release-readiness feature so the website is fast, production-safe, and ready for public deployment.",
+"scope": [
+"Run production build and fix build errors.",
+"Optimize images and media loading.",
+"Lazy-load below-the-fold media.",
+"Reduce unnecessary client components.",
+"Avoid runtime roadmap parsing where static rendering is possible.",
+"Analyze and reduce bundle size.",
+"Optimize font loading.",
+"Check for console errors.",
+"Run Lighthouse or equivalent production checks.",
+"Verify external links.",
+"Finalize 404 page and deployment configuration.",
+"Prepare GitHub and Vercel deployment readiness."
+],
+"deliverables": [
+"Production-ready build.",
+"Performance fixes.",
+"Image optimization fixes.",
+"Bundle-size improvements.",
+"Final link check.",
+"404 page.",
+"Deployment configuration.",
+"Release notes or changelog entry."
+],
+"successCriteria": [
+"Production build succeeds.",
+"No critical console errors remain.",
+"Images are optimized and do not cause layout shift.",
+"Roadmaps render efficiently from local structured content.",
+"Lighthouse targets are acceptable for first public release.",
+"All critical links work.",
+"The site is ready to deploy as v1.0.0."
+]
+}
+]
+}

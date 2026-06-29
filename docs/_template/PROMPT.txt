@@ -1,0 +1,1 @@
+Use this template folder as a starting point for future implementation prompts and design/engineering planning artifacts.

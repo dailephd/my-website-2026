@@ -1,0 +1,26 @@
+:root {
+  --color-background: #edeff3;
+  --color-surface: #f2f4f8;
+  --color-card: #f6f7fa;
+  --color-elevated: #fbfbfd;
+  --color-text-primary: #151924;
+  --color-text-secondary: #4a5262;
+  --color-text-muted: #687284;
+  --color-border: #cbd1dc;
+  --color-border-strong: #aeb7c7;
+  --color-accent-violet: #6d3ee8;
+  --color-accent-cyan: #087b91;
+  --color-focus-ring: #087b91;
+  --color-focus: var(--color-focus-ring);
+  --color-on-accent: #f7f8fb;
+  --color-selection: rgb(124 58 237 / 20%);
+  --color-glow: rgb(109 62 232 / 13%);
+  --color-glow-cyan: rgb(8 123 145 / 10%);
+  --color-highlight: rgb(255 255 255 / 72%);
+  --shadow-card: 0 18px 55px rgb(35 42 56 / 9%);
+  --shadow-card-hover: 0 24px 70px rgb(35 42 56 / 14%);
+  --shadow-control: 0 7px 24px rgb(35 42 56 / 11%);
+  --radius-control: 0.75rem;
+  --radius-card: 1.25rem;
+  --radius-panel: 1.75rem;
+}
