@@ -1,5 +1,38 @@
 # Development Logging
 
+## 2026-06-29 — M14 Performance and Release Readiness
+
+- Updated `scripts/check-release-readiness.mjs` with 9 clearly-labeled gate sections, required-path checks for `src/app/robots.ts`, `src/app/sitemap.ts`, `.env.example`, and `README.md`, a `public/robots.txt` conflict check, and a post-M14 deployment workflow summary.
+- Updated `.env.example` to document `NEXT_PUBLIC_SITE_URL` with a real example domain (not localhost) and added `NEXT_PUBLIC_NOINDEX` with a comment explaining staging use.
+- Added `.idea/` to `.gitignore` to exclude JetBrains IDE configuration files.
+- Fixed `docs/project_tree.txt`: removed erroneous `public/robots.txt` entry from the public tree section; added `NavLink.tsx` to the layout component tree; added M14 additions section.
+- Updated `public/images/og/README.md` with a table of current placeholder files, a table of missing page-specific OG images, and format/placement workflow guidance.
+- Added `tests/content/release-readiness.test.ts` with 15 M14-specific tests covering site URL production safety (invalid URL fallback, trailing slash stripping, production domain), route registry completeness (all routes have metadata, non-empty titles/descriptions, sitemap exact match), robots safety (`NEXT_PUBLIC_NOINDEX` behavior including "false" value), and OG image fallback (all current 1×1 placeholders and 4 missing page-specific images return `undefined`).
+- Final validation: 19 test files, 84 tests passed; typecheck, lint, validate:content, validate:links, build, check:release all passed.
+- No new pages, features, backend services, npm dependencies, or deployment actions were performed.
+- Deployment to Vercel and GitHub publication remain as a separate subsequent workflow.
+
+## 2026-06-29 — M13 Responsive and Accessibility Hardening
+
+- Initialized git repository and created `feature/m13-responsive-accessibility-hardening` branch.
+- Added skip link (`#main-content`) as first focusable element in SiteShell.
+- Added `id="main-content"` and `tabIndex={-1}` to the `<main>` element.
+- Created `NavLink` client component with `usePathname()` for `aria-current="page"` on active nav links.
+- Updated Header to use NavLink for all nav items.
+- Added `overflow-x: hidden`, `overflow-wrap: break-word`, and responsive img/video/svg rules to globals.css.
+- Fixed heading hierarchy in roadmap components: lane h2→h3, phase h3→h4, milestone h4→h5.
+- Fixed heading hierarchy in ContactCard: h2→h3 under ContactPanel's h2.
+- Reformatted minified one-liner components: RoadmapTimeline, RoadmapPhaseCard, RoadmapMilestoneList, RoadmapShowcase, RoadmapPreview, ProductCard, ProductGrid, /projects page.
+- Updated roadmap.spec.ts lane heading assertions from level 2 to level 3.
+- Added `tests/e2e/accessibility.spec.ts` with skip link, h1, nav labels, status badges, aria-current, and ecosystem diagram tests.
+- Added `tests/e2e/responsive.spec.ts` with no-overflow assertions at 390px (all routes) and 768px (homepage, ecosystem).
+- Expanded `tests/accessibility/basic-a11y.test.ts` to 3 tests covering nav link labels and hrefs.
+- Updated DESIGN.md with M13 accessibility and responsive rules.
+- Updated COMPONENT_MAP.md with NavLink addition and heading hierarchy changes.
+- Kept `milestones.json` unchanged because its schema has no status field.
+- Full WCAG 2.1 AA certification was not performed; hardening is based on code review and E2E assertions.
+- E2E tests require a running dev server on port 3100 (`npm run dev:web -- --port 3100`).
+
 ## 2026-06-29 — M7 Homepage Product-Lab Narrative
 
 - Added typed homepage-only copy and a deterministic aggregate view model.
@@ -82,7 +115,7 @@
 - Added one structured ecosystem roadmap with three lanes and six phases.
 - Added all six textual statuses, nested stable IDs, deterministic ordering, and preview derivation.
 - Replaced roadmap placeholders with a static strategy-dashboard component system.
-- Wired the full roadmap into `/products/my-dev-kit`.
+- Wired the full roadmap into `/projects/my-dev-kit`.
 - Implemented but did not homepage-wire the compact preview.
 - Added unit and dark-mode mobile browser coverage.
 
@@ -91,7 +124,7 @@
 - Added featured my-dev-kit, experimental BioLit, and website/product-lab index entries.
 - Added product index/card view models and roadmap-slug resolution.
 - Reused the M5 roadmap preview inside the featured product card.
-- Implemented `/products` while leaving the homepage narrative unchanged.
+- Implemented `/projects` while leaving the homepage narrative unchanged.
 - Added unit and dark-mode mobile browser coverage.
 
 ## M2 follow-up
@@ -120,7 +153,7 @@
 - Added one typed product family with three ordered ecosystem modules.
 - Added validated statuses, stages, semantic roles, priorities, and optional links.
 - Implemented the family hero, text-equivalent ecosystem flow, module cards, and route.
-- Kept `/products` as a minimal link surface; the full index remains M6.
+- Kept `/projects` as a minimal link surface; the full index remains M6.
 - Added unit and browser coverage, including dark-mode mobile overflow checks.
 - Did not implement or wire roadmap UI.
 - Kept `milestones.json` unchanged because its schema has no status field.

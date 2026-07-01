@@ -1,17 +1,18 @@
 import Link from 'next/link';
 
-import ProjectGrid from '@/components/projects/ProjectGrid';
+import ProductCard from '@/components/products/ProductCard';
+import Card from '@/components/ui/Card';
 import SectionHeader from '@/components/ui/SectionHeader';
 import { routes } from '@/lib/routes';
 import type { HomeSectionCopy } from '@/types/home';
-import type { Project } from '@/types/project';
+import type { ProductCardViewModel } from '@/types/product';
 
 export default function FeaturedWorkSection({
   copy,
-  projects,
+  products,
 }: {
   copy: HomeSectionCopy;
-  projects: readonly Project[];
+  products: readonly ProductCardViewModel[];
 }) {
   return (
     <section aria-labelledby="featured-work-heading" className="section-shell">
@@ -23,12 +24,26 @@ export default function FeaturedWorkSection({
         />
         <Link
           className="premium-link mb-7 rounded-sm font-medium text-[var(--color-accent-cyan)] hover:underline"
-          href={routes.work}
+          href={routes.projects}
         >
-          View all selected work
+          View all projects
         </Link>
       </div>
-      <ProjectGrid featured projects={projects} />
+      {products.length ? (
+        <div className="grid gap-6">
+          {products.map((product) => (
+            <ProductCard
+              headingLevel={3}
+              key={product.item.id}
+              showBadges={false}
+              showLinks={false}
+              viewModel={product}
+            />
+          ))}
+        </div>
+      ) : (
+        <Card><p className="text-[var(--color-text-secondary)]">Product previews are being prepared.</p></Card>
+      )}
     </section>
   );
 }

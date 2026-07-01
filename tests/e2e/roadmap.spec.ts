@@ -1,21 +1,32 @@
 import { expect, test } from '@playwright/test';
 
-test('ecosystem page renders the full structured roadmap', async ({ page }) => {
-  await page.goto('/products/my-dev-kit');
-  await expect(page.getByRole('heading', { level: 2, name: 'my-dev-kit Ecosystem Roadmap' })).toBeVisible();
-  for (const lane of ['my-dev-kit', 'my-dev-kit-orchestrator', 'my-dev-kit-lab']) {
-    await expect(page.getByRole('heading', { level: 2, name: lane, exact: true })).toBeVisible();
-  }
-  await expect(page.getByText('Status: Shipped').first()).toBeVisible();
-  await expect(page.getByText('Status: Active').first()).toBeVisible();
-  await expect(page.getByText('Status: Planned').first()).toBeVisible();
+test('each product roadmap expands to show its full version timeline', async ({ page }) => {
+  await page.goto('/projects/my-dev-kit');
+
+  const orchestratorHeading = page.getByRole('heading', { level: 3, name: 'my-dev-kit-orchestrator', exact: true });
+  const orchestratorPanel = page.locator('article', { has: orchestratorHeading });
+  await orchestratorPanel.getByRole('button', { name: 'Roadmap' }).click();
+  await expect(orchestratorPanel.getByText('v0.1.0')).toBeVisible();
+  await expect(orchestratorPanel.getByText('v1.0.0')).toBeVisible();
+
+  const labHeading = page.getByRole('heading', { level: 3, name: 'my-dev-kit-lab', exact: true });
+  const labPanel = page.locator('article', { has: labHeading });
+  await labPanel.getByRole('button', { name: 'Roadmap' }).click();
+  await expect(labPanel.getByText('v0.1.0')).toBeVisible();
+  await expect(labPanel.getByText('v1.4.0')).toBeVisible();
+  await expect(labPanel.getByText(/Turn experiment outputs into a publication/)).toBeVisible();
 });
 
-test('roadmap dashboard remains mobile-safe in dark mode', async ({ page }) => {
+test('roadmap timelines remain mobile-safe in dark mode', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.addInitScript(() => localStorage.setItem('my-website-2026-theme', 'dark'));
-  await page.goto('/products/my-dev-kit');
+  await page.goto('/projects/my-dev-kit');
   await expect(page.locator('html')).toHaveClass(/dark/);
-  await expect(page.getByText('Cross-project benchmark suite')).toBeVisible();
+
+  const labHeading = page.getByRole('heading', { level: 3, name: 'my-dev-kit-lab', exact: true });
+  const labPanel = page.locator('article', { has: labHeading });
+  await labPanel.getByRole('button', { name: 'Roadmap' }).click();
+  await expect(labPanel.getByText('v0.2.0')).toBeVisible();
+
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });

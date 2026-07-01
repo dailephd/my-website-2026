@@ -17,18 +17,13 @@ export const routeMetadata = {
     description: homepageContent.hero.summary,
     pageType: 'WebPage', ogImagePath: '/images/og/home-og.png',
   },
-  work: {
-    key: 'work', path: routes.work, title: 'Selected Work',
-    description: 'Selected developer tooling, scientific software, applied AI systems, and product-focused engineering work by Dai Le.',
-    pageType: 'CollectionPage', ogImagePath: '/images/og/work-og.png',
+  projects: {
+    key: 'projects', path: routes.projects, title: 'Technical Projects',
+    description: 'Selected developer tools, scientific software, applied AI systems, and technical projects from dailephd LLC.',
+    pageType: 'CollectionPage', ogImagePath: '/images/og/projects-og.png',
   },
-  products: {
-    key: 'products', path: routes.products, title: 'Product Lab',
-    description: 'Selected developer tools, scientific software, and product experiments from Dai Le’s product lab.',
-    pageType: 'CollectionPage', ogImagePath: '/images/og/products-og.png',
-  },
-  productMyDevKit: {
-    key: 'productMyDevKit', path: routes.productMyDevKit, title: ecosystem.title,
+  projectMyDevKit: {
+    key: 'projectMyDevKit', path: routes.projectMyDevKit, title: ecosystem.title,
     description: ecosystem.positioning,
     pageType: 'WebPage', ogImagePath: '/images/og/my-dev-kit-og.png',
   },
@@ -37,14 +32,14 @@ export const routeMetadata = {
     description: `${profile.summary} Background in software, applied AI, and scientific research.`,
     pageType: 'WebPage', ogImagePath: '/images/og/about-og.png',
   },
-  writing: {
-    key: 'writing', path: routes.writing, title: 'Writing',
-    description: 'Technical notes, project logs, and research-informed writing from Dai Le.',
-    pageType: 'CollectionPage', ogImagePath: '/images/og/writing-og.png',
+  publications: {
+    key: 'publications', path: routes.publications, title: 'Publications',
+    description: 'Technical publications, research notes, and project writing from Dai Le.',
+    pageType: 'CollectionPage', ogImagePath: '/images/og/publications-og.png',
   },
   contact: {
     key: 'contact', path: routes.contact, title: 'Contact Dai Le',
-    description: 'Professional pathways for software engineering, applied AI, scientific software, and product work.',
+    description: 'Send a message for project inquiries, software engineering, AI workflows, scientific computing, or technical collaboration.',
     pageType: 'WebPage', ogImagePath: '/images/og/contact-og.png',
   },
 } as const satisfies Record<keyof typeof routes, PageMetadataConfig>;
@@ -52,7 +47,7 @@ export const routeMetadata = {
 export function getSiteMetadata(): SiteMetadata {
   return {
     name: 'Dai Le',
-    defaultTitle: 'Dai Le | Software Developer, AI Builder, and Product Lab',
+    defaultTitle: 'dailephd LLC | Software, AI, and Scientific Computing',
     titleTemplate: '%s | Dai Le',
     description: profile.summary,
     locale: 'en_US',

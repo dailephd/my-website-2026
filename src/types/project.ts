@@ -27,8 +27,10 @@ export interface Project {
   readonly title: string;
   readonly summary: string;
   readonly longSummary?: string;
+  readonly notes?: string;
   readonly status: ProjectStatus;
   readonly category: ProjectCategory;
+  readonly focusLabel?: string;
   readonly role: string;
   readonly stack: readonly string[];
   readonly featured: boolean;

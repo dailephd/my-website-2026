@@ -81,4 +81,75 @@ export const projects = [
     displayPriority: 50,
     links: [],
   },
+  {
+    id: 'tcga-brca-transcriptomics-dashboard',
+    slug: 'tcga-brca-transcriptomics-dashboard',
+    title: 'TCGA BRCA Tumor-Normal Transcriptomics Dashboard',
+    summary:
+      'A reproducible R-based analysis pipeline and companion web dashboard for exploring tumor-normal transcriptomic differences in the TCGA Breast Cancer cohort.',
+    longSummary:
+      'The project separates validated statistical analysis from downstream visualization so collaborators can explore precomputed results without installing R or inspecting notebooks.',
+    notes:
+      'The dashboard is a read-only consumer of analysis artifacts. It does not perform live computation, statistical re-analysis, or modification of source artifact files.',
+    status: 'archived',
+    category: 'scientific-software',
+    focusLabel: 'Bioinformatics dashboard',
+    role: 'Creator and developer',
+    stack: ['R', 'transcriptomics', 'TCGA', 'BRCA', 'dashboard', 'statistical analysis'],
+    featured: false,
+    displayPriority: 60,
+    links: [],
+  },
+  {
+    id: 'smarttutor',
+    slug: 'smarttutor',
+    title: 'SmartTutor',
+    summary:
+      "An intelligent tutoring system built with Django that uses OpenAI's ChatGPT to generate summaries, essay questions, practice exercises, and flashcards from uploaded learning materials.",
+    longSummary:
+      'The system provides AI-assisted feedback on grammar, logic, comprehension, and learning progress. It also supports cognitive performance tracking and goal-based study planning.',
+    status: 'archived',
+    category: 'developer-tooling',
+    focusLabel: 'AI tutoring system',
+    role: 'Creator and developer',
+    stack: ['Django', 'education technology', 'AI tutoring', 'OpenAI', 'learning analytics', 'document upload'],
+    featured: false,
+    displayPriority: 70,
+    links: [],
+  },
+  {
+    id: 'brain-proteome-differential-expression',
+    slug: 'brain-proteome-differential-expression',
+    title: 'Automated Differential Expression Analysis of Human Brain Proteome',
+    summary:
+      "A fully automatic workflow for differential expression analysis of human brain proteomics data from Alzheimer's and Parkinson's patients.",
+    longSummary:
+      'The workflow integrates frequentist statistical testing and Bayesian analysis for statistical verification, with downstream enrichment-analysis support.',
+    status: 'archived',
+    category: 'scientific-software',
+    focusLabel: 'Proteomics analysis workflow',
+    role: 'Creator and developer',
+    stack: ['proteomics', 'differential expression', "Alzheimer's disease", "Parkinson's disease", 'Bayesian analysis'],
+    featured: false,
+    displayPriority: 80,
+    links: [],
+  },
+  {
+    id: 'gnn-swmm-water-depth-prediction',
+    slug: 'gnn-swmm-water-depth-prediction',
+    title: 'GNN Water Depth Prediction for SWMM',
+    summary:
+      'A graph neural network project for predicting water depth levels in a synthetic storm water or sewage system using time-series data from multiple sensor nodes.',
+    longSummary:
+      'The model predicts water depth at an output node and explores flow dynamics, load capacity, hydraulic behavior, flood-risk modeling, and infrastructure optimization.',
+    notes: 'This is a technical modeling project, not a scientific research project.',
+    status: 'archived',
+    category: 'developer-tooling',
+    focusLabel: 'Graph neural network modeling',
+    role: 'Creator and developer',
+    stack: ['graph neural networks', 'time series', 'SWMM', 'hydraulic modeling', 'forecasting'],
+    featured: false,
+    displayPriority: 90,
+    links: [],
+  },
 ] as const satisfies readonly Project[];

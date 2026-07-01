@@ -25,14 +25,25 @@ export interface Publication {
   title: string;
   authors: PublicationAuthor[];
   year?: number;
+  month?: number | string;
+  journal?: string;
   venue?: string;
-  summary: string;
+  volume?: number | string;
+  issue?: number | string;
+  pages?: string;
+  articleNumber?: string;
+  publisher?: string;
+  doi?: string;
+  url?: string;
+  abstract?: string | null;
+  formattedCitation?: string;
+  bibtex?: string;
+  summary?: string;
   type: PublicationType;
   links: PublicationLink[];
   tags: string[];
   displayPriority: number;
   featured?: boolean;
-  doi?: string;
   pmid?: string;
 }
 

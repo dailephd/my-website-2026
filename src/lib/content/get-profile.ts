@@ -13,10 +13,6 @@ export function getProfile(): ProfileContent {
     }
   }
 
-  if (profile.primaryRoleLabels.length === 0) {
-    throw new Error('Profile content requires at least one primary role label.');
-  }
-
   return profile;
 }
 

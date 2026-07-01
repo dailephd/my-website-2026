@@ -243,4 +243,21 @@ When adding or changing milestones, preserve these rules:
 5. M8 through M10 are complete locally; the supporting public routes are in place.
 6. M11 metadata quality is complete locally.
 7. M12 premium visual polish is complete locally.
-8. Finish with M13 and M14 hardening and release readiness.
+8. M13 responsive and accessibility hardening is complete locally.
+9. M14 performance and release readiness is complete locally.
+
+## Post-M14 status
+
+The planned M1–M14 implementation milestone sequence is complete. The website builds cleanly,
+passes all validation gates, and is ready for the following separate deployment workflow:
+
+1. Review final git diff for the M13 and M14 feature branch.
+2. Commit staged changes.
+3. Open a pull request to `main`.
+4. Push to GitHub after review.
+5. Configure Vercel project and set `NEXT_PUBLIC_SITE_URL` to the production domain.
+6. Deploy a Vercel preview and verify all seven public routes.
+7. Promote to production when preview looks correct.
+8. Add real 1200×630 OG images to `public/images/og/` and replace the placeholder resume PDF.
+
+These steps are not part of the M14 milestone and have not been performed.

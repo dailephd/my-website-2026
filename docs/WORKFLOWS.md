@@ -2,171 +2,98 @@
 
 ## Purpose
 
-This document describes the expected implementation, validation, documentation, and deployment workflows for `my-website-2026`.
+This document describes the day-to-day and release workflows for `my-website-2026` as they
+actually work today. For the local branch model, see `docs/BRANCHING.md`; for the pre-deployment
+checklist, see `docs/RELEASE_READINESS.md`.
 
-## Repository workflow model
+## Local development workflow
 
-- Single Next.js website repo
-- Local structured content under `src/content`
-- GitHub for source publication and pull-request review
-- Vercel for preview and production deployment
-- Docker for optional local production preview
+1. `npm install`
+2. `npm run dev` (Windows env check + dev server) or `npm run dev:web` (dev server only)
+3. Make changes under `src/`.
+4. Run the fast checks relevant to the change (`npm run typecheck`, `npm run lint`) before a
+   larger validation pass.
+5. Before considering work done, run `npm run test:all` (typecheck + lint + validate:content +
+   validate:links + test) or the full `npm run check:release` gate.
 
-## Normal feature workflow
+## Content update workflow
 
-1. Create or switch to a feature branch.
-2. Run `npm install`.
-3. Run `npm run dev`.
-4. Implement scoped changes.
-5. Run:
-   - `npm run typecheck`
-   - `npm run lint`
-   - `npm run validate:content`
-   - `npm run validate:links`
-   - `npm run test`
-   - `npm run build`
-6. Open a pull request.
-7. Let GitHub Actions and Vercel preview validate the branch.
+1. Identify the source-of-truth file for the domain being changed (see the table in
+   `README.md` and `docs/DOMAIN_MODEL.md`).
+2. Edit the typed record directly — never hardcode content in a page/component.
+3. Run `npm run validate:content` to catch missing required fields, duplicate ids/slugs, or
+   invalid enum values immediately.
+4. Run `npm run validate:links` if any `href` changed.
+5. Update or add a unit test under `tests/content/` if the change affects adapter behavior
+   (sorting, filtering, view-model shape).
+6. Run `npm run build` to confirm the change renders without runtime errors.
 
-## Documentation workflow
+## Publication update workflow
 
-Rules:
+1. Edit `src/content/publications.ts` directly for manual additions/corrections, **or**
+2. Run `npm run sync:publications` (`scripts/sync-publications.mjs`) — requires
+   `PUBLICATIONS_ORCID_ID` in the environment; fetches public works from ORCID. This is an
+   **optional, explicit, opt-in** sync — it is not run automatically by any other command, and it
+   makes an external network call.
+3. After either path, run `npm run validate:content` and `npm run test` — publication tests
+   (`tests/content/publications.test.ts`) check sort order, author-highlighting eligibility, and
+   required-field coverage.
+4. Never add an invented DOI, citation count, or abstract. If unverified, leave the field absent
+   — `PublicationCard` degrades gracefully (see `docs/CONTRACT.md`).
 
-- use `docs/`, not `doc/`
-- keep project-level docs aligned with the codebase shape
-- keep roadmap source-of-truth rules aligned with `src/content/roadmaps.ts`
-- do not document this repo as a monorepo or multi-service system
+## Contact email setup workflow
 
-## Content workflow
+The contact form (`/contact` → `POST /api/contact` → Resend) requires environment configuration
+before it can send real email:
 
-Rules:
+1. Create a Resend account and verify a sending domain.
+2. Set `RESEND_API_KEY` (server-only — never prefix with `NEXT_PUBLIC_`).
+3. Set `CONTACT_FROM_EMAIL` to a verified address on that domain.
+4. Optionally set `CONTACT_TO_EMAIL` (defaults to `dailephd@gmail.com`), `CONTACT_FROM_NAME`
+   (defaults to `dailephd LLC`), and `CONTACT_SUBJECT_PREFIX`.
+5. To run a **real** end-to-end email test locally: set `ALLOW_REAL_CONTACT_EMAIL_TEST=true` and
+   run `npm run test:contact-email` (`scripts/send-contact-test.mjs`). This is opt-in only and
+   must not run as part of `check:release`, CI, or any automated gate — it sends a real email
+   through a paid provider.
+6. Without a real send, `tests/content/send-contact-email.test.ts` and
+   `tests/content/api-contact-route.test.ts` cover the validation, config-error, and
+   provider-error paths with mocked calls — no network access required.
 
-- website-owned content belongs in `src/content`
-- route pages should consume structured content rather than duplicate it
-- roadmap updates should be made in `src/content/roadmaps.ts`
+## Validation workflow
 
-### M1 profile and shell workflow
+Run in this order for a fast-fail sequence (matches `npm run test:all` and the first part of
+`check:release`):
 
-1. Edit identity and positioning copy in `src/content/profile.ts`.
-2. Edit CTA, navigation, and footer link records in `src/content/links.ts`.
-3. Keep stable IDs and update `displayPriority` to change ordering.
-4. Consume records through the accessors in `src/lib/content`.
-5. Run `npm run validate:content`, `npm run test`, and `npm run build`.
+```
+npm run typecheck
+npm run lint
+npm run validate:content
+npm run validate:links
+npm run test
+```
 
-Do not duplicate profile identity in route components. External URLs should be added only after verification.
+## Release-readiness workflow
 
-### M2 theme validation workflow
+```
+npm run check:release
+```
 
-1. Change palette values only in `src/styles/tokens.css` or `src/styles/theme.css`.
-2. Keep component styles tied to semantic variables.
-3. Run `npm run lint` to reject pure white or pure black main backgrounds.
-4. Run `npm run test` for theme resolution contracts.
-5. Run `npm run test:e2e` for switching, persistence, and mobile smoke coverage.
-6. Run `npm run build`.
+Runs required-path checks, forbidden-path checks, the conflicting-asset check, then the full
+gate chain above plus `npm run build`. See `docs/RELEASE_READINESS.md` for the complete checklist
+and what remains manual. This command **does not** deploy, commit, push, or publish anything.
 
-### M3 project-content workflow
+## Post-readiness deployment workflow (future / manual only)
 
-1. Edit selected-work records only in `src/content/projects.ts`.
-2. Keep IDs and slugs stable; use constrained status/category/link values.
-3. Omit unknown links rather than publishing placeholders.
-4. Use `displayPriority` for deterministic order and `featured` for visual priority.
-5. Consume project collections through `src/lib/content/get-projects.ts`.
-6. Run `npm run validate:content`, `npm run test`, `npm run test:e2e`, and `npm run build`.
+Deployment is **not** performed by any script in this repository. When explicitly instructed to
+deploy:
 
-### M4 product-family workflow
+1. Review the final `git diff` and `git status` on the branch.
+2. Commit and push to GitHub (only when explicitly instructed).
+3. Confirm Vercel project environment variables are set (`NEXT_PUBLIC_SITE_URL`,
+   `RESEND_API_KEY`, `CONTACT_FROM_EMAIL`, and any optional contact vars).
+4. Let Vercel build a preview deployment from the GitHub integration; verify it manually against
+   `docs/QA_CHECKLIST.md`.
+5. Promote to production only after the preview passes manual QA.
 
-1. Edit ecosystem content only in `src/content/products.ts`.
-2. Preserve stable family/module IDs, slugs, role labels, and display priorities.
-3. Omit unknown links and keep maturity claims conservative.
-4. Consume data through `src/lib/content/get-products.ts`.
-5. Keep roadmap data and UI out of product-family content.
-6. Run content, unit, browser, and production-build checks.
-
-### M5 roadmap workflow
-
-1. Edit roadmap direction only in `src/content/roadmaps.ts`.
-2. Preserve stable nested IDs and allowed textual statuses.
-3. Use display priorities instead of relying on source order.
-4. Consume full and preview data through `src/lib/content/get-roadmaps.ts`.
-5. Run content validation, unit tests, browser tests, and the production build.
-
-### M6 product-index workflow
-
-1. Edit concise index entries in `productIndex` inside `src/content/products.ts`.
-2. Keep family detail content separate from index-card copy.
-3. Relate roadmap-enabled products with `roadmapSlug`; never copy roadmap milestones.
-4. Omit unverified links and preserve honest maturity labels.
-5. Validate adapters, browser behavior, and production build.
-
-## Docker workflow
-
-### M7 homepage-content workflow
-
-1. Edit homepage-only copy and technical focus in `src/content/home.ts`.
-2. Edit identity, links, projects, products, and roadmaps only in their owning modules.
-3. Adjust preview selection in `src/lib/content/get-homepage.ts`; keep arrays out of the route.
-4. Keep sections prop-driven and preserve graceful empty states.
-5. Run typecheck, lint, content validation, unit tests, Playwright, and the production build.
-
-Commands:
-
-- `npm run docker:ready`
-- `npm run dev:docker`
-- `npm run dev:docker:down`
-
-Purpose:
-
-- local production-style preview of the website only
-
-## Deployment workflow
-
-- pull requests: GitHub Actions checks plus Vercel preview
-- `main`: stable deployable branch for Vercel production
-
-## Release workflow
-
-Run:
-
-- `npm run ci`
-- `npm run check:release`
-
-Then confirm:
-
-- docs are aligned
-- no obsolete multi-service references remain
-- route/build/content validation passes
-
-## About and publication content workflow
-
-1. Edit verified background records in `src/content/profile.ts`.
-2. Add complete citations only in `src/content/publications.ts`.
-3. Replace `public/files/resume.pdf` with a valid current PDF before setting resume availability.
-4. Run typecheck, content validation, unit tests, E2E tests, and build.
-
-## Gallery and media workflow
-
-1. Add an optimized AVIF, WebP, or PNG under the matching `public/images` folder.
-2. Record its local path, intrinsic dimensions, caption, and alt policy in `gallery.ts`.
-3. Associate it with a project, product, category, or placement only when verified.
-4. Run content validation; missing local files fail validation.
-
-## Writing and contact workflow
-
-1. Add only real published writing or verified external destinations to `writing.ts`.
-2. Keep draft and planned records non-public.
-3. Edit contact framing in `contact.ts`; edit shared destinations only in `links.ts`.
-4. Never add a form endpoint or visible email without an intentional verified source.
-
-## SEO and link-preview workflow
-
-1. Edit route metadata in `src/lib/seo/metadata.ts`.
-2. Configure `NEXT_PUBLIC_SITE_URL` for production canonicals.
-3. Replace preview placeholders with compressed 1200×630 PNG files.
-4. Run `npm run validate:links`, tests, and build.
-
-## Visual QA workflow
-
-1. Change semantic tokens or reusable utilities before component-specific styles.
-2. Inspect light desktop and dark mobile views in a real browser.
-3. Verify focus, reduced motion, overflow, content truth, and lack of animation loops.
-4. Run lint, tests, and build.
+This workflow is documented for completeness; no step in it is executed by local tooling or by
+this documentation task.

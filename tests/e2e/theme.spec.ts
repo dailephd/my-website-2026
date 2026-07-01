@@ -47,5 +47,5 @@ test('theme control and navigation remain visible at a mobile viewport', async (
   await expect(
     page.getByRole('navigation', { name: 'Primary navigation' }).getByRole('link', { name: 'Contact' }),
   ).toBeVisible();
-  await expect(page.getByRole('heading', { level: 1, name: 'Dai Le' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: 'dailephd LLC' })).toBeVisible();
 });

@@ -16,6 +16,21 @@ export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
   title: { default: site.defaultTitle, template: site.titleTemplate },
   description: site.description,
+  manifest: '/site.webmanifest',
+  icons: {
+    icon: [
+      { url: '/icons/dl-favicon-light.svg', type: 'image/svg+xml' },
+      {
+        url: '/icons/dl-favicon-dark.svg',
+        type: 'image/svg+xml',
+        media: '(prefers-color-scheme: dark)',
+      },
+      { url: '/icons/icon-16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/icons/icon-32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/icons/icon-48.png', sizes: '48x48', type: 'image/png' },
+    ],
+    apple: [{ url: '/icons/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
+  },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

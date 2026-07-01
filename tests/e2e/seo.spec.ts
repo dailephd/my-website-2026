@@ -1,12 +1,12 @@
 import { expect, test } from '@playwright/test';
 
 const routesAndTitles = [
-  ['/', /Dai Le.*Software Developer/i],
+  ['/', /dailephd LLC/i],
   ['/work', /Selected Work.*Dai Le/i],
-  ['/products', /Product Lab.*Dai Le/i],
-  ['/products/my-dev-kit', /my-dev-kit Ecosystem.*Dai Le/i],
+  ['/projects', /Technical Projects.*Dai Le/i],
+  ['/projects/my-dev-kit', /my-dev-kit Ecosystem.*Dai Le/i],
   ['/about', /About Dai Le/i],
-  ['/writing', /Writing.*Dai Le/i],
+  ['/publications', /Publications.*Dai Le/i],
   ['/contact', /Contact Dai Le/i],
 ] as const;
 

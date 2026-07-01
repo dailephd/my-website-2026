@@ -1,79 +1,103 @@
 # Domain Model
 
-## Profile and links
+This document describes the current content/domain types under `src/types` and where each is
+defined. All content records satisfy these types (`as const satisfies readonly X[]`), and
+adapters in `src/lib/content` validate required fields at read time.
 
-`ProfileContent` owns Dai Le’s identity and positioning. `SiteLink`, `CtaLink`, and
-`NavigationLink` describe stable actions used by the shell.
+## Business / Profile
 
-## Selected work
+`ProfileContent` (`src/types/content.ts`) — Dai Le's identity plus the dailephd LLC business
+block (`BusinessInfo`: name, description, founder). Includes `technicalFocus`, `researchFocus`,
+and `education` arrays used on `/about`. Content: `src/content/profile.ts`.
 
-### Project
+## Link
 
-A curated technical work record with stable identity, honest maturity status, category, role,
-stack, featured state, display priority, and optional links.
+`SiteLink` (`src/types/content.ts`) — `id`, `label`, `href`, `kind` (`navigation | cta | social |
+email | download`), `external`, `displayPriority`, `locations` (`primary | navigation | footer`).
+`CtaLink` and `NavigationLink` are narrowed variants. Content: `src/content/links.ts`. A separate,
+simpler `profileLinks` array (`kind: 'github' | 'linkedin'`) lives in `src/content/contact.ts` and
+is the source of truth for the GitHub/LinkedIn links shown on `/contact`.
 
-### ProjectStatus
+## Project
 
-One of `active`, `in-development`, `maintained`, `experimental`, `archived`, or `planned`.
-Status communicates current maturity and is always rendered as text.
+`Project` (`src/types/project.ts`) — `id`, `slug`, `title`, `summary`, optional `longSummary` and
+`notes`, `status` (`active | in-development | maintained | experimental | archived | planned`),
+`category`, optional `focusLabel` (overrides the category label for display), `role`, `stack`,
+`featured`, `displayPriority`, `links`. Content: `src/content/projects.ts`.
 
-### ProjectLink
+### Archived Project
 
-An optional project action with stable ID, meaningful label, safe URL, link kind, and explicit
-external behavior.
+Not a separate type — an archived project is a `Project` record with `status: 'archived'` and
+`featured: false`. `getArchivedProjects()` (`src/lib/content/get-projects.ts`) filters for these
+and they render on `/projects` under the "Archived projects" heading via `ProjectGrid`/`ProjectCard`
+with `showTags={false}` (tag pills intentionally hidden for archived cards; title, description,
+and notes remain visible).
 
-## Relationships
+## Product family / my-dev-kit relationship diagram
 
-- The `/work` route consumes project collections through adapters.
-- Featured projects are a subset of all projects.
-- A project can have zero or more links and stack items.
-- The `my-dev-kit` projects remain related members of the future ecosystem story, while M3
-  presents them as selected technical work.
+`ProductFamily` (`src/types/product.ts`) — the my-dev-kit Ecosystem record: `id`, `slug`, `title`,
+`summary`, `description`, `status`, `category`, `positioning`, `primaryAudience`, `modules`
+(`ProductModule[]`), `links`, `featured`, `displayPriority`, `roadmapPlanned`. Content:
+`src/content/products.ts` (`products` array).
 
-## Later domains
+`ProductModule` — one of the three ecosystem members (`my-dev-kit`, `my-dev-kit-orchestrator`,
+`my-dev-kit-lab`): `id`, `slug`, `title`, `roleLabel` (`'Codebase Intelligence' |
+'Workflow Orchestration' | 'Validation Lab'`), `layerLabel`, `summary`, `description`, `status`,
+`stage`, `stack`, `links` (`ProductLink[]`, one `kind: 'repository'` GitHub entry and one
+`kind: 'package'` npm entry per module), and `versionRoadmap` (`ProductVersionEntry[]`: `version`,
+`description` — rendered as a compact ascending-order timeline inside each product panel's
+collapsible Roadmap section on `/projects/my-dev-kit`).
 
-Products beyond the ecosystem overview, publications, gallery items, writing, and resume metadata remain owned by
-their later milestones.
+`ProductIndexItem` — the lighter-weight card record used for the `/projects` listing grid
+(`itemType: 'product-family' | 'standalone-product'`). Content: `products.ts` (`productIndex`
+array, currently the my-dev-kit family and BioLit).
 
-## Roadmap domain
+The relationship between the three modules (rendered by `ProductArchitectureVisual.tsx`) is:
 
-- A `Roadmap` belongs to a product slug and contains ordered lanes.
-- A `RoadmapLane` maps to one ecosystem module and contains ordered phases.
-- A `RoadmapPhase` communicates timeframe, priority, status, and milestones.
-- A `RoadmapMilestone` is the smallest status-bearing direction item.
-- Status is always visible text; progress rails carry no essential information.
+- `my-dev-kit` = acquire context
+- `my-dev-kit-orchestrator` = guide implementation
+- `my-dev-kit-lab` = evaluate and visualize
 
-## Product Lab Index
+See `docs/DIAGRAMS.md` for the diagram.
 
-The index is a curated projection over product-family and standalone-product records. It relates
-products to roadmaps by slug; products without roadmap data render without a preview.
+## Roadmap (full structured model)
 
-## Gallery media
+`Roadmap` (`src/types/roadmap.ts`) — `id`, `slug`, `title`, `shortTitle`, `productSlug`,
+`summary`, `status`, `updatedAt`, `lanes` (`RoadmapLane[]`), `featured`, `displayPriority`.
+`RoadmapLane` → `RoadmapPhase[]` → `RoadmapMilestone[]`. Content: `src/content/roadmaps.ts`.
+This full model backs `getRoadmapPreview()` (used by `ProductCard`'s optional roadmap-preview
+slot) and is validated by `validateRoadmaps`; it is a distinct, richer model from the simpler
+per-module `versionRoadmap` described above.
 
-A `GalleryItem` relates one optimized local asset to a kind, category, optional project/product,
-and page placement. Intrinsic dimensions prevent layout shift. Alt text is required unless the
-item is explicitly decorative; project and product screenshots are presentation variants.
+## Publication
 
-## SEO and discovery
+`Publication` (`src/types/publication.ts`) — `id`, `title`, `authors` (`PublicationAuthor[]`,
+each with optional `isProfileOwner`), `year`, `journal`/`venue`, `volume`, `issue`, `pages`,
+`doi`, `url`, `abstract`, `bibtex`, `type`, `links` (`PublicationLink[]`), `tags`,
+`displayPriority`. Content: `src/content/publications.ts`. Sorted by `getAllPublications()` —
+year descending, then `displayPriority` ascending.
 
-A public route has one metadata configuration, absolute canonical URL, Open Graph/Twitter card,
-and schema page type. Sitemap routes are the same registry projection. Robots is crawlable by
-default, and preview images are optional verified local assets.
+## Contact message / contact channel
 
-## Writing and contact
+`ContactChannel` (`src/types/contact.ts`) — `id`, `label`, `href`, `kind` (`email | github |
+linkedin | website | resume | product | work | other`), `description`, `external`,
+`displayPriority`, `primary`. Currently only partially used — `getContactChannels()` and
+`getPrimaryContactChannels()` are legacy adapters kept for backward compatibility and return `[]`
+(the contact page now renders `ContactForm` directly rather than a channel list). The "contact
+message" itself is not a persisted domain type — it's the ephemeral `ContactEmailPayload`
+(`senderEmail`, `title`, `message`) defined in `src/lib/server/send-contact-email.ts`, sent by
+email and never stored.
 
-A `WritingItem` is public only when its status is published and its destination is verified.
-`WritingIndexViewModel` supports an explicit empty state. `ContactChannel` is derived from an
-existing link; `ContactPanelViewModel` groups channels and reports direct-email availability.
+## SEO metadata
 
-## Homepage narrative
+`PageMetadataConfig` (`src/types/seo.ts`) — `key`, `path`, `title`, `description`, `pageType`
+(`WebPage | CollectionPage`), optional `ogImagePath`. The six live routes are defined in
+`routeMetadata` (`src/lib/seo/metadata.ts`) and consumed by `buildPageMetadata()` for canonical
+URLs, Open Graph/Twitter cards, and by `sitemap.ts` for the sitemap.
 
-`HomepageContent` owns homepage labels, summaries, technical-focus items, credibility copy, and
-CTA framing. `HomepageViewModel` joins it with existing profile, link, project, product, and
-roadmap adapters without becoming a second source for their records.
+## Route
 
-## About credibility model
-
-`EducationItem`, `TechnicalFocusItem`, and `ResearchFocusItem` support the profile. `Publication`
-represents only a fully verified citation; an empty collection is valid. `ResumeMetadata`
-separates a planned file path from actual download availability.
+Not a formal type — `routes` (`src/lib/routes.ts`) is the single object literal mapping route
+keys to path strings (`home`, `projects`, `projectMyDevKit`, `publications`, `about`, `contact`).
+Every internal `href` in content and components should reference `routes.*` rather than a literal
+path string, so a route rename only requires one edit.

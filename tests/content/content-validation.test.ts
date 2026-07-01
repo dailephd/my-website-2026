@@ -17,23 +17,21 @@ describe('M1 content adapters', () => {
     expect(profile.headline).toBeTruthy();
     expect(profile.subheadline).toBeTruthy();
     expect(profile.summary).toBeTruthy();
-    expect(profile.primaryRoleLabels.length).toBeGreaterThan(0);
   });
 
   it('returns primary links in display-priority order', () => {
     const links = getPrimaryLinks();
 
     expect(links.length).toBe(2);
-    expect(links.map((link) => link.href)).toEqual([routes.work, routes.products]);
+    expect(links.map((link) => link.href)).toEqual([routes.projects, routes.contact]);
     expect(links[0].displayPriority).toBeLessThan(links[1].displayPriority);
   });
 
   it('returns the expected navigation routes', () => {
     expect(getNavigationLinks().map((link) => link.href)).toEqual([
       routes.home,
-      routes.work,
-      routes.products,
-      routes.writing,
+      routes.projects,
+      routes.publications,
       routes.about,
       routes.contact,
     ]);

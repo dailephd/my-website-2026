@@ -1,24 +1,37 @@
 import { describe, expect, it } from 'vitest';
 
-import { getContactChannels, getContactPanel, getPrimaryContactChannels } from '@/lib/content';
+import { getContactIntro, getContactPanel, getProfileLinks } from '@/lib/content';
 
 describe('contact adapters', () => {
-  it('derives deterministic channels only from existing links', () => {
-    expect(getContactChannels().map(({ id }) => id)).toEqual([
-      'view-work',
-      'explore-products',
-      'about',
-    ]);
-    expect(getContactChannels().every(({ href }) => href.length > 0)).toBe(true);
+  it('getContactIntro returns the intro string', () => {
+    const intro = getContactIntro();
+    expect(typeof intro).toBe('string');
+    expect(intro.length).toBeGreaterThan(0);
   });
 
-  it('returns prioritized channels and handles missing email safely', () => {
-    expect(getPrimaryContactChannels().map(({ id }) => id)).toEqual([
-      'view-work',
-      'explore-products',
-    ]);
-    expect(getContactPanel().hasDirectEmail).toBe(false);
-    expect(getContactPanel().channels.some(({ kind }) => kind === 'email')).toBe(false);
-    expect(getContactPanel()).not.toHaveProperty('formEndpoint');
+  it('getProfileLinks returns LinkedIn and GitHub', () => {
+    const links = getProfileLinks();
+    const ids = links.map((l) => l.id);
+    expect(ids).toContain('linkedin');
+    expect(ids).toContain('github');
+  });
+
+  it('LinkedIn link points to the correct profile URL', () => {
+    const links = getProfileLinks();
+    const linkedin = links.find((l) => l.id === 'linkedin');
+    expect(linkedin?.href).toBe('https://linkedin.com/in/dailephd');
+    expect(linkedin?.external).toBe(true);
+  });
+
+  it('GitHub link points to the correct profile URL', () => {
+    const links = getProfileLinks();
+    const github = links.find((l) => l.id === 'github');
+    expect(github?.href).toBe('https://github.com/dailephd');
+    expect(github?.external).toBe(true);
+  });
+
+  it('getContactPanel returns a panel with hasDirectEmail true', () => {
+    const panel = getContactPanel();
+    expect(panel.hasDirectEmail).toBe(true);
   });
 });

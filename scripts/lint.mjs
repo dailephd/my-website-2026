@@ -16,8 +16,7 @@ const requiredPaths = [
   'docs/project_tree.txt',
   'src/app/page.tsx',
   'src/app/layout.tsx',
-  'src/app/work/page.tsx',
-  'src/app/products/my-dev-kit/page.tsx',
+  'src/app/projects/my-dev-kit/page.tsx',
   'src/content/profile.ts',
   'src/content/projects.ts',
   'src/content/roadmaps.ts',
@@ -115,34 +114,26 @@ if (!themeText.includes('--color-background: #1a1d23')) {
   errors.push('Dark theme must define the approved charcoal background token.');
 }
 
-const workPageText = readFileSync(path.join(repoRoot, 'src/app/work/page.tsx'), 'utf8');
-if (!workPageText.includes('getAllProjects') || !workPageText.includes('getFeaturedProjects')) {
-  errors.push('/work must load project collections through content adapters.');
-}
-if (/\b(?:title|summary|status|stack):/.test(workPageText)) {
-  errors.push('/work must not define project card content directly in the route module.');
-}
-
 const ecosystemPageText = readFileSync(
-  path.join(repoRoot, 'src/app/products/my-dev-kit/page.tsx'),
+  path.join(repoRoot, 'src/app/projects/my-dev-kit/page.tsx'),
   'utf8',
 );
 if (!ecosystemPageText.includes('getMyDevKitEcosystem')) {
-  errors.push('/products/my-dev-kit must load its family through the content adapter.');
+  errors.push('/projects/my-dev-kit must load its family through the content adapter.');
 }
 
-const productsPageText = readFileSync(path.join(repoRoot, 'src/app/products/page.tsx'), 'utf8');
+const productsPageText = readFileSync(path.join(repoRoot, 'src/app/projects/page.tsx'), 'utf8');
 if (!productsPageText.includes('getProductIndexViewModel')) {
-  errors.push('/products must load its index through the product content adapter.');
+  errors.push('/projects must load its index through the product content adapter.');
 }
 if (/my-dev-kit Ecosystem|BioLit|Recently shipped|Current focus|Next planned/.test(productsPageText)) {
-  errors.push('/products must not duplicate product or roadmap card content.');
+  errors.push('/projects must not duplicate product or roadmap card content.');
 }
 if (/Codebase Intelligence|Workflow Orchestration|Validation Lab/.test(ecosystemPageText)) {
   errors.push('The ecosystem route must not duplicate module role content.');
 }
-if (!ecosystemPageText.includes('getMyDevKitRoadmap') || !ecosystemPageText.includes('RoadmapShowcase')) {
-  errors.push('M5 ecosystem route must load and render the roadmap through its adapter.');
+if (!ecosystemPageText.includes('getProductFamilyModules')) {
+  errors.push('M5 ecosystem route must load its product modules, including per-module roadmaps, through the content adapter.');
 }
 if (/Project intelligence foundation|Staged workflow discipline|Deterministic evaluation fixtures/.test(ecosystemPageText)) {
   errors.push('The ecosystem route must not duplicate roadmap phase content.');

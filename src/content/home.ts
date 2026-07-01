@@ -1,29 +1,18 @@
+import { routes } from '@/lib/routes';
 import type { HomepageContent } from '@/types/home';
 
 export const homepageContent: HomepageContent = {
   hero: {
-    eyebrow: 'Independent product lab',
-    heading: 'Software, science, and applied AI—built into useful products.',
+    eyebrow: 'Software, data, and AI',
+    heading: 'Custom computing services and technical projects.',
     summary:
-      'Dai Le is a software developer, AI builder, PhD-trained scientist, and product-focused builder.',
+      'dailephd LLC delivers software, data, and AI projects. Founded and operated by Dai Le, software developer and biological scientist.',
   },
   featuredWork: {
     eyebrow: 'Selected work',
     heading: 'Systems built for real technical work',
     summary:
       'A focused selection of developer tooling, scientific software, and applied AI projects.',
-  },
-  productLab: {
-    eyebrow: 'Product lab',
-    heading: 'From codebase intelligence to validated workflows',
-    summary:
-      'The lab turns recurring engineering and research problems into focused tools and product experiments.',
-  },
-  roadmaps: {
-    eyebrow: 'Direction',
-    heading: 'Building in public, with the next steps visible',
-    summary:
-      'A compact view of shipped work, current focus, and planned development from the structured ecosystem roadmap.',
   },
   technicalFocus: {
     eyebrow: 'Capabilities',
@@ -58,16 +47,29 @@ export const homepageContent: HomepageContent = {
       },
     ],
   },
-  credibility: {
-    eyebrow: 'Research foundation',
-    heading: 'Scientific rigor behind the software',
-    summary:
-      'PhD training and hands-on research experience inform a careful approach to evidence, reproducibility, and building software for complex technical domains.',
-  },
-  contact: {
-    eyebrow: 'Next step',
-    heading: 'Explore the work—or start a conversation',
-    summary:
-      'Review selected projects, inspect the product lab, or use the contact route to discuss engineering, AI, and scientific software.',
+  background: {
+    eyebrow: 'Background',
+    heading: 'Background and expertise',
+    summary: 'A short look at the research and story behind the business.',
+    cards: [
+      {
+        id: 'biological-sciences',
+        title: 'Biological Sciences',
+        subtitle: 'Research background',
+        body: 'Peer-reviewed work in developmental biology, microbiology, and quantitative biological modeling.',
+        supportingText:
+          'A research foundation for building software and data systems grounded in real scientific problems.',
+        cta: { label: 'View publications', href: routes.publications },
+      },
+      {
+        id: 'about-dai-le',
+        title: 'About Dai Le',
+        subtitle: 'Software, AI, and biological sciences',
+        body: 'Dai Le brings together software development, AI model evaluation, data science, and biological research experience.',
+        supportingText:
+          'A technical background shaped by research, implementation, and practical problem-solving across computing and science.',
+        cta: { label: 'Read bio', href: routes.about },
+      },
+    ],
   },
 };

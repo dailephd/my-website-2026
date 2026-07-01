@@ -12,10 +12,9 @@ if (existsSync(routeFile)) {
   const routeMatches = [...routesText.matchAll(/:\s*['"`]([^'"`]+)['"`]/g)].map((match) => match[1]);
   const routeToFile = new Map([
     ['/', 'src/app/page.tsx'],
-    ['/work', 'src/app/work/page.tsx'],
-    ['/products', 'src/app/products/page.tsx'],
-    ['/products/my-dev-kit', 'src/app/products/my-dev-kit/page.tsx'],
-    ['/writing', 'src/app/writing/page.tsx'],
+    ['/projects', 'src/app/projects/page.tsx'],
+    ['/projects/my-dev-kit', 'src/app/projects/my-dev-kit/page.tsx'],
+    ['/publications', 'src/app/publications/page.tsx'],
     ['/about', 'src/app/about/page.tsx'],
     ['/contact', 'src/app/contact/page.tsx'],
   ]);
@@ -83,16 +82,15 @@ for (const requiredSeoFile of [
   if (!existsSync(path.join(repoRoot, requiredSeoFile))) errors.push(`Missing SEO helper: ${requiredSeoFile}`);
 }
 const metadataText = readFileSync(path.join(repoRoot, 'src/lib/seo/metadata.ts'), 'utf8');
-for (const routeKey of ['home', 'work', 'products', 'productMyDevKit', 'about', 'writing', 'contact']) {
+for (const routeKey of ['home', 'projects', 'projectMyDevKit', 'about', 'publications', 'contact']) {
   if (!metadataText.includes(`${routeKey}: {`)) errors.push(`Missing route metadata: ${routeKey}`);
 }
 for (const pageFile of [
   'src/app/page.tsx',
-  'src/app/work/page.tsx',
-  'src/app/products/page.tsx',
-  'src/app/products/my-dev-kit/page.tsx',
+  'src/app/projects/page.tsx',
+  'src/app/projects/my-dev-kit/page.tsx',
   'src/app/about/page.tsx',
-  'src/app/writing/page.tsx',
+  'src/app/publications/page.tsx',
   'src/app/contact/page.tsx',
 ]) {
   if (!readFileSync(path.join(repoRoot, pageFile), 'utf8').includes('buildPageMetadata')) {

@@ -26,18 +26,11 @@ export default function HomeHero({
             {copy.eyebrow}
           </p>
           <h1 id="home-heading" className="mt-5 text-5xl font-semibold tracking-[-0.045em] sm:text-7xl">
-            {profile.name}
+            {profile.business?.name ?? profile.name}
           </h1>
-          <p className="mt-6 max-w-3xl text-xl font-medium leading-snug sm:text-2xl">{profile.headline}</p>
-          <p className="mt-3 max-w-3xl text-lg font-medium text-[var(--color-text-primary)]">
-            {copy.heading}
-          </p>
+          <p className="mt-6 max-w-3xl text-xl font-medium leading-snug sm:text-2xl">{copy.heading}</p>
           <p className="mt-4 max-w-3xl text-lg text-[var(--color-text-secondary)]">
-            {profile.subheadline}
-          </p>
-          <p className="mt-5 max-w-2xl text-[var(--color-text-secondary)]">{profile.summary}</p>
-          <p className="mt-3 max-w-2xl text-sm text-[var(--color-text-muted)]">
-            {profile.productLabStatement}
+            Founded and operated by {profile.name} - {profile.headline}
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             {primaryLinks.map((link, index) => (

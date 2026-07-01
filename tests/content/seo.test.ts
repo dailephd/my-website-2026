@@ -29,29 +29,29 @@ describe('site URL helpers', () => {
     vi.stubEnv('NEXT_PUBLIC_SITE_URL', 'https://example.test/base//');
     expect(getSiteUrl()).toBe('https://example.test/base');
     expect(normalizeSiteUrl('https://example.test///')).toBe('https://example.test');
-    expect(normalizePath('//products//my-dev-kit/')).toBe('/products/my-dev-kit');
+    expect(normalizePath('//projects//my-dev-kit/')).toBe('/projects/my-dev-kit');
   });
 
   it('uses a safe fallback and creates absolute root and nested URLs', () => {
     vi.stubEnv('NEXT_PUBLIC_SITE_URL', '');
     expect(getSiteUrl()).toBe('http://localhost:3000');
     expect(createAbsoluteUrl('/')).toBe('http://localhost:3000/');
-    expect(createAbsoluteUrl('/work')).toBe('http://localhost:3000/work');
+    expect(createAbsoluteUrl('/projects')).toBe('http://localhost:3000/projects');
   });
 });
 
 describe('metadata helpers', () => {
   it('builds branded titles, absolute canonicals, Open Graph and Twitter data', () => {
-    const metadata = buildPageMetadata(routeMetadata.work);
-    expect(buildPageTitle('Selected Work')).toBe('Selected Work | Dai Le');
+    const metadata = buildPageMetadata(routeMetadata.projects);
+    expect(buildPageTitle('Technical Projects')).toBe('Technical Projects | Dai Le');
     expect(metadata.description).toBeTruthy();
-    expect(metadata.alternates?.canonical).toBe('http://localhost:3000/work');
-    expect(metadata.openGraph?.title).toBe('Selected Work | Dai Le');
+    expect(metadata.alternates?.canonical).toBe('http://localhost:3000/projects');
+    expect(metadata.openGraph?.title).toBe('Technical Projects | Dai Le');
     expect(metadata.twitter).toMatchObject({ card: 'summary' });
   });
 
   it('omits invalid placeholder images and covers exactly the public route registry', () => {
-    expect(resolveOpenGraphImage('/images/og/work-og.png', 'Work')).toBeUndefined();
+    expect(resolveOpenGraphImage('/images/og/projects-og.png', 'Projects')).toBeUndefined();
     expect(Object.values(routeMetadata).map(({ path }) => path).sort()).toEqual(
       Object.values(routes).sort(),
     );
@@ -72,9 +72,9 @@ describe('structured data', () => {
       name: 'Dai Le',
       url: 'http://localhost:3000/',
     });
-    expect(buildWebPageJsonLd(routeMetadata.products)).toMatchObject({
+    expect(buildWebPageJsonLd(routeMetadata.projects)).toMatchObject({
       '@type': 'CollectionPage',
-      url: 'http://localhost:3000/products',
+      url: 'http://localhost:3000/projects',
     });
   });
 

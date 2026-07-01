@@ -2,9 +2,9 @@ import { routes } from '@/lib/routes';
 import type { CtaLink, NavigationLink, SiteLink } from '@/types/content';
 
 export const primaryCta: CtaLink = {
-  id: 'view-work',
-  label: 'View selected work',
-  href: routes.work,
+  id: 'explore-projects',
+  label: 'Explore technical projects',
+  href: routes.projects,
   kind: 'cta',
   external: false,
   displayPriority: 10,
@@ -12,9 +12,9 @@ export const primaryCta: CtaLink = {
 };
 
 export const secondaryCta: CtaLink = {
-  id: 'explore-products',
-  label: 'Explore the product lab',
-  href: routes.products,
+  id: 'contact-cta',
+  label: 'Contact',
+  href: routes.contact,
   kind: 'cta',
   external: false,
   displayPriority: 20,
@@ -23,11 +23,10 @@ export const secondaryCta: CtaLink = {
 
 export const navigationLinks: NavigationLink[] = [
   ['home', 'Home', routes.home, 10],
-  ['work', 'Work', routes.work, 20],
-  ['products', 'Products', routes.products, 30],
-  ['writing', 'Writing', routes.writing, 40],
-  ['about', 'About', routes.about, 50],
-  ['contact', 'Contact', routes.contact, 60],
+  ['projects', 'Projects', routes.projects, 20],
+  ['publications', 'Publications', routes.publications, 30],
+  ['about', 'About', routes.about, 40],
+  ['contact', 'Contact', routes.contact, 50],
 ].map(([id, label, href, displayPriority]) => ({
   id: String(id),
   label: String(label),

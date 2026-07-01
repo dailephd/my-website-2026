@@ -55,17 +55,19 @@ export default function ProductFamilyHero({ family }: { family: ProductFamily })
             </ul>
           </div>
 
-          <div className="mt-8 flex flex-wrap gap-3">
-            {family.links.map((link, index) => (
-              <LinkButton
-                key={link.id}
-                emphasis={index === 0 ? 'primary' : 'secondary'}
-                external={link.external}
-                href={link.href}
-                label={link.label}
-              />
-            ))}
-          </div>
+          {family.links.length ? (
+            <div className="mt-8 flex flex-wrap gap-3">
+              {family.links.map((link, index) => (
+                <LinkButton
+                  key={link.id}
+                  emphasis={index === 0 ? 'primary' : 'secondary'}
+                  external={link.external}
+                  href={link.href}
+                  label={link.label}
+                />
+              ))}
+            </div>
+          ) : null}
         </div>
       </Card>
     </section>

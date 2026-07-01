@@ -19,6 +19,12 @@ export interface NavigationLink extends SiteLink {
   external: false;
 }
 
+export interface BusinessInfo {
+  name: string;
+  description: string;
+  founder: string;
+}
+
 export interface ProfileContent {
   id: 'profile';
   name: string;
@@ -26,9 +32,13 @@ export interface ProfileContent {
   headline: string;
   subheadline: string;
   locationLabel?: string;
-  primaryRoleLabels: string[];
   summary: string;
+  intro?: string;
+  professionalSummary?: string;
+  aiComputingSummary?: string;
+  businessContext?: string;
   productLabStatement: string;
+  business?: BusinessInfo;
   primaryCta: CtaLink;
   secondaryCta: CtaLink;
   primaryLinks: CtaLink[];

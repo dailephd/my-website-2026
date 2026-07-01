@@ -19,12 +19,21 @@ const categoryLabels: Record<ProjectCategory, string> = {
   'website-product-lab': 'Website and product lab',
 };
 
-export default function ProjectCard({ project }: { project: Project }) {
+export default function ProjectCard({
+  project,
+  quiet = false,
+  showTags = true,
+}: {
+  project: Project;
+  quiet?: boolean;
+  showTags?: boolean;
+}) {
   return (
     <article className="h-full" data-project-slug={project.slug}>
       <Card
         className={cn(
-          'premium-card-interactive flex h-full flex-col',
+          'flex h-full flex-col',
+          quiet ? 'shadow-none' : 'premium-card-interactive',
           project.featured &&
             'border-[var(--color-accent-violet)] bg-[var(--color-elevated)] shadow-[var(--shadow-card-hover)]',
         )}
@@ -32,7 +41,7 @@ export default function ProjectCard({ project }: { project: Project }) {
         <div className="flex flex-wrap items-center gap-2">
           <Badge>{statusLabels[project.status]}</Badge>
           <span className="text-xs font-medium uppercase tracking-[0.12em] text-[var(--color-text-muted)]">
-            {categoryLabels[project.category]}
+            {project.focusLabel ?? categoryLabels[project.category]}
           </span>
         </div>
 
@@ -49,19 +58,24 @@ export default function ProjectCard({ project }: { project: Project }) {
         {project.longSummary ? (
           <p className="mt-3 text-sm text-[var(--color-text-muted)]">{project.longSummary}</p>
         ) : null}
+        {project.notes ? (
+          <p className="mt-3 text-sm text-[var(--color-text-muted)]">{project.notes}</p>
+        ) : null}
 
         <p className="mt-5 text-sm text-[var(--color-text-secondary)]">
           <span className="font-semibold text-[var(--color-text-primary)]">Role:</span>{' '}
           {project.role}
         </p>
 
-        <ul aria-label={`${project.title} technology stack`} className="mt-5 flex flex-wrap gap-2">
-          {project.stack.map((item) => (
-            <li key={item}>
-              <Badge>{item}</Badge>
-            </li>
-          ))}
-        </ul>
+        {showTags && project.stack.length ? (
+          <ul aria-label={`${project.title} technology stack`} className="mt-5 flex flex-wrap gap-2">
+            {project.stack.map((item) => (
+              <li key={item}>
+                <Badge>{item}</Badge>
+              </li>
+            ))}
+          </ul>
+        ) : null}
 
         <div className="mt-auto pt-6">
           <ProjectLinkList links={project.links} />

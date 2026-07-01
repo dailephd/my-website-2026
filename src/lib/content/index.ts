@@ -1,5 +1,5 @@
 export { getFooterLinks, getLinks, getNavigationLinks, getPrimaryLinks } from './get-links';
-export { getContactChannels, getContactPanel, getPrimaryContactChannels } from './get-contact';
+export { getContactChannels, getContactIntro, getContactPanel, getPrimaryContactChannels, getProfileLinks } from './get-contact';
 export {
   getAllWritingItems,
   getFeaturedWritingItems,
@@ -29,12 +29,14 @@ export {
   getPublicationCards,
   getPublications,
   getPublicationSummary,
+  isDaiLeAuthor,
   validatePublications,
 } from './get-publications';
 export { getResumeLink, getResumeMetadata } from './get-resume';
 export { getHomepageViewModel } from './get-homepage';
 export {
   getAllProjects,
+  getArchivedProjects,
   getFeaturedProjects,
   getProjectBySlug,
   getProjectCards,

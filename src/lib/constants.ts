@@ -1,6 +1,6 @@
 export const siteConfig = {
   name: 'my-website-2026',
-  description: 'Dai Le’s personal website and product lab.',
+  description: 'dailephd LLC - software, data, and AI projects by Dai Le.',
 };
 
 export const THEME_STORAGE_KEY = 'my-website-2026-theme';

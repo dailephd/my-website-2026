@@ -39,7 +39,6 @@ for (const requiredSnippet of [
   'shortName:',
   'headline:',
   'subheadline:',
-  'primaryRoleLabels:',
   'summary:',
   'productLabStatement:',
   'primaryCta',
@@ -54,11 +53,8 @@ const homeText = readFileSync(path.join(repoRoot, 'src/content/home.ts'), 'utf8'
 for (const sectionId of [
   'hero',
   'featuredWork',
-  'productLab',
-  'roadmaps',
   'technicalFocus',
-  'credibility',
-  'contact',
+  'background',
 ]) {
   if (!homeText.includes(`${sectionId}:`)) {
     errors.push(`Homepage content is missing section: ${sectionId}`);
@@ -88,8 +84,6 @@ if (/\b(const|let)\s+(projects|products|roadmaps)\s*=\s*\[/.test(homepageRouteTe
 }
 for (const sourceFile of [
   'src/components/sections/FeaturedWorkSection.tsx',
-  'src/components/sections/ProductLabSection.tsx',
-  'src/components/sections/SelectedRoadmapsSection.tsx',
 ]) {
   const sourceText = readFileSync(path.join(repoRoot, sourceFile), 'utf8');
   if (sourceText.includes('@/content/projects') || sourceText.includes('@/content/products') || sourceText.includes('@/content/roadmaps')) {
@@ -279,7 +273,7 @@ for (const id of publicationIds) {
   const recordStart = publicationText.indexOf(`id: '${id}'`);
   const nextRecord = publicationText.indexOf('\n  {', recordStart + 1);
   const record = publicationText.slice(recordStart, nextRecord === -1 ? undefined : nextRecord);
-  for (const field of ['title:', 'authors:', 'summary:', 'type:', 'links:', 'tags:', 'displayPriority:']) {
+  for (const field of ['title:', 'authors:', 'type:', 'links:', 'tags:', 'displayPriority:']) {
     if (!record.includes(field)) errors.push(`Publication "${id}" is missing ${field}`);
   }
 }
@@ -308,7 +302,7 @@ if (!existsSync(aboutPath)) {
   errors.push('The /about route must exist.');
 } else {
   const aboutText = readFileSync(aboutPath, 'utf8');
-  for (const adapter of ['getAboutProfile', 'getPublicationSummary', 'getResumeMetadata']) {
+  for (const adapter of ['getAboutProfile']) {
     if (!aboutText.includes(adapter)) errors.push(`/about must use ${adapter}.`);
   }
   if (/\bconst\s+publications\s*=\s*\[/.test(aboutText)) {
@@ -351,13 +345,6 @@ for (const id of galleryIds) {
     if (!existsSync(assetPath)) errors.push(`Missing local gallery asset: ${src}`);
   }
 }
-const workRouteText = readFileSync(path.join(repoRoot, 'src/app/work/page.tsx'), 'utf8');
-if (!workRouteText.includes('getMediaCardViewModels')) {
-  errors.push('/work must load gallery data through the gallery adapter.');
-}
-if (/\b(const|let)\s+(galleryItems|mediaItems)\s*=\s*\[/.test(workRouteText)) {
-  errors.push('/work must not hardcode gallery item arrays.');
-}
 if (existsSync(path.join(repoRoot, 'src/app/gallery'))) {
   errors.push('M9 must not add a top-level /gallery route.');
 }
@@ -385,8 +372,8 @@ for (const type of [...writingText.matchAll(/type:\s*'([^']+)'/g)].map((match) =
   if (!allowedWritingTypes.has(type)) errors.push(`Unsupported writing type: ${type}`);
 }
 for (const [route, adapter] of [
-  ['writing', 'getWritingIndex'],
-  ['contact', 'getContactPanel'],
+  ['publications', 'getPublicationSummary'],
+  ['contact', 'getContactIntro'],
 ]) {
   const routePath = path.join(repoRoot, `src/app/${route}/page.tsx`);
   if (!existsSync(routePath)) {
@@ -395,11 +382,8 @@ for (const [route, adapter] of [
   }
   const routeText = readFileSync(routePath, 'utf8');
   if (!routeText.includes(adapter)) errors.push(`/${route} must use ${adapter}.`);
-  if (/\b(const|let)\s+(writingItems|contactLinks|channels)\s*=\s*\[/.test(routeText)) {
+  if (/\b(const|let)\s+(writingItems|channels)\s*=\s*\[/.test(routeText)) {
     errors.push(`/${route} must not hardcode structured record arrays.`);
-  }
-  if (/<form|formAction|\/api\/contact/i.test(routeText)) {
-    errors.push(`/${route} must not add contact form submission behavior.`);
   }
 }
 

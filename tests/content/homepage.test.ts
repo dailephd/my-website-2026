@@ -10,31 +10,36 @@ describe('M7 homepage view model', () => {
     const second = getHomepageViewModel();
 
     expect(first.profile.name).toBe('Dai Le');
-    expect(first.featuredProjects.length).toBeGreaterThan(0);
-    expect(first.featuredProjects.map(({ id }) => id)).toEqual(
-      second.featuredProjects.map(({ id }) => id),
-    );
     expect(first.featuredProducts[0]?.item.title).toBe('my-dev-kit Ecosystem');
-    expect(first.ecosystem.slug).toBe('my-dev-kit');
-    expect(first.roadmapPreview?.roadmap.slug).toBe('my-dev-kit');
+    expect(first.featuredProducts.map(({ item }) => item.id)).toEqual(
+      second.featuredProducts.map(({ item }) => item.id),
+    );
   });
 
-  it('derives hero and contact actions from link content', () => {
-    const home = getHomepageViewModel();
+  it('does not render the removed ecosystem workflow sentence', () => {
+    const pageSource = readFileSync('src/components/sections/FeaturedWorkSection.tsx', 'utf8');
 
-    expect(home.heroLinks.map(({ href }) => href)).toEqual([routes.work, routes.products]);
-    expect(home.contactLinks.map(({ href }) => href)).toEqual([
-      routes.work,
-      routes.products,
-      routes.contact,
-    ]);
+    expect(pageSource).not.toContain(
+      'Understand the repository, structure the implementation workflow, then validate the result and process.',
+    );
   });
 
-  it('uses a safe credibility summary instead of placeholder publication data', () => {
+  it('derives hero actions from link content', () => {
     const home = getHomepageViewModel();
 
-    expect(home.copy.credibility.summary).toContain('PhD');
-    expect(home.copy.credibility.summary).not.toContain('TBD');
+    expect(home.heroLinks.map(({ href }) => href)).toEqual([routes.projects, routes.contact]);
+  });
+
+  it('renders the two background cards with valid CTA routes', () => {
+    const home = getHomepageViewModel();
+    const cards = home.copy.background.cards;
+
+    expect(cards.map((card) => card.title)).toEqual(['Biological Sciences', 'About Dai Le']);
+    expect(cards.find((card) => card.id === 'biological-sciences')?.cta.href).toBe(routes.publications);
+    expect(cards.find((card) => card.id === 'about-dai-le')?.cta.href).toBe(routes.about);
+    expect(cards.every((card) => !card.body.includes('—') && !card.supportingText.includes('—'))).toBe(
+      true,
+    );
   });
 
   it('keeps structured project, product, and roadmap arrays out of the route', () => {

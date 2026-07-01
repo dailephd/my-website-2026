@@ -406,6 +406,85 @@ Requirements:
 
 Accessibility is not an optional cleanup pass; it is part of the intended product quality.
 
+## M13 Responsive and Accessibility Hardening
+
+M13 locks in the following design rules that were implemented across shared components, layout, and all public routes.
+
+### Skip link
+
+A "Skip to main content" link is the first focusable element in SiteShell. It is visually hidden by default and becomes visible on focus using the site's elevated surface, control radius, and focus ring token. It links to `#main-content` on the main element.
+
+### Landmark expectations
+
+- The header element wraps the sticky navigation bar.
+- The main element has `id="main-content"` and receives focus when the skip link is activated.
+- The footer element wraps the footer.
+- Navigation landmarks use `aria-label` to distinguish primary and footer navigation.
+- `aria-current="page"` is applied to the active route link via the NavLink client component.
+
+### Heading expectations
+
+- Every public route has exactly one h1 heading.
+- Section headings follow h2 → h3 → h4 → h5 within their nesting level.
+- In the roadmap feature: roadmap title is h2, lane titles are h3, phase titles are h4, milestone titles are h5.
+- Contact cards inside a ContactPanel use h3 headings.
+- Heading levels are not skipped.
+
+### Focus state expectations
+
+- Global `:focus-visible` applies a 3px outline using `--color-focus-ring` with 3px offset.
+- Focus ring uses cyan in light mode and in dark mode for visibility across themes.
+- All interactive elements (links, buttons, toggle) receive visible focus states without additional style overrides.
+
+### Reduced-motion behavior
+
+- `prefers-reduced-motion: reduce` removes `scroll-behavior` forced animation.
+- All `theme-transition`, `premium-card-interactive`, and `premium-link` transitions are removed.
+- The `body` background-color transition is removed.
+- Decorative hover transforms (translateY) are removed.
+- No motion-dependent content remains.
+
+### Status label rules
+
+- All status badges render text labels. Color is supporting, not the sole indicator.
+- RoadmapStatusBadge renders: "Status: Shipped", "Status: Active", "Status: Planned", etc.
+- ProductCard status renders: "Status: Active", "Status: In development", etc.
+- ProjectCard status renders: "Active", "In development", etc.
+
+### Image alt and decorative image rules
+
+- Content images require non-empty alt text from the `alt` field in gallery metadata.
+- Decorative images use empty alt text via the `item.decorative` flag.
+- Decorative non-image visual elements use `aria-hidden="true"` or are CSS-only pseudo-elements.
+- Image, video, and SVG elements are constrained to `max-width: 100%; height: auto` globally.
+
+### Mobile layout expectations
+
+- The body element has `overflow-x: hidden` and `overflow-wrap: break-word`.
+- All grids collapse to single-column at small viewports.
+- EcosystemDiagram arrows rotate 90° on mobile via `rotate-90 md:rotate-0`.
+- Header wraps via `flex-wrap` at narrow widths.
+- Container uses `px-5 sm:px-8` for safe mobile edge padding.
+
+### Responsive grid and card expectations
+
+- ProjectGrid: single column → sm:2-column → xl:3-column.
+- ProductGrid standard: single column → md:2-column.
+- ContactPanel channels: single column → md:2-column → lg:3-column.
+- GalleryGrid: single column → md:2-column.
+- Roadmap phases: single column → xl:2-column per lane.
+- Long titles in PublicationCard and WritingCard use `break-words`.
+
+### Testing commands
+
+- Unit tests: `npm run test`
+- E2E tests: `npm run test:e2e` (requires dev server on port 3100)
+- Full CI: `npm run ci`
+- E2E accessibility spec: `tests/e2e/accessibility.spec.ts`
+- E2E responsive spec: `tests/e2e/responsive.spec.ts`
+
+Full independent WCAG 2.1 AA certification was not performed for M13. Accessibility hardening is based on code inspection, semantic HTML correctness, and E2E assertion coverage.
+
 ## Performance and visualization balance
 
 Visual polish must not damage speed, stability, or readability.

@@ -18,7 +18,7 @@ export default function ContactCard({ channel }: { channel: ContactChannel }) {
   return (
     <Card as="article" className="premium-card-interactive flex h-full flex-col">
       <Badge>{kindLabels[channel.kind]}</Badge>
-      <h2 className="mt-4 text-xl font-semibold">{channel.label}</h2>
+      <h3 className="mt-4 text-xl font-semibold">{channel.label}</h3>
       <p className="mt-2 flex-1 text-[var(--color-text-secondary)]">{channel.description}</p>
       <a
         className="mt-5 font-medium text-[var(--color-accent-cyan)] underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-focus)]"

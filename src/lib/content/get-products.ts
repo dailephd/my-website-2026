@@ -124,6 +124,6 @@ export function getProductCardViewModels(): readonly ProductCardViewModel[] {
   }));
 }
 export function getProductIndexViewModel(): ProductIndexViewModel {
-  const cards = getProductCardViewModels();
+  const cards = getProductCardViewModels().map(({ item }) => ({ item }));
   return { featured: cards.filter(({ item }) => item.featured), standard: cards.filter(({ item }) => !item.featured) };
 }

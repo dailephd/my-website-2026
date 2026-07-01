@@ -1,295 +1,123 @@
-my-website-2026/
-M1 additions not represented in the original scaffold branches below:
-- src/components/sections/PlannedPage.tsx
-- src/lib/content/index.ts
-M2 additions:
-- src/types/theme.ts
-- src/lib/theme.ts
-M3 additions:
-- tests/content/projects.test.ts
-- tests/e2e/work.spec.ts
-M4 additions:
-- tests/content/products.test.ts
-- tests/e2e/ecosystem.spec.ts
-M6 additions:
-- tests/e2e/products.spec.ts
+my-website-2026/ — actual current repository structure
+(regenerated from the live tree; this file no longer reflects the old M1-M14 planning scaffold)
 
+Top level
 ├── .github/
 │   └── workflows/
-│       ├── ci.yml
-│       └── vercel-preview-checks.yml
-├── docs/
-│   ├── _template/
-│   │   ├── SPEC.md
-│   │   ├── PLAN.md
-│   │   └── PROMPT.txt
-│   ├── project_template/
-│   ├── components/
-│   │   ├── content/
-│   │   │   ├── PLAN.md
-│   │   │   └── SPEC.md
-│   │   ├── gallery/
-│   │   │   ├── PLAN.md
-│   │   │   └── SPEC.md
-│   │   ├── layout/
-│   │   │   ├── PLAN.md
-│   │   │   └── SPEC.md
-│   │   ├── product-cards/
-│   │   │   ├── PLAN.md
-│   │   │   └── SPEC.md
-│   │   ├── project-cards/
-│   │   │   ├── PLAN.md
-│   │   │   └── SPEC.md
-│   │   ├── publication-cards/
-│   │   │   ├── PLAN.md
-│   │   │   └── SPEC.md
-│   │   ├── roadmap/
-│   │   │   ├── PLAN.md
-│   │   │   └── SPEC.md
-│   │   ├── seo/
-│   │   │   ├── PLAN.md
-│   │   │   └── SPEC.md
-│   │   └── theme/
-│   │       ├── PLAN.md
-│   │       └── SPEC.md
-│   ├── ARCHITECTURE.md
-│   ├── CI_CD.md
-│   ├── COMPONENT_MAP.md
-│   ├── CONTRACT.md
-│   ├── DESIGN.md
-│   ├── DOMAIN_MODEL.md
-│   ├── PROJECT_OVERVIEW.md
-│   ├── PROJECT_PLAN.md
-│   ├── ROADMAP.md
-│   ├── WORKFLOWS.md
-│   ├── component_registry.md
-│   ├── dev_logging.md
-│   ├── lower_level_rules.md
-│   ├── milestones.json
-│   └── project_tree.txt
-├── public/
-│   ├── favicon.ico
-│   ├── files/
-│   │   ├── README.md
-│   │   └── resume.pdf
-│   ├── images/
-│   │   ├── gallery/
-│   │   │   └── README.md
-│   │   ├── og/
-│   │   │   ├── default-og.png
-│   │   │   ├── home-og.png
-│   │   │   ├── products-og.png
-│   │   │   └── work-og.png
-│   │   ├── profile/
-│   │   │   └── README.md
-│   │   └── projects/
-│   │       ├── README.md
-│   │       ├── biolit/
-│   │       └── my-dev-kit/
-│   ├── robots.txt
-│   └── site.webmanifest
-├── scripts/
-│   ├── Check-DevEnv.ps1
-│   ├── Start-Dev.ps1
-│   ├── Start-DockerDesktop.ps1
-│   ├── check-release-readiness.mjs
-│   ├── generate-og-images.ts
-│   ├── import-legacy-content.ts
-│   ├── lint.mjs
-│   ├── validate-content.mjs
-│   └── validate-links.mjs
-├── src/
-│   ├── app/
-│   │   ├── about/
-│   │   │   └── page.tsx
-│   │   ├── contact/
-│   │   │   └── page.tsx
-│   │   ├── products/
-│   │   │   ├── my-dev-kit/
-│   │   │   │   └── page.tsx
-│   │   │   └── page.tsx
-│   │   ├── work/
-│   │   │   └── page.tsx
-│   │   ├── writing/
-│   │   │   └── page.tsx
-│   │   ├── globals.css
-│   │   ├── layout.tsx
-│   │   ├── not-found.tsx
-│   │   ├── page.tsx
-│   │   ├── robots.ts
-│   │   └── sitemap.ts
-│   ├── components/
-│   │   ├── contact/
-│   │   │   ├── ContactCard.tsx
-│   │   │   └── ContactPanel.tsx
-│   │   ├── gallery/
-│   │   │   ├── GalleryGrid.tsx
-│   │   │   ├── MediaCard.tsx
-│   │   │   └── ProjectScreenshot.tsx
-│   │   ├── layout/
-│   │   │   ├── Footer.tsx
-│   │   │   ├── Header.tsx
-│   │   │   ├── MobileNav.tsx
-│   │   │   ├── PageContainer.tsx
-│   │   │   └── SiteShell.tsx
-│   │   ├── products/
-│   │   │   ├── EcosystemDiagram.tsx
-│   │   │   ├── EcosystemModuleCard.tsx
-│   │   │   ├── ProductCard.tsx
-│   │   │   ├── ProductFamilyHero.tsx
-│   │   │   └── ProductGrid.tsx
-│   │   ├── projects/
-│   │   │   ├── ProjectCard.tsx
-│   │   │   ├── ProjectGrid.tsx
-│   │   │   └── ProjectLinkList.tsx
-│   │   ├── publications/
-│   │   │   ├── PublicationCard.tsx
-│   │   │   └── PublicationList.tsx
-│   │   ├── roadmap/
-│   │   │   ├── RoadmapMilestoneList.tsx
-│   │   │   ├── RoadmapPhaseCard.tsx
-│   │   │   ├── RoadmapPreview.tsx
-│   │   │   ├── RoadmapProgressRail.tsx
-│   │   │   ├── RoadmapShowcase.tsx
-│   │   │   ├── RoadmapStatusBadge.tsx
-│   │   │   ├── RoadmapTimeline.tsx
-│   │   │   └── RoadmapUpdatedLabel.tsx
-│   │   ├── sections/
-│   │   │   ├── ContactCTASection.tsx
-│   │   │   ├── FeaturedWorkSection.tsx
-│   │   │   ├── HomeHero.tsx
-│   │   │   ├── ProductLabSection.tsx
-│   │   │   ├── PublicationsPreviewSection.tsx
-│   │   │   ├── SelectedRoadmapsSection.tsx
-│   │   │   └── TechnicalFocusSection.tsx
-│   │   ├── theme/
-│   │   │   ├── ThemeProvider.tsx
-│   │   │   ├── ThemeToggle.tsx
-│   │   │   └── theme-script.tsx
-│   │   ├── ui/
-│   │   │   ├── Badge.tsx
-│   │   │   ├── Button.tsx
-│   │   │   ├── Card.tsx
-│   │   │   ├── Container.tsx
-│   │   │   ├── LinkButton.tsx
-│   │   │   ├── SectionHeader.tsx
-│   │   │   └── VisuallyHidden.tsx
-│   │   └── writing/
-│   │       ├── WritingCard.tsx
-│   │       └── WritingEmptyState.tsx
-│   ├── content/
-│   │   ├── gallery.ts
-│   │   ├── index.ts
-│   │   ├── legacy-import-notes.md
-│   │   ├── links.ts
-│   │   ├── products.ts
-│   │   ├── profile.ts
-│   │   ├── projects.ts
-│   │   ├── publications.ts
-│   │   ├── resume.ts
-│   │   ├── roadmaps.ts
-│   │   └── writing.ts
-│   ├── lib/
-│   │   ├── content/
-│   │   │   ├── get-gallery.ts
-│   │   │   ├── get-links.ts
-│   │   │   ├── get-products.ts
-│   │   │   ├── get-profile.ts
-│   │   │   ├── get-projects.ts
-│   │   │   ├── get-publications.ts
-│   │   │   ├── get-roadmaps.ts
-│   │   │   └── validate-content.ts
-│   │   ├── seo/
-│   │   │   ├── metadata.ts
-│   │   │   ├── open-graph.ts
-│   │   │   ├── site-url.ts
-│   │   │   └── structured-data.ts
-│   │   ├── constants.ts
-│   │   ├── routes.ts
-│   │   └── utils.ts
-│   ├── styles/
-│   │   ├── theme.css
-│   │   ├── tokens.css
-│   │   └── utilities.css
-│   └── types/
-│       ├── content.ts
-│       ├── gallery.ts
-│       ├── product.ts
-│       ├── project.ts
-│       ├── publication.ts
-│       ├── roadmap.ts
-│       └── seo.ts
-├── tests/
-│   ├── accessibility/
-│   │   └── basic-a11y.test.ts
-│   ├── content/
-│   │   ├── content-validation.test.ts
-│   │   └── roadmap-validation.test.ts
-│   └── e2e/
-│       ├── homepage.spec.ts
-│       ├── navigation.spec.ts
-│       ├── roadmap.spec.ts
-│       └── theme.spec.ts
-├── .dockerignore
-├── .env.example
-├── .eslintrc.json
+│       ├── ci.yml                        CI: typecheck, lint, validate, test, build, docker-build
+│       └── vercel-preview-checks.yml     Runs `npm run ci` on PRs
+├── docs/                                 see "docs/" section below
+├── public/                               see "public/" section below
+├── scripts/                              see "scripts/" section below
+├── src/                                  see "src/" section below
+├── tests/                                see "tests/" section below
+├── Dockerfile, docker-compose.yml        optional local production-style preview
+├── .env.example                          documented env vars, no secrets
 ├── .gitignore
-├── .prettierrc
-├── Dockerfile
-├── README.md
-├── docker-compose.yml
-├── next-env.d.ts
-├── next.config.ts
-├── package-lock.json
-├── package.json
-├── playwright.config.ts
-├── postcss.config.js
-├── tailwind.config.ts
+├── next.config.ts                        redirects (/work -> /projects)
+├── package.json / package-lock.json
 ├── tsconfig.json
-├── vitest.config.ts
-└── vercel.json
+├── tailwind.config.ts / postcss.config.js
+├── playwright.config.ts / vitest.config.ts
+├── vercel.json                           { "framework": "nextjs" }
+└── README.md
 
-M7 additions:
-- src/content/home.ts
-- src/types/home.ts
-- src/lib/content/get-homepage.ts
-- tests/content/homepage.test.ts
+docs/ (active, current)
+├── PROJECT_OVERVIEW.md
+├── ARCHITECTURE.md                       includes Mermaid architecture diagram
+├── DOMAIN_MODEL.md
+├── CONTRACT.md
+├── COMPONENT_MAP.md
+├── WORKFLOWS.md
+├── RELEASE_READINESS.md
+├── DIAGRAMS.md                           all 8 required Mermaid diagrams
+├── BRANCHING.md
+├── QA_CHECKLIST.md
+├── DESIGN.md                             visual design system authority (unchanged)
+├── CI_CD.md
+├── ROADMAP.md
+├── PROJECT_PLAN.md
+├── dev_logging.md
+├── milestones.json                       M1-M14 milestone history (left as-is; not re-validated)
+└── project_tree.txt                      this file
 
-M8 additions:
-- src/types/resume.ts
-- src/lib/content/get-resume.ts
-- tests/content/publications.test.ts
-- tests/content/resume.test.ts
-- tests/content/publication-components.test.tsx
-- tests/e2e/about.spec.ts
+docs/ (legacy scaffold — retained, not the active architecture guide)
+├── _template/{SPEC.md,PLAN.md,PROMPT.txt}
+├── components/{contact,content,gallery,layout,product-cards,project-cards,
+│               publication-cards,roadmap,seo,theme,writing}/{PLAN.md,SPEC.md}
+├── component_registry.md
+└── lower_level_rules.md
 
-M9 additions:
-- src/components/gallery/GalleryEmptyState.tsx
-- src/components/sections/GalleryPreviewSection.tsx
-- public/images/projects/my-dev-kit/README.md
-- tests/content/gallery.test.ts
-- tests/content/gallery-components.test.tsx
-- tests/e2e/gallery.spec.ts
+src/app/ — routes (App Router)
+├── page.tsx                              / (home)
+├── projects/page.tsx                     /projects
+├── projects/my-dev-kit/page.tsx          /projects/my-dev-kit
+├── publications/page.tsx                 /publications
+├── about/page.tsx                        /about
+├── contact/page.tsx                      /contact
+├── api/contact/route.ts                  POST /api/contact
+├── layout.tsx, globals.css, not-found.tsx
+├── robots.ts, sitemap.ts
+(no /work, /products, /products/my-dev-kit, or /writing route files — /work is a redirect only,
+defined in next.config.ts)
 
-M10 additions:
-- src/types/writing.ts
-- src/types/contact.ts
-- src/content/contact.ts
-- src/lib/content/get-writing.ts
-- src/lib/content/get-contact.ts
-- docs/components/writing/
-- docs/components/contact/
-- tests/content/writing.test.ts
-- tests/content/contact.test.ts
-- tests/content/writing-contact-components.test.tsx
-- tests/e2e/writing-contact.spec.ts
+src/components/ — see docs/COMPONENT_MAP.md for the live/orphaned breakdown
+├── layout/        SiteShell, Header, Footer, NavLink, SiteLogoMark, PageContainer, MobileNav*
+├── theme/         ThemeProvider, ThemeToggle, theme-script
+├── sections/      HomeHero, FeaturedWorkSection, TechnicalFocusSection, BackgroundSection,
+│                  GalleryPreviewSection*, PlannedPage*
+├── projects/      ProjectCard, ProjectGrid, ProjectLinkList, ProductArchitectureVisual
+│                  (my-dev-kit relationship diagram), ProductLinks, RoadmapTimeline, RoadmapToggle
+├── products/      ProductCard, ProductGrid, ProductFamilyHero, EcosystemDiagram*,
+│                  EcosystemModuleCard*
+├── publications/  PublicationCard, PublicationList
+├── contact/       ContactForm, ContactCard, ContactPanel*
+├── roadmap/       RoadmapPreview, RoadmapUpdatedLabel
+├── gallery/*      GalleryEmptyState, GalleryGrid, MediaCard, ProjectScreenshot
+├── writing/*      WritingCard, WritingEmptyState
+├── ui/            Card, Badge, LinkButton, SectionHeader, Container, Button*, VisuallyHidden*
+└── seo/           JsonLd
+(* = orphaned; not imported by any current route — see docs/COMPONENT_MAP.md)
 
-M11 additions:
-- src/components/seo/JsonLd.tsx
-- public/images/og/README.md
-- tests/content/seo.test.ts
-- tests/content/seo-routes.test.ts
-- tests/e2e/seo.spec.ts
+src/content/ — source of truth (see README.md content table)
+├── profile.ts, links.ts, projects.ts, products.ts, publications.ts, contact.ts, home.ts,
+│   roadmaps.ts
+├── gallery.ts*, writing.ts*, resume.ts       (* orphaned — no live route consumes these)
+├── index.ts
+└── legacy-import-notes.md
 
-M12 additions:
-- tests/content/visual-polish.test.ts
+src/lib/
+├── content/       adapters (get-profile, get-links, get-projects, get-products, get-publications,
+│                   get-contact, get-homepage, get-roadmaps, get-resume*, get-gallery*,
+│                   get-writing*, validate-content, index.ts)
+├── seo/            metadata, open-graph, site-url, structured-data
+├── server/         send-contact-email.ts
+├── routes.ts, constants.ts, theme.ts, utils.ts
+
+src/types/          content, project, product, publication, contact, home, roadmap, seo, gallery*,
+                     writing*, resume*, theme
+
+src/styles/          tokens.css, theme.css, utilities.css
+
+public/
+├── favicon.ico
+├── icons/           dl-logo-{light,dark}.svg, dl-favicon-{light,dark}.svg,
+│                     icon-{16,32,48,192,512}.png, apple-touch-icon.png
+├── images/og/        default-og.png, home-og.png, products-og.png, work-og.png (+ README.md)
+├── images/{gallery,profile,projects}/README.md   placeholders, no committed media yet
+├── files/resume.pdf, files/README.md
+└── site.webmanifest  now referenced from src/app/layout.tsx metadata.manifest
+
+scripts/
+├── validate-content.mjs, validate-links.mjs, lint.mjs   validation gates
+├── check-release-readiness.mjs                          orchestrates the full gate chain
+├── generate-favicons.mjs                                sharp-based PNG export from SVG source
+├── sync-publications.mjs                                optional ORCID sync (opt-in, network)
+├── send-contact-test.mjs                                optional real-email test (opt-in)
+├── generate-og-images.ts, import-legacy-content.ts       one-off / historical scripts
+└── Check-DevEnv.ps1, Start-Dev.ps1, Start-DockerDesktop.ps1   Windows dev helpers
+
+tests/
+├── content/          Vitest unit/component tests (one file per content/component area)
+└── e2e/               Playwright specs (some, e.g. work.spec.ts, gallery.spec.ts, target routes
+                        that no longer exist as pages — see docs/RELEASE_READINESS.md)

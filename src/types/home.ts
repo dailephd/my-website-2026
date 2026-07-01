@@ -1,8 +1,5 @@
-import type { CtaLink, SiteLink, ProfileContent } from './content';
-import type { ProductCardViewModel, ProductFamily } from './product';
-import type { Project } from './project';
-import type { RoadmapPreviewViewModel } from './roadmap';
-import type { PublicationListViewModel } from './publication';
+import type { CtaLink, ProfileContent } from './content';
+import type { ProductCardViewModel } from './product';
 
 export interface HomeSectionCopy {
   readonly eyebrow?: string;
@@ -16,26 +13,34 @@ export interface TechnicalFocusItem {
   readonly summary: string;
 }
 
+export interface BackgroundCardCta {
+  readonly label: string;
+  readonly href: string;
+}
+
+export interface BackgroundCard {
+  readonly id: string;
+  readonly title: string;
+  readonly subtitle: string;
+  readonly body: string;
+  readonly supportingText: string;
+  readonly cta: BackgroundCardCta;
+}
+
 export interface HomepageContent {
   readonly hero: HomeSectionCopy;
   readonly featuredWork: HomeSectionCopy;
-  readonly productLab: HomeSectionCopy;
-  readonly roadmaps: HomeSectionCopy;
   readonly technicalFocus: HomeSectionCopy & {
     readonly items: readonly TechnicalFocusItem[];
   };
-  readonly credibility: HomeSectionCopy;
-  readonly contact: HomeSectionCopy;
+  readonly background: HomeSectionCopy & {
+    readonly cards: readonly BackgroundCard[];
+  };
 }
 
 export interface HomepageViewModel {
   readonly copy: HomepageContent;
   readonly profile: ProfileContent;
   readonly heroLinks: readonly CtaLink[];
-  readonly featuredProjects: readonly Project[];
   readonly featuredProducts: readonly ProductCardViewModel[];
-  readonly ecosystem: ProductFamily;
-  readonly roadmapPreview?: RoadmapPreviewViewModel;
-  readonly contactLinks: readonly SiteLink[];
-  readonly publicationSummary: PublicationListViewModel;
 }

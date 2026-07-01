@@ -5,9 +5,13 @@ import type { Project } from '@/types/project';
 export default function ProjectGrid({
   projects,
   featured = false,
+  quiet = false,
+  showTags = true,
 }: {
   projects: readonly Project[];
   featured?: boolean;
+  quiet?: boolean;
+  showTags?: boolean;
 }) {
   if (projects.length === 0) {
     return (
@@ -28,7 +32,7 @@ export default function ProjectGrid({
       }
     >
       {projects.map((project) => (
-        <ProjectCard key={project.id} project={project} />
+        <ProjectCard key={project.id} project={project} quiet={quiet} showTags={showTags} />
       ))}
     </div>
   );

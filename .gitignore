@@ -1,5 +1,6 @@
 node_modules/
 .next/
+.idea/
 out/
 coverage/
 playwright-report/
@@ -14,8 +15,18 @@ yarn-error.log*
 pnpm-debug.log*
 .env
 .env.local
+.env.development
+.env.production
 .env.development.local
 .env.test.local
 .env.production.local
+.env*.local
 .DS_Store
 Thumbs.db
+AGENTS.md
+agents.txt
+CLAUDE.md
+claude.txt
+public/files/README.md
+.my-dev-kit/
+.junie/

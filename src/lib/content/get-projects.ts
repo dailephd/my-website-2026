@@ -49,6 +49,10 @@ export function getFeaturedProjects(): readonly FeaturedProject[] {
   );
 }
 
+export function getArchivedProjects(): readonly Project[] {
+  return getAllProjects().filter((project) => project.status === 'archived');
+}
+
 export function getProjectBySlug(slug: string): Project | undefined {
   return getAllProjects().find((project) => project.slug === slug);
 }

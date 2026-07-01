@@ -5,7 +5,7 @@ export default function SectionHeader({
   headingId,
 }: {
   title: string;
-  description: string;
+  description?: string;
   level?: 1 | 2;
   headingId?: string;
 }) {
@@ -16,7 +16,9 @@ export default function SectionHeader({
       <Heading className="max-w-3xl text-3xl font-semibold tracking-[-0.025em] sm:text-4xl" id={headingId}>
         {title}
       </Heading>
-      <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--color-text-secondary)]">{description}</p>
+      {description ? (
+        <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--color-text-secondary)]">{description}</p>
+      ) : null}
     </header>
   );
 }

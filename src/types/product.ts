@@ -16,6 +16,11 @@ export interface ProductLink {
   readonly external: boolean;
 }
 
+export interface ProductVersionEntry {
+  readonly version: string;
+  readonly description: string;
+}
+
 export interface ProductModule {
   readonly id: string;
   readonly slug: string;
@@ -30,6 +35,7 @@ export interface ProductModule {
   readonly stage: ProductStage;
   readonly stack: readonly string[];
   readonly links: readonly ProductLink[];
+  readonly versionRoadmap: readonly ProductVersionEntry[];
   readonly displayPriority: number;
 }
 
@@ -48,8 +54,6 @@ export interface ProductFamily {
   readonly links: readonly ProductLink[];
   readonly featured: boolean;
   readonly displayPriority: number;
-  readonly workflowSummary: string;
-  readonly statusNote: string;
   readonly roadmapPlanned: boolean;
 }
 
