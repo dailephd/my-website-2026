@@ -47,10 +47,13 @@ Current website scope
 - Local content source: `src/content`
 - Roadmap source: `src/content/roadmaps.ts`
 - Product-family story:
-  - `my-dev-kit` = Codebase Intelligence
-  - `my-dev-kit-orchestrator` = Workflow Orchestration
-  - `my-dev-kit-lab` = Validation Lab
+  - `my-dev-kit` = static repository/codebase evidence
+  - `my-dev-kit-orchestrator` = workflow and lifecycle control
+  - `my-frontend-observer` = rendered browser/runtime evidence
+  - `my-dev-kit-lab` = optional assurance and evaluation
   - present them together as `my-dev-kit Ecosystem`
+  - an external human or coding agent edits source; Orchestrator does not automatically run agents or tools; Observer never edits source; Lab is not mandatory for every edit
+  - `ProductArchitectureVisual` owns the hybrid workflow, Observer correction loop, and optional Lab assurance lane
 
 Do-not-add guardrails
 
@@ -62,6 +65,12 @@ Do-not-add guardrails
 - Do not create a separate npm content package.
 - Do not duplicate roadmap text across pages.
 - Do not push, deploy, publish, tag, or release unless explicitly instructed.
+
+Diagram rules
+
+- Before diagram work, read `docs/DESIGN.md` and `docs/DIAGRAM_DESIGN.md`.
+- Use `src/styles/diagrams.css` and the shared primitives in `src/components/diagrams/` when the semantic role matches.
+- Keep diagram-specific topology local; do not recreate canvas/node/connector styling independently.
 
 Content and design rules
 

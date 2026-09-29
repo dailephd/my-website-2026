@@ -18,3 +18,11 @@ for (const [route, title] of routesAndTitles) {
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', /^http:\/\/localhost:3000/);
   });
 }
+
+test('ecosystem metadata uses the updated family positioning', async ({ page }) => {
+  await page.goto('/projects/my-dev-kit');
+  await expect(page.locator('meta[name="description"]')).toHaveAttribute(
+    'content',
+    'Local-first evidence and workflow infrastructure for disciplined AI-assisted software development.',
+  );
+});

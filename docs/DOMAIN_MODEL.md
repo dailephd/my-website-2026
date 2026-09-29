@@ -40,23 +40,25 @@ and notes remain visible).
 (`ProductModule[]`), `links`, `featured`, `displayPriority`, `roadmapPlanned`. Content:
 `src/content/products.ts` (`products` array).
 
-`ProductModule` — one of the three ecosystem members (`my-dev-kit`, `my-dev-kit-orchestrator`,
-`my-dev-kit-lab`): `id`, `slug`, `title`, `roleLabel` (`'Codebase Intelligence' |
-'Workflow Orchestration' | 'Validation Lab'`), `layerLabel`, `summary`, `description`, `status`,
+`ProductModule` — one of the four ecosystem members (`my-dev-kit`, `my-dev-kit-orchestrator`,
+`my-frontend-observer`, `my-dev-kit-lab`): `id`, `slug`, `title`, `roleLabel` (`'Codebase Intelligence' |
+'Workflow Orchestration' | 'Runtime Evidence' | 'Validation Lab'`), `layerLabel`, `summary`, `description`, `status`,
 `stage`, `stack`, `links` (`ProductLink[]`, one `kind: 'repository'` GitHub entry and one
-`kind: 'package'` npm entry per module), and `versionRoadmap` (`ProductVersionEntry[]`: `version`,
-`description` — rendered as a compact ascending-order timeline inside each product panel's
-collapsible Roadmap section on `/projects/my-dev-kit`).
+`kind: 'package'` npm entry per module), and `versionRoadmap` (`ProductVersionEntry[]`: `state`,
+`version`, `description` — rendered as an ordered Recent/Current/Next release snapshot inside
+each product panel's collapsible Release snapshot section on `/projects/my-dev-kit`).
 
 `ProductIndexItem` — the lighter-weight card record used for the `/projects` listing grid
 (`itemType: 'product-family' | 'standalone-product'`). Content: `products.ts` (`productIndex`
 array, currently the my-dev-kit family and BioLit).
 
-The relationship between the three modules (rendered by `ProductArchitectureVisual.tsx`) is:
+The relationship among the four modules (rendered by `ProductArchitectureVisual.tsx`) is:
 
-- `my-dev-kit` = acquire context
-- `my-dev-kit-orchestrator` = guide implementation
-- `my-dev-kit-lab` = evaluate and visualize
+- `my-dev-kit` = bounded static repository evidence
+- `my-dev-kit-orchestrator` = staged workflow and lifecycle control without executing agents or tools
+- external human or coding agent = target-source editor
+- `my-frontend-observer` = rendered browser/runtime evidence and correction input without editing source
+- `my-dev-kit-lab` = optional experiments, audits, security validation, and assurance
 
 See `docs/DIAGRAMS.md` for the diagram.
 

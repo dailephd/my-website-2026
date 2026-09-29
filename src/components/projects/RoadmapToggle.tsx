@@ -22,7 +22,7 @@ export default function RoadmapToggle({ children }: { children: ReactNode }) {
         >
           {'›'}
         </span>
-        Roadmap
+        Release snapshot
       </button>
       <div hidden={!open} id={panelId}>
         <div className="mt-4">{children}</div>

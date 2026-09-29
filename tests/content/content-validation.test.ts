@@ -19,6 +19,19 @@ describe('M1 content adapters', () => {
     expect(profile.summary).toBeTruthy();
   });
 
+  it('describes frontier-model evaluation and benchmark design in the About profile', () => {
+    const profile = getProfile();
+    expect(profile.intro).toContain('frontier-model evaluation');
+    expect(profile.intro).toContain('advanced AI models and coding agents');
+    expect(profile.professionalSummary).toContain('benchmark design');
+    expect(profile.professionalSummary).toContain('task specifications, evidence design, scoring and verification');
+    expect(profile.aiComputingSummary).toContain('rubrics and acceptance criteria');
+    expect(profile.aiComputingSummary).toContain('failure modes');
+    expect(profile.aiComputingSummary).toContain('shortcuts or superficial success');
+    expect(profile.technicalFocus.find((item) => item.id === 'applied-ai')?.summary).toContain('difficulty calibration');
+    expect(profile.aiComputingSummary).not.toContain('data annotation');
+  });
+
   it('returns primary links in display-priority order', () => {
     const links = getPrimaryLinks();
 

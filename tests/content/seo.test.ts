@@ -21,6 +21,7 @@ import {
   serializeJsonLd,
 } from '@/lib/seo/structured-data';
 import { routes } from '@/lib/routes';
+import { getMyDevKitEcosystem } from '@/lib/content/get-products';
 
 afterEach(() => vi.unstubAllEnvs());
 
@@ -57,6 +58,11 @@ describe('metadata helpers', () => {
     );
     expect(getRouteMetadata('/missing')).toBeUndefined();
     expect(buildCanonicalUrl('/about')).toMatch(/^http:\/\/localhost:3000\/about$/);
+  });
+
+  it('derives ecosystem metadata from the updated family positioning', () => {
+    expect(routeMetadata.projectMyDevKit.description).toBe(getMyDevKitEcosystem().positioning);
+    expect(buildPageMetadata(routeMetadata.projectMyDevKit).description).toBe('Local-first evidence and workflow infrastructure for disciplined AI-assisted software development.');
   });
 });
 

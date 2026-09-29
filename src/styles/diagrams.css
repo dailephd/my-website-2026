@@ -1,0 +1,308 @@
+/*
+ * Central diagram style authority.
+ *
+ * Owns reusable visual values and semantic roles for live technical diagrams
+ * (see docs/DIAGRAM_DESIGN.md). Route-specific topology, content, and path
+ * coordinates stay in their owning components; do not add product- or
+ * route-specific selectors here.
+ *
+ * Colors map onto the generic site tokens so light/dark behavior is inherited
+ * from tokens.css / theme.css. Do not add mode-specific values in this file.
+ */
+
+:root {
+  --diagram-canvas-bg: var(--color-surface);
+  --diagram-primary-node-bg: var(--color-elevated);
+  --diagram-secondary-node-bg: var(--color-card);
+  --diagram-artifact-bg: var(--color-card);
+  --diagram-border: var(--color-border);
+  --diagram-border-strong: var(--color-border-strong);
+  --diagram-text-primary: var(--color-text-primary);
+  --diagram-text-secondary: var(--color-text-secondary);
+  --diagram-text-muted: var(--color-text-muted);
+  --diagram-flow-data: var(--color-accent-cyan);
+  --diagram-flow-control: var(--color-accent-violet);
+  --diagram-focus: var(--color-focus);
+  --diagram-shadow: var(--shadow-card);
+
+  --diagram-canvas-radius: 1.5rem;
+  --diagram-primary-node-radius: 1.25rem;
+  --diagram-secondary-node-radius: 0.875rem;
+  --diagram-artifact-radius: 1rem;
+
+  --diagram-canvas-padding: 1.25rem;
+  --diagram-primary-node-padding: 1rem;
+  --diagram-secondary-node-padding-y: 0.625rem;
+  --diagram-secondary-node-padding-x: 0.75rem;
+
+  --diagram-primary-stroke: 3px;
+  --diagram-secondary-stroke: 2.5px;
+  --diagram-feedback-stroke: 2.5px;
+
+  --diagram-feedback-dash: 8 8;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --diagram-primary-stroke: 3.5px;
+    --diagram-canvas-padding: 1.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --diagram-primary-stroke: 4px;
+    --diagram-canvas-padding: 2.25rem;
+    --diagram-primary-node-padding: 1.5rem;
+  }
+}
+
+/* Canvas */
+
+.diagram-canvas {
+  padding: var(--diagram-canvas-padding);
+  border: 1px solid var(--diagram-border);
+  border-radius: var(--diagram-canvas-radius);
+  background: var(--diagram-canvas-bg);
+  color: var(--diagram-text-primary);
+}
+
+.diagram-canvas :focus-visible {
+  outline-color: var(--diagram-focus);
+}
+
+/* Nodes */
+
+.diagram-node {
+  box-sizing: border-box;
+  min-width: 0;
+  color: var(--diagram-text-primary);
+  transition:
+    transform 200ms ease-out,
+    box-shadow 200ms ease-out,
+    border-color 200ms ease-out,
+    background-color 180ms ease,
+    color 180ms ease;
+}
+
+.diagram-node--primary {
+  position: relative;
+  isolation: isolate;
+  padding: var(--diagram-primary-node-padding);
+  border: 1.5px solid var(--diagram-border);
+  border-radius: var(--diagram-primary-node-radius);
+  background: var(--diagram-primary-node-bg);
+  box-shadow:
+    inset 0 1px 0 var(--color-highlight),
+    var(--diagram-shadow);
+}
+
+.diagram-node--primary::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, var(--color-highlight), transparent 38%);
+  content: '';
+  pointer-events: none;
+}
+
+.diagram-node--primary:hover {
+  border-color: var(--diagram-flow-control);
+  transform: translateY(-2px);
+}
+
+.diagram-node--secondary {
+  padding: var(--diagram-secondary-node-padding-y) var(--diagram-secondary-node-padding-x);
+  border: 1px solid var(--diagram-border);
+  border-radius: var(--diagram-secondary-node-radius);
+  background: var(--diagram-secondary-node-bg);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.375;
+  text-align: center;
+}
+
+.diagram-node--artifact {
+  border: 1.5px solid var(--diagram-border-strong);
+  border-radius: var(--diagram-artifact-radius);
+  background: var(--diagram-artifact-bg);
+}
+
+/* Connectors (SVG paths) */
+
+.diagram-connector {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.diagram-connector--primary {
+  stroke-width: var(--diagram-primary-stroke);
+}
+
+.diagram-connector--secondary {
+  stroke-width: var(--diagram-secondary-stroke);
+}
+
+.diagram-connector--data {
+  stroke: var(--diagram-flow-data);
+}
+
+.diagram-connector--control {
+  stroke: var(--diagram-flow-control);
+}
+
+.diagram-connector--feedback {
+  stroke: var(--diagram-flow-control);
+  stroke-width: var(--diagram-feedback-stroke);
+  stroke-dasharray: var(--diagram-feedback-dash);
+}
+
+/* Arrowheads (children of the SVG marker) */
+
+.diagram-arrow-marker--data {
+  fill: var(--diagram-flow-data);
+}
+
+.diagram-arrow-marker--control {
+  fill: var(--diagram-flow-control);
+}
+
+/* Rails: HTML stand-ins for connector branches in stacked (mobile) layouts */
+
+.diagram-rail--data {
+  border-color: var(--diagram-flow-data);
+}
+
+.diagram-rail--control {
+  border-color: var(--diagram-flow-control);
+}
+
+/* Connector labels */
+
+.diagram-connector-label {
+  padding: 0.25rem 0.625rem;
+  border: 1px solid var(--diagram-border);
+  border-radius: var(--radius-control);
+  background: var(--diagram-secondary-node-bg);
+  color: var(--diagram-text-secondary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1rem;
+  text-align: center;
+}
+
+.diagram-connector-label--feedback {
+  padding: 0.5rem 0.25rem;
+  border-width: 0;
+  color: var(--diagram-flow-control);
+  line-height: 1.25;
+}
+
+/*
+ * Accessible text equivalent. Visual hiding is composed from the site's
+ * existing `sr-only` utility in DiagramSummary rather than duplicated here.
+ */
+
+.diagram-summary {
+  color: var(--diagram-text-secondary);
+}
+
+/* Timeline (ordered-list timelines such as the product roadmap) */
+
+.diagram-timeline {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.diagram-timeline-entry {
+  display: grid;
+  grid-template-columns: minmax(4.5rem, 5.5rem) auto minmax(0, 1fr);
+  align-items: start;
+  column-gap: 0.75rem;
+  padding-block: 0.625rem;
+}
+
+.diagram-timeline-entry:first-child {
+  padding-top: 0;
+}
+
+.diagram-timeline-entry:last-child {
+  padding-bottom: 0;
+}
+
+.diagram-timeline-divider {
+  border-top: 1px solid var(--diagram-border);
+}
+
+.diagram-timeline-marker {
+  width: 0.5rem;
+  height: 0.5rem;
+  flex-shrink: 0;
+  margin-top: 0.5rem;
+  border-radius: 9999px;
+  background: var(--diagram-flow-control);
+}
+
+.diagram-timeline-release {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.diagram-timeline-state {
+  color: var(--diagram-text-muted);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.diagram-timeline-entry[data-release-state='current'] {
+  margin-inline: -0.5rem;
+  padding-inline: 0.5rem;
+  border-left: 3px solid var(--diagram-flow-control);
+  background: var(--diagram-primary-node-bg);
+}
+
+.diagram-timeline-entry[data-release-state='current'] .diagram-timeline-state,
+.diagram-timeline-entry[data-release-state='current'] .diagram-timeline-version {
+  color: var(--diagram-flow-control);
+}
+
+.diagram-timeline-entry[data-release-state='next'] .diagram-timeline-state {
+  color: var(--diagram-flow-data);
+}
+
+.diagram-timeline-entry[data-release-state='recent'] .diagram-timeline-version {
+  color: var(--diagram-text-secondary);
+}
+
+.diagram-timeline-version {
+  padding-top: 0.125rem;
+  color: var(--diagram-flow-data);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+}
+
+.diagram-timeline-description {
+  color: var(--diagram-text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.625;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .diagram-node {
+    transition: none;
+  }
+
+  .diagram-node--primary:hover {
+    transform: none;
+  }
+}

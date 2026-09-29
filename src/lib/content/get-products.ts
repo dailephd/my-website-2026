@@ -56,6 +56,16 @@ export function validateProductFamilies(records: readonly ProductFamily[]): void
       }
       moduleIds.add(productModule.id);
       moduleSlugs.add(productModule.slug);
+
+      const releaseStates = productModule.versionRoadmap.map((entry) => entry.state);
+      if (
+        releaseStates.length !== 3 ||
+        releaseStates[0] !== 'recent' ||
+        releaseStates[1] !== 'current' ||
+        releaseStates[2] !== 'next'
+      ) {
+        throw new Error(`Product module ${productModule.slug} requires one ordered recent, current, and next release.`);
+      }
     }
   }
 }

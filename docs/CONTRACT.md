@@ -22,7 +22,7 @@ For type shapes see `docs/DOMAIN_MODEL.md`; this document focuses on *behavior*.
 |---|---|
 | `/` | Exactly one `h1`; hero, featured technical work, technical focus, background/credibility sections; no hardcoded content arrays in the page component |
 | `/projects` | Current products/projects index plus an "Archived projects" section (`getArchivedProjects()`), positioned after current content; archived cards render without tag pills |
-| `/projects/my-dev-kit` | Renders the my-dev-kit relationship diagram (`ProductArchitectureVisual`) with three product panels, each exposing a GitHub link, an npm link, and a collapsible Roadmap toggle |
+| `/projects/my-dev-kit` | Renders the my-dev-kit relationship diagram (`ProductArchitectureVisual`) with four product panels, an external implementation actor, Observer correction loop, and optional Lab assurance; each product exposes GitHub and npm links and a collapsible Release snapshot toggle |
 | `/publications` | Renders only verified `Publication` records from `src/content/publications.ts` — no invented citations |
 | `/about` | Dai Le's professional background, research background, and education; primary identity surface for the individual (as opposed to the business-first homepage) |
 | `/contact` | Contact form (`ContactForm` → `POST /api/contact`) plus GitHub/LinkedIn profile links |

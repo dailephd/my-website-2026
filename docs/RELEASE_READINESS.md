@@ -65,8 +65,8 @@ secrets. Verify env vars are configured in Vercel before deploying.
 - [ ] No placeholder/fake project, publication, or profile content.
 - [ ] Archived projects render without technology-stack tag pills; active project/product cards
       are unaffected.
-- [ ] my-dev-kit relationship diagram shows all three modules, each with a GitHub link, an npm
-      link, and a working Roadmap toggle.
+- [ ] my-dev-kit relationship diagram shows all four modules, each with a GitHub link, an npm
+      link, and a working Release snapshot toggle; Lab is optional assurance.
 
 ## Asset checklist
 

@@ -80,17 +80,16 @@ flowchart TD
 
 ```mermaid
 flowchart TD
-  A["my-dev-kit
-  acquire context"]
-  Packet["Architecture Context Packet"]
-  B["my-dev-kit-orchestrator
-  guide implementation"]
-  Outcomes["artifacts and outcomes"]
-  C["my-dev-kit-lab
-  evaluate and visualize"]
+  Kit["my-dev-kit: static repository evidence"]
+  Evidence["Bounded Repository Evidence"]
+  Orchestrator["my-dev-kit-orchestrator: workflow control"]
+  Actor["External human or coding agent: edits target source"]
+  Observer["my-frontend-observer: rendered runtime evidence"]
+  Lab["my-dev-kit-lab: optional assurance"]
 
-  A --> Packet --> B --> Outcomes --> C
-  C -. feedback for better prompts and workflows .-> B
+  Kit --> Evidence --> Orchestrator --> Actor --> Observer
+  Observer -- runtime evidence and correction result --> Orchestrator
+  Observer -.-|optional assurance| Lab
 ```
 
 ## 5. Publication rendering flow

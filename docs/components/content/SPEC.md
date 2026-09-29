@@ -36,7 +36,7 @@ Define the M1 local profile and link content that powers the shared website shel
 
 ## M4 product-family content
 
-- `src/content/products.ts` owns the my-dev-kit Ecosystem family and its three modules.
+- `src/content/products.ts` owns the my-dev-kit Ecosystem family and its four modules.
 - `src/lib/content/get-products.ts` validates, sorts, and exposes family/module accessors.
 - Product copy may complement M3 project summaries but must not duplicate roadmap data.
 

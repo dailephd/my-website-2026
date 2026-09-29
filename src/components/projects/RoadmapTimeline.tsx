@@ -1,20 +1,31 @@
 import type { ProductVersionEntry } from '@/types/product';
 
+const stateLabels: Record<ProductVersionEntry['state'], string> = {
+  recent: 'Recent',
+  current: 'Current',
+  next: 'Next',
+};
+
 export default function RoadmapTimeline({ entries }: { entries: readonly ProductVersionEntry[] }) {
   if (!entries.length) {
     return <p className="text-sm text-[var(--color-text-muted)]">No roadmap entries listed yet.</p>;
   }
 
   return (
-    <ol className="divide-y divide-[var(--color-border)]">
-      {entries.map((entry) => (
+    <ol className="diagram-timeline" data-diagram-timeline>
+      {entries.map((entry, index) => (
         <li
-          className="grid grid-cols-[4.5rem_auto_1fr] items-start gap-x-3 py-2.5 first:pt-0 last:pb-0"
+          className={'diagram-timeline-entry' + (index > 0 ? ' diagram-timeline-divider' : '')}
+          data-diagram-timeline-entry={entry.version}
+          data-release-state={entry.state}
           key={entry.version}
         >
-          <span className="pt-0.5 text-sm font-semibold text-[var(--color-accent-cyan)]">{entry.version}</span>
-          <span aria-hidden="true" className="mt-2 h-2 w-2 shrink-0 rounded-full bg-[var(--color-accent-violet)]" />
-          <span className="text-sm leading-relaxed text-[var(--color-text-secondary)]">{entry.description}</span>
+          <span className="diagram-timeline-release">
+            <span className="diagram-timeline-state">{stateLabels[entry.state]}</span>
+            <span className="diagram-timeline-version">{entry.version}</span>
+          </span>
+          <span aria-hidden="true" className="diagram-timeline-marker" />
+          <span className="diagram-timeline-description">{entry.description}</span>
         </li>
       ))}
     </ol>

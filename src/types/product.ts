@@ -17,6 +17,7 @@ export interface ProductLink {
 }
 
 export interface ProductVersionEntry {
+  readonly state: 'recent' | 'current' | 'next';
   readonly version: string;
   readonly description: string;
 }
@@ -27,7 +28,7 @@ export interface ProductModule {
   readonly title: string;
   readonly packageName?: string;
   readonly repoName?: string;
-  readonly roleLabel: 'Codebase Intelligence' | 'Workflow Orchestration' | 'Validation Lab';
+  readonly roleLabel: 'Codebase Intelligence' | 'Workflow Orchestration' | 'Runtime Evidence' | 'Validation Lab';
   readonly layerLabel: string;
   readonly summary: string;
   readonly description: string;

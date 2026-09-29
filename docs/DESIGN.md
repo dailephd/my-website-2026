@@ -51,7 +51,7 @@ Roadmaps are structured data, not copied markdown. The design must support rich 
 
 ### `my-dev-kit Ecosystem` product family
 
-`my-dev-kit`, `my-dev-kit-orchestrator`, and `my-dev-kit-lab` must read visually as one connected ecosystem, not three unrelated repo cards.
+`my-dev-kit`, `my-dev-kit-orchestrator`, `my-frontend-observer`, and `my-dev-kit-lab` must read visually as one connected ecosystem with distinct responsibilities.
 
 ## Core visual system
 
@@ -257,11 +257,20 @@ This page is the clearest product-story page in the site.
 
 It must visually express:
 
-- `my-dev-kit` = Codebase Intelligence
-- `my-dev-kit-orchestrator` = Workflow Orchestration
-- `my-dev-kit-lab` = Validation Lab
+- `my-dev-kit` = static repository/codebase evidence
+- `my-dev-kit-orchestrator` = workflow and lifecycle control
+- `my-frontend-observer` = rendered browser/runtime evidence
+- `my-dev-kit-lab` = optional assurance and evaluation
 
-The ecosystem should read as a system pipeline, not a list of repos.
+The core workflow includes an external human or coding agent that edits target source and an Observer correction loop. Orchestrator does not automatically run agents or other tools, Observer never edits source, and Lab is not mandatory for every edit. The diagram should show these explicit relationships and Lab's optional assurance lane.
+
+### Technical diagrams and visualizations
+
+Technical diagrams, architecture maps, workflow diagrams, timelines, system maps, node-link visualizations, and similar technical explainers use `DIAGRAM_DESIGN.md` as their diagram-specific visual authority.
+
+Global website identity, typography, theme, accessibility, responsive behavior, motion, and performance remain governed by this file.
+
+Implementation uses the shared diagram style layer in `src/styles/diagrams.css` and the established primitives in `src/components/diagrams/`.
 
 ### About page
 

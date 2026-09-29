@@ -16,7 +16,8 @@ technical project work; Dai Le's personal professional and research background i
 
 The site presents:
 
-- The `my-dev-kit` product ecosystem (`my-dev-kit`, `my-dev-kit-orchestrator`, `my-dev-kit-lab`)
+- The `my-dev-kit` product ecosystem (`my-dev-kit`, `my-dev-kit-orchestrator`,
+  `my-frontend-observer`, `my-dev-kit-lab`)
   as one connected product family.
 - Current and archived technical projects.
 - Verified publications (no invented or placeholder citation data).

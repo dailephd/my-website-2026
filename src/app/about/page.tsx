@@ -69,7 +69,7 @@ export default function AboutPage() {
       {about.profile.aiComputingSummary ? (
         <section aria-labelledby="ai-computing-heading">
           <SectionHeader
-            description="AI response evaluation, data annotation, and custom computing services."
+            description="Frontier-model evaluation, benchmark design, scientific reasoning, and AI-assisted software workflows."
             headingId="ai-computing-heading"
             title="AI model evaluation and computing"
           />

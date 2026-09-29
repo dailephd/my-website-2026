@@ -1,69 +1,59 @@
 import { useId } from 'react';
 
+import DiagramArrowMarker from '@/components/diagrams/DiagramArrowMarker';
+import DiagramCanvas from '@/components/diagrams/DiagramCanvas';
+import DiagramConnectorPath, { type DiagramTone } from '@/components/diagrams/DiagramConnectorPath';
+import DiagramLabel from '@/components/diagrams/DiagramLabel';
+import DiagramNode from '@/components/diagrams/DiagramNode';
+import DiagramSummary from '@/components/diagrams/DiagramSummary';
+
 import ProductLinks from './ProductLinks';
 import RoadmapTimeline from './RoadmapTimeline';
 import RoadmapToggle from './RoadmapToggle';
 import type { ProductModule } from '@/types/product';
 
 interface NodeCopy {
-  readonly label: string;
-  readonly purpose: string;
-  readonly steps: readonly string[];
+  readonly stages: readonly string[];
+  readonly branches: readonly string[];
+  readonly outcome: string;
+  readonly tone: DiagramTone;
 }
 
 const NODE_COPY: Record<string, NodeCopy> = {
   'my-dev-kit': {
-    label: 'Context acquisition layer',
-    purpose: 'Retrieves bounded project context through graph-guided workflows.',
-    steps: [
-      'Index project',
-      'Project manifest + graphs',
-      'Search / Lookup / Slice / Source / Semantic view',
-      'Architecture context',
-    ],
+    stages: ['Index source roots', 'Manifest + semantic graphs'],
+    branches: ['Search', 'Lookup', 'Slice', 'Source', 'Context'],
+    outcome: 'Bounded static evidence',
+    tone: 'data',
   },
   'my-dev-kit-orchestrator': {
-    label: 'Workflow control layer',
-    purpose: 'Organizes the staged design-to-code workflow after context acquisition.',
-    steps: [
-      'Consume Architecture Context Packet',
-      'Stage workflow',
-      'Generate implementation prompts',
-      'Coding agent execution',
-      'Tests / Reports / Artifacts',
-    ],
+    stages: ['Start / resume run', 'Current stage prompt', 'Artifacts + readiness'],
+    branches: ['Responsibility continuity', 'Status / check', 'Judge / correction routing'],
+    outcome: 'Export / handoff',
+    tone: 'control',
+  },
+  'my-frontend-observer': {
+    stages: ['Initialize project', 'Capture baseline', 'Check candidate'],
+    branches: ['Before / after comparison', 'Frontend contract', 'Reference fidelity'],
+    outcome: 'Viewer + correction evidence',
+    tone: 'data',
   },
   'my-dev-kit-lab': {
-    label: 'Evaluation and visualization layer',
-    purpose: 'Evaluates prompt variants, agents, and outputs through experiments and visualizations.',
-    steps: [
-      'Benchmark projects',
-      'Prompt variants',
-      'Agent adapters',
-      'Experiment runner',
-      'Reports / Charts / Demos / Gallery',
-    ],
+    stages: ['Choose experiment / audit / security validation', 'Explicit target + configuration', 'Run bounded evidence workflow'],
+    branches: ['Reports', 'Plots', 'Gallery / tutorial'],
+    outcome: 'Reviewable assurance evidence',
+    tone: 'control',
   },
 };
 
-const PACKET = {
-  title: 'Architecture Context Packet',
-  description: 'Retrieval evidence + synthesized context packet',
-};
-
-const OUTCOME_LABEL = 'artifacts and outcomes';
-const FEEDBACK_LABEL = 'feedback for better prompts and workflows';
+const SUMMARY =
+  'my-dev-kit produces bounded static repository evidence that can be supplied to my-dev-kit-orchestrator. The orchestrator manages staged prompts, artifacts, readiness, responsibility continuity, and correction routing but does not execute the coding agent. A human or coding agent edits target source. my-frontend-observer evaluates the rendered frontend and returns runtime evidence for review or correction without editing source. my-dev-kit-lab is an optional assurance companion for supported experiments, audits, security validation, and reports.';
 
 function GraphIcon() {
   return (
     <svg aria-hidden="true" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.75" viewBox="0 0 20 20">
-      <circle cx="4" cy="4" r="2" />
-      <circle cx="16" cy="4" r="2" />
-      <circle cx="10" cy="10" r="2" />
-      <circle cx="4" cy="16" r="2" />
-      <line x1="5.4" x2="8.6" y1="5.4" y2="8.6" />
-      <line x1="14.6" x2="11.4" y1="5.4" y2="8.6" />
-      <line x1="5.4" x2="8.6" y1="14.6" y2="11.4" />
+      <circle cx="4" cy="4" r="2" /><circle cx="16" cy="4" r="2" /><circle cx="10" cy="10" r="2" /><circle cx="4" cy="16" r="2" />
+      <line x1="5.4" x2="8.6" y1="5.4" y2="8.6" /><line x1="14.6" x2="11.4" y1="5.4" y2="8.6" /><line x1="5.4" x2="8.6" y1="14.6" y2="11.4" />
     </svg>
   );
 }
@@ -71,9 +61,16 @@ function GraphIcon() {
 function StagesIcon() {
   return (
     <svg aria-hidden="true" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.75" viewBox="0 0 20 20">
-      <rect height="4" rx="1" width="16" x="2" y="2" />
-      <rect height="4" rx="1" width="16" x="2" y="8" />
-      <rect height="4" rx="1" width="16" x="2" y="14" />
+      <rect height="4" rx="1" width="16" x="2" y="2" /><rect height="4" rx="1" width="16" x="2" y="8" /><rect height="4" rx="1" width="16" x="2" y="14" />
+    </svg>
+  );
+}
+
+function BrowserIcon() {
+  return (
+    <svg aria-hidden="true" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.75" viewBox="0 0 20 20">
+      <rect height="15" rx="2" width="18" x="1" y="2.5" /><path d="M1 7h18M4 4.8h1M7 4.8h1M10 4.8h1" />
+      <path d="M6 12h4m2 0h2M6 15h8" />
     </svg>
   );
 }
@@ -81,11 +78,16 @@ function StagesIcon() {
 function ChartIcon() {
   return (
     <svg aria-hidden="true" className="h-5 w-5" fill="currentColor" stroke="currentColor" strokeWidth="0.5" viewBox="0 0 20 20">
-      <line stroke="currentColor" strokeWidth="1.5" x1="2" x2="2" y1="18" y2="3" />
-      <line stroke="currentColor" strokeWidth="1.5" x1="2" x2="18" y1="18" y2="18" />
-      <rect height="6" rx="0.5" width="3" x="4" y="12" />
-      <rect height="9" rx="0.5" width="3" x="9" y="9" />
-      <rect height="13" rx="0.5" width="3" x="14" y="5" />
+      <line stroke="currentColor" strokeWidth="1.5" x1="2" x2="2" y1="18" y2="3" /><line stroke="currentColor" strokeWidth="1.5" x1="2" x2="18" y1="18" y2="18" />
+      <rect height="6" rx="0.5" width="3" x="4" y="12" /><rect height="9" rx="0.5" width="3" x="9" y="9" /><rect height="13" rx="0.5" width="3" x="14" y="5" />
+    </svg>
+  );
+}
+
+function EvidenceIcon() {
+  return (
+    <svg aria-hidden="true" className="h-5 w-5 shrink-0" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.75" viewBox="0 0 20 20">
+      <path d="M5 2.5h7l3 3V17.5H5z" /><path d="M12 2.5v3h3M7.5 9h5M7.5 12h5M7.5 15h3" />
     </svg>
   );
 }
@@ -93,173 +95,239 @@ function ChartIcon() {
 function getIcon(moduleId: string) {
   if (moduleId === 'my-dev-kit') return <GraphIcon />;
   if (moduleId === 'my-dev-kit-orchestrator') return <StagesIcon />;
+  if (moduleId === 'my-frontend-observer') return <BrowserIcon />;
   return <ChartIcon />;
 }
 
-/** Thick, glowing gradient connector between vertically stacked flow stages. Purely decorative — carries no information not already conveyed by DOM order and labels. */
-function VerticalConnector({ label }: { label?: string }) {
-  const gradientId = useId();
+function VerticalConnector({
+  label,
+  name,
+}: {
+  label: string;
+  name: 'static-evidence' | 'workflow-context' | 'implementation-handoff' | 'candidate-runtime';
+}) {
+  const markerId = useId();
   return (
-    <div className="flex flex-col items-center gap-1.5 py-1.5" role="presentation">
-      <svg aria-hidden="true" className="h-10 w-5 overflow-visible" preserveAspectRatio="none" viewBox="0 0 20 100">
-        <defs>
-          <linearGradient id={gradientId} x1="0%" x2="0%" y1="0%" y2="100%">
-            <stop offset="0%" stopColor="var(--color-accent-violet)" />
-            <stop offset="100%" stopColor="var(--color-accent-cyan)" />
-          </linearGradient>
-        </defs>
-        <path
-          d="M10,2 L10,86"
-          fill="none"
-          stroke={`url(#${gradientId})`}
-          strokeLinecap="round"
-          strokeWidth={10}
-          style={{ filter: 'drop-shadow(0 0 3px var(--color-glow-cyan))' }}
-        />
-        <polygon fill="var(--color-accent-cyan)" points="2,86 18,86 10,99" />
+    <div className="relative z-0 flex flex-col items-center gap-1 py-2" data-diagram-connector={name}>
+      <svg aria-hidden="true" className="h-12 w-8 overflow-visible" viewBox="0 0 32 56">
+        <defs><DiagramArrowMarker id={markerId} tone="data" /></defs>
+        <DiagramConnectorPath d="M16 2 V47" markerEnd={'url(#' + markerId + ')'} tone="data" variant="primary" />
       </svg>
-      {label ? (
-        <span className="rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-2.5 py-0.5 text-center text-[0.62rem] font-semibold uppercase tracking-[0.1em] text-[var(--color-text-secondary)]">
-          {label}
-        </span>
-      ) : null}
+      <DiagramLabel>{label}</DiagramLabel>
     </div>
   );
 }
 
-/** Dashed upward loop indicating evaluation feedback flowing back into the orchestrator stage. */
-function FeedbackConnector({ label, target }: { label: string; target: string }) {
+function MiniArrow({ tone }: { tone: DiagramTone }) {
+  const markerId = useId();
   return (
-    <div className="flex flex-col items-center gap-1.5 py-1.5" role="presentation">
-      <svg aria-hidden="true" className="h-10 w-5 overflow-visible" preserveAspectRatio="none" viewBox="0 0 20 100">
-        <path
-          d="M10,98 L10,14"
-          fill="none"
-          stroke="var(--color-accent-violet)"
-          strokeDasharray="7 6"
-          strokeLinecap="round"
-          strokeWidth={5}
-        />
-        <polygon fill="var(--color-accent-violet)" points="3,14 17,14 10,2" />
-      </svg>
-      <span className="max-w-[16rem] rounded-full border border-dashed border-[var(--color-accent-violet)] bg-[var(--color-surface)] px-3 py-1 text-center text-[0.62rem] font-semibold uppercase tracking-[0.08em] text-[var(--color-accent-violet)]">
-        {label} — back to {target}
-      </span>
+    <svg aria-hidden="true" className="mx-auto h-6 w-6 overflow-visible" viewBox="0 0 24 28">
+      <defs><DiagramArrowMarker id={markerId} tone={tone} /></defs>
+      <DiagramConnectorPath d="M12 1 V20" markerEnd={'url(#' + markerId + ')'} tone={tone} variant="secondary" />
+    </svg>
+  );
+}
+
+function StepNode({ label, branch = false }: { label: string; branch?: boolean }) {
+  return <DiagramNode className={branch ? '' : 'mx-auto w-full max-w-sm'} variant="secondary">{label}</DiagramNode>;
+}
+
+function BranchGroup({ items, tone }: { items: readonly string[]; tone: DiagramTone }) {
+  const positions = items.length === 5 ? [10, 30, 50, 70, 90] : [16.67, 50, 83.33];
+  return (
+    <div className="w-full">
+      <div className="hidden sm:block">
+        <svg aria-hidden="true" className="h-8 w-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 100 32">
+          <DiagramConnectorPath d="M50 1 V13 M10 13 H90" tone={tone} variant="secondary" />
+          {positions.map((position) => <DiagramConnectorPath d={'M' + position + ' 13 V30'} key={position} tone={tone} variant="secondary" />)}
+        </svg>
+        <div className={'grid gap-2 ' + (items.length === 5 ? 'grid-cols-5' : 'grid-cols-3')}>
+          {items.map((item) => <StepNode branch key={item} label={item} />)}
+        </div>
+      </div>
+      <div className="sm:hidden">
+        <svg aria-hidden="true" className="h-8 w-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 100 32">
+          <DiagramConnectorPath d="M50 0 V14 H0 V32" tone={tone} variant="secondary" />
+        </svg>
+        <div className={'diagram-rail--' + tone + ' space-y-2 border-l-[3px] pl-3'}>
+          {items.map((item) => (
+            <div className="flex items-center gap-2" key={item}>
+              <span aria-hidden="true" className={'diagram-rail--' + tone + ' h-0 w-3 shrink-0 border-t-[3px]'} />
+              <DiagramNode as="span" className="flex-1" variant="secondary">{item}</DiagramNode>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
 
-function MiniDiagram({ title, steps }: { title: string; steps: readonly string[] }) {
+function BranchMerge({ items, tone }: { items: readonly string[]; tone: DiagramTone }) {
+  const positions = items.length === 5 ? [10, 30, 50, 70, 90] : [16.67, 50, 83.33];
   return (
-    <ol aria-label={`${title} workflow steps`} className="mt-4 flex flex-wrap items-center gap-x-1.5 gap-y-2 border-t border-[var(--color-border)] pt-4">
-      {steps.map((step, index) => (
-        <li className="flex items-center gap-1.5" key={step}>
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--color-card)] px-2.5 py-1 text-[0.7rem] leading-snug text-[var(--color-text-muted)]">
-            <span
-              aria-hidden="true"
-              className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[var(--color-surface)] text-[0.6rem] font-semibold text-[var(--color-accent-violet)]"
-            >
-              {index + 1}
-            </span>
-            {step}
-          </span>
-          {index < steps.length - 1 ? (
-            <span aria-hidden="true" className="text-[var(--color-accent-cyan)]">
-              {'→'}
-            </span>
-          ) : null}
-        </li>
-      ))}
-    </ol>
+    <>
+      <svg aria-hidden="true" className="hidden h-8 w-full overflow-visible sm:block" preserveAspectRatio="none" viewBox="0 0 100 32">
+        {positions.map((position) => <DiagramConnectorPath d={'M' + position + ' 1 V15 H50'} key={position} tone={tone} variant="secondary" />)}
+        <DiagramConnectorPath d="M50 15 V31" tone={tone} variant="secondary" />
+      </svg>
+      <svg aria-hidden="true" className="h-8 w-full overflow-visible sm:hidden" preserveAspectRatio="none" viewBox="0 0 100 32">
+        <DiagramConnectorPath d="M0 0 V14 H50 V32" tone={tone} variant="secondary" />
+      </svg>
+      <MiniArrow tone={tone} />
+    </>
+  );
+}
+
+function MiniDiagram({ moduleId, title, copy }: { moduleId: string; title: string; copy: NodeCopy }) {
+  return (
+    <div className="mt-5 border-t border-[var(--color-border)] pt-5" data-diagram-mini={moduleId}>
+      <p className="mb-3 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--color-text-secondary)]">Internal workflow</p>
+      <div aria-label={title + ' workflow steps'} className="space-y-0" role="group">
+        {copy.stages.map((stage, index) => (
+          <div key={stage}>
+            <StepNode label={stage} />
+            {index < copy.stages.length - 1 ? <MiniArrow tone={copy.tone} /> : null}
+          </div>
+        ))}
+      </div>
+      <BranchGroup items={copy.branches} tone={copy.tone} />
+      <BranchMerge items={copy.branches} tone={copy.tone} />
+      <div aria-label={title + ' workflow outcome'} role="group"><StepNode label={copy.outcome} /></div>
+    </div>
   );
 }
 
 function ModulePanel({ productModule }: { productModule: ProductModule }) {
   const moduleId = productModule.id;
-  const title = productModule.title;
   const copy = NODE_COPY[moduleId];
   if (!copy) return null;
-
   return (
-    <article
-      aria-labelledby={`arch-node-${moduleId}-heading`}
-      className="premium-card theme-transition motion-reduce:transition-none w-full rounded-[var(--radius-panel)] border border-[var(--color-border)] bg-[var(--color-elevated)] p-6 shadow-[var(--shadow-control)] transition-[transform,box-shadow,border-color] duration-200 ease-out hover:-translate-y-0.5 hover:border-[var(--color-accent-violet)] hover:shadow-[var(--shadow-card-hover)] motion-reduce:hover:translate-y-0 sm:p-7"
+    <DiagramNode
+      aria-labelledby={'arch-node-' + moduleId + '-heading'}
+      as="article"
+      className="relative z-10 w-full"
+      data-diagram-node={moduleId}
+      variant="primary"
     >
       <div className="flex items-start gap-3">
-        <div aria-hidden="true" className="mt-0.5 shrink-0 text-[var(--color-accent-violet)]">
-          {getIcon(moduleId)}
-        </div>
+        <div aria-hidden="true" className="mt-0.5 shrink-0 text-[var(--color-accent-violet)]">{getIcon(moduleId)}</div>
         <div className="min-w-0 flex-1">
-          <p className="text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-[var(--color-accent-cyan)]">
-            {copy.label}
-          </p>
-          <h3 className="mt-1 break-words text-xl font-semibold tracking-tight" id={`arch-node-${moduleId}-heading`}>
-            {title}
-          </h3>
-          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[var(--color-text-secondary)]">{copy.purpose}</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[var(--color-accent-cyan)]">{productModule.roleLabel}</p>
+          <h3 className="mt-1 break-words text-xl font-semibold tracking-tight" id={'arch-node-' + moduleId + '-heading'}>{productModule.title}</h3>
+          <p className="mt-1 text-sm font-medium text-[var(--color-text-primary)]">{productModule.layerLabel}</p>
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[var(--color-text-secondary)]">{productModule.summary}</p>
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[var(--color-text-muted)]">{productModule.description}</p>
         </div>
       </div>
-      <MiniDiagram steps={copy.steps} title={title} />
+      <MiniDiagram copy={copy} moduleId={moduleId} title={productModule.title} />
       <ProductLinks links={productModule.links} />
-      <RoadmapToggle>
-        <RoadmapTimeline entries={productModule.versionRoadmap} />
-      </RoadmapToggle>
-    </article>
+      <RoadmapToggle><RoadmapTimeline entries={productModule.versionRoadmap} /></RoadmapToggle>
+    </DiagramNode>
   );
 }
 
-function PacketCard() {
+function EvidenceCard() {
   return (
-    <div
-      aria-labelledby="arch-node-packet-heading"
-      className="theme-transition motion-reduce:transition-none w-full max-w-md rounded-[var(--radius-card)] border border-[var(--color-accent-cyan)] bg-[var(--color-surface)] px-5 py-4 text-center shadow-[var(--shadow-control)] transition-[transform,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:shadow-[var(--shadow-card-hover)] motion-reduce:hover:translate-y-0"
+    <DiagramNode
+      aria-labelledby="arch-node-evidence-heading"
+      className="relative z-10 mx-auto w-full max-w-md px-4 py-4 sm:px-5"
+      data-diagram-node="bounded-repository-evidence"
       role="group"
+      variant="artifact"
     >
-      <p className="text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-[var(--color-accent-cyan)]">
-        Handoff artifact
-      </p>
-      <p className="mt-1 text-base font-semibold" id="arch-node-packet-heading">
-        {PACKET.title}
-      </p>
-      <p className="mt-1 text-[0.7rem] text-[var(--color-text-secondary)]">{PACKET.description}</p>
+      <div className="flex items-start justify-center gap-3">
+        <span aria-hidden="true" className="mt-0.5 text-[var(--color-accent-cyan)]"><EvidenceIcon /></span>
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[var(--color-accent-cyan)]">Supplied evidence</p>
+          <p className="mt-1 text-base font-semibold text-[var(--color-text-primary)]" id="arch-node-evidence-heading">Bounded Repository Evidence</p>
+          <p className="mt-1 text-sm text-[var(--color-text-secondary)]">Selected source, graph, context, and retrieval provenance supplied to the workflow.</p>
+        </div>
+      </div>
+    </DiagramNode>
+  );
+}
+
+function ExternalActor() {
+  return (
+    <DiagramNode
+      aria-labelledby="arch-node-external-actor-heading"
+      className="relative z-10 mx-auto w-full max-w-md text-left"
+      data-diagram-node="external-implementation-actor"
+      role="group"
+      variant="secondary"
+    >
+      <p className="text-sm font-semibold text-[var(--color-text-primary)]" id="arch-node-external-actor-heading">External implementation actor</p>
+      <p className="mt-1 text-sm font-normal text-[var(--color-text-secondary)]">A human or coding agent edits the target source. The ecosystem tools do not silently perform this step.</p>
+    </DiagramNode>
+  );
+}
+
+function RuntimeCorrectionConnector() {
+  const markerId = useId();
+  return (
+    <div className="relative col-start-2 row-start-5 row-end-10 min-w-0 self-stretch" data-diagram-connector="runtime-correction">
+      <svg aria-hidden="true" className="absolute inset-0 h-full w-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 48 100">
+        <defs><DiagramArrowMarker id={markerId} tone="control" /></defs>
+        <DiagramConnectorPath d="M2 98 H26 Q36 98 36 88 V12 Q36 2 26 2 H3" markerEnd={'url(#' + markerId + ')'} variant="feedback" />
+      </svg>
+      <DiagramLabel className="absolute right-0 top-1/2 -translate-y-1/2 [writing-mode:vertical-rl]" variant="feedback">
+        runtime evidence + correction result
+      </DiagramLabel>
+    </div>
+  );
+}
+
+function OptionalAssuranceConnector() {
+  return (
+    <div className="flex min-w-0 flex-col items-center gap-1 py-4" data-diagram-connector="optional-assurance">
+      <svg aria-hidden="true" className="h-5 w-full max-w-40 overflow-visible" preserveAspectRatio="none" viewBox="0 0 100 20">
+        <DiagramConnectorPath d="M1 10 H99" variant="feedback" />
+      </svg>
+      <DiagramLabel>optional assurance</DiagramLabel>
     </div>
   );
 }
 
 export default function ProductArchitectureVisual({ modules }: { modules: readonly ProductModule[] }) {
   const headingId = useId();
+  const summaryId = useId();
   const moduleById = new Map(modules.map((productModule) => [productModule.id, productModule]));
-  const hasLab = moduleById.has('my-dev-kit-lab');
-  const orchestratorModule = moduleById.get('my-dev-kit-orchestrator');
-  const orchestratorTitle = orchestratorModule?.title ?? 'my-dev-kit-orchestrator';
+  const devKit = moduleById.get('my-dev-kit');
+  const orchestrator = moduleById.get('my-dev-kit-orchestrator');
+  const observer = moduleById.get('my-frontend-observer');
+  const lab = moduleById.get('my-dev-kit-lab');
 
   return (
     <section aria-labelledby={headingId}>
       <header className="mb-6">
-        <h2 className="text-2xl font-semibold tracking-tight" id={headingId}>
-          How the products are related
-        </h2>
-        <p className="mt-2 max-w-3xl text-[var(--color-text-secondary)]">
-          Vertical overview of my-dev-kit, my-dev-kit-orchestrator, and my-dev-kit-lab.
-        </p>
+        <h2 className="text-2xl font-semibold tracking-tight" id={headingId}>How the products are related</h2>
+        <p className="mt-2 max-w-3xl text-[var(--color-text-secondary)]">Static repository evidence feeds staged workflow control; an external implementation actor changes source; Observer returns browser/runtime evidence for review and correction; Lab provides optional assurance when explicitly invoked.</p>
       </header>
-
-      <div className="rounded-[var(--radius-panel)] border border-[var(--color-border)] bg-[var(--color-surface)] p-5 sm:p-6">
-        <div className="flex flex-col items-center gap-0">
-          {moduleById.get('my-dev-kit') ? <ModulePanel productModule={moduleById.get('my-dev-kit')!} /> : null}
-          <VerticalConnector label="Bounded context" />
-          <PacketCard />
-          <VerticalConnector label="Handoff artifact" />
-          {orchestratorModule ? <ModulePanel productModule={orchestratorModule} /> : null}
-          {hasLab ? (
-            <>
-              <VerticalConnector label={OUTCOME_LABEL} />
-              <ModulePanel productModule={moduleById.get('my-dev-kit-lab')!} />
-              <FeedbackConnector label={FEEDBACK_LABEL} target={orchestratorTitle} />
-            </>
+      <DiagramCanvas aria-describedby={summaryId} data-diagram="my-dev-kit-ecosystem">
+        <DiagramSummary id={summaryId}>{SUMMARY}</DiagramSummary>
+        <div className="grid min-w-0 gap-x-5 gap-y-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.8fr)]">
+          <div className="grid min-w-0 grid-cols-[minmax(0,1fr)_2.25rem] sm:grid-cols-[minmax(0,1fr)_3.5rem]" data-diagram-core>
+            {devKit ? <div className="col-start-1 row-start-1 min-w-0"><ModulePanel productModule={devKit} /></div> : null}
+            <div className="col-start-1 row-start-2"><VerticalConnector label="bounded static evidence" name="static-evidence" /></div>
+            <div className="col-start-1 row-start-3 min-w-0"><EvidenceCard /></div>
+            <div className="col-start-1 row-start-4"><VerticalConnector label="supplied context evidence" name="workflow-context" /></div>
+            {orchestrator ? <div className="col-start-1 row-start-5 min-w-0"><ModulePanel productModule={orchestrator} /></div> : null}
+            <div className="col-start-1 row-start-6"><VerticalConnector label="stage prompt + acceptance contract" name="implementation-handoff" /></div>
+            <div className="col-start-1 row-start-7 min-w-0"><ExternalActor /></div>
+            <div className="col-start-1 row-start-8"><VerticalConnector label="changed application" name="candidate-runtime" /></div>
+            {observer ? <div className="col-start-1 row-start-9 min-w-0"><ModulePanel productModule={observer} /></div> : null}
+            <RuntimeCorrectionConnector />
+          </div>
+          {lab ? (
+            <aside className="min-w-0 lg:self-center" aria-label="Optional assurance">
+              <p className="text-sm font-semibold uppercase tracking-[0.12em] text-[var(--color-accent-violet)]">Optional assurance</p>
+              <p className="mt-2 text-sm text-[var(--color-text-secondary)]">Run explicitly when experiments, audits, security validation, or additional evidence are required.</p>
+              <OptionalAssuranceConnector />
+              <ModulePanel productModule={lab} />
+            </aside>
           ) : null}
         </div>
-      </div>
+      </DiagramCanvas>
     </section>
   );
 }

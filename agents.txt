@@ -105,6 +105,7 @@ Present these as one connected product family:
 
 - `my-dev-kit`
 - `my-dev-kit-orchestrator`
+- `my-frontend-observer`
 - `my-dev-kit-lab`
 
 Product-family name:
@@ -113,13 +114,16 @@ Product-family name:
 
 Visual and semantic model:
 
-- `my-dev-kit` = Codebase Intelligence
-- `my-dev-kit-orchestrator` = Workflow Orchestration
-- `my-dev-kit-lab` = Validation Lab
+- `my-dev-kit` = static repository/codebase evidence
+- `my-dev-kit-orchestrator` = workflow and lifecycle control
+- `my-frontend-observer` = rendered browser/runtime evidence
+- `my-dev-kit-lab` = optional assurance and evaluation
+
+An external human or coding agent edits target source. Orchestrator does not automatically run agents or the other tools; Observer never edits source; Lab is not required for every edit. `ProductArchitectureVisual` owns the hybrid core workflow, Observer correction loop, and optional Lab assurance lane.
 
 Roadmap model
 
-- Use one unified ecosystem roadmap with lanes for the three related projects.
+- Use one unified ecosystem roadmap with lanes for the four related projects.
 - Store roadmap data once in `src/content/roadmaps.ts`.
 - Render roadmap content through roadmap UI components.
 - Do not duplicate roadmap text across route pages or docs pretending to be source data.
@@ -137,6 +141,16 @@ Architecture discipline
 - Lower layers must not import higher layers.
 - Content modules must not import React components.
 - UI primitives must not know about project-specific content records.
+
+Diagram work
+
+Any new or changed public diagram, architecture map, workflow diagram, or timeline must:
+
+1. read `docs/DESIGN.md` and `docs/DIAGRAM_DESIGN.md`
+2. use the central style authority `src/styles/diagrams.css`
+3. use the shared primitives in `src/components/diagrams/` when the matching semantic role exists
+4. keep diagram-specific topology, content, and path geometry local to the owning component
+5. not recreate canvas, node, connector, marker, or label styling independently
 
 my-dev-kit retrieval workflow
 

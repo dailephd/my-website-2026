@@ -11,11 +11,11 @@ export const profile: ProfileContent = {
   summary:
     'Dai Le is a software developer, AI model evaluation specialist, and biological scientist based in Corpus Christi, Texas.',
   intro:
-    'Dai Le is a software developer, AI model evaluation specialist, and biological scientist based in Corpus Christi, Texas. He has an MS in Computer Science from Texas A&M University-Corpus Christi and a PhD in Biological Sciences from Korea Advanced Institute of Science and Technology.',
+    'Dai Le is a software developer, frontier-model evaluation specialist, and biological scientist based in Corpus Christi, Texas. His current technical work includes designing and evaluating challenging scientific and software-engineering tasks for advanced AI models and coding agents. He has an MS in Computer Science from Texas A&M University-Corpus Christi and a PhD in Biological Sciences from Korea Advanced Institute of Science and Technology.',
   professionalSummary:
-    'Dai works across software development, AI model evaluation, scientific data annotation, biological research, data analysis, and custom computing services through dailephd LLC. His research background includes bacterial physiology, antibiotic response, drug-target kinetics, proton motive force, efflux-mediated drug resistance, gene expression under stress, retinal developmental biology, retinal pigment epithelium polarity, Notch signaling, and retinal axon growth.',
+    'Dai works across software development, frontier-model evaluation and benchmark design, biological research, and scientific computing. His AI work focuses on designing, reviewing, and stress-testing scientific and technical evaluations for advanced models and coding agents, including task specifications, evidence design, scoring and verification, adversarial testing, difficulty calibration, and failure analysis. His research background includes bacterial physiology, antibiotic response, drug-target kinetics, proton motive force, efflux-mediated drug resistance, gene expression under stress, retinal developmental biology, retinal pigment epithelium polarity, Notch signaling, and retinal axon growth.',
   aiComputingSummary:
-    'Dai works on AI model evaluation, data annotation, software development, and custom computing services. He evaluates AI-generated responses for factual accuracy, scientific reasoning, hallucinations, instruction following, safety compliance, and domain-specific correctness. His computing background includes Python, R, JavaScript, TypeScript, React, Next.js, machine learning, data analysis, technical documentation, and AI-assisted workflows.',
+    'Dai works on frontier-model evaluation and benchmark design across scientific, technical, and software-engineering domains. His work includes designing and stress-testing research-level evaluation tasks, defining rubrics and acceptance criteria, validating scientific and quantitative reasoning, analyzing model and agent failure modes, and calibrating tasks to distinguish genuine reasoning from shortcuts or superficial success. He also develops software tools and workflows for AI-assisted engineering and scientific computing.',
   businessContext:
     'dailephd LLC provides custom computing services, with work interests in software tools, AI and data workflows, scientific computing, technical writing, and research-oriented computing support.',
   productLabStatement:
@@ -37,7 +37,7 @@ export const profile: ProfileContent = {
     {
       id: 'applied-ai',
       title: 'AI model evaluation',
-      summary: 'Evaluating AI-generated responses for factual accuracy, scientific reasoning, hallucinations, instruction following, and safety compliance.',
+      summary: 'Designing and stress-testing scientific and technical evaluations for advanced models and coding agents, including reasoning, verification, failure analysis, and difficulty calibration.',
     },
     {
       id: 'scientific-software',

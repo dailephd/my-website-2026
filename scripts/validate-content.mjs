@@ -198,8 +198,8 @@ if (familyIds.length === 0 || familyIds.length !== familySlugs.length) {
 if (new Set(familyIds).size !== familyIds.length || new Set(familySlugs).size !== familySlugs.length) {
   errors.push('Product family ids and slugs must be unique.');
 }
-if (moduleIds.length !== 3 || moduleIds.length !== moduleSlugs.length) {
-  errors.push('my-dev-kit Ecosystem must contain exactly three modules with stable ids and slugs.');
+if (moduleIds.length !== 4 || moduleIds.length !== moduleSlugs.length) {
+  errors.push('my-dev-kit Ecosystem must contain exactly four modules with stable ids and slugs.');
 }
 if (new Set(moduleIds).size !== moduleIds.length || new Set(moduleSlugs).size !== moduleSlugs.length) {
   errors.push('Product module ids and slugs must be unique within the family.');
@@ -209,7 +209,7 @@ for (const status of productStatuses) {
     errors.push(`Product content uses unsupported status: ${status}`);
   }
 }
-for (const role of ['Codebase Intelligence', 'Workflow Orchestration', 'Validation Lab']) {
+for (const role of ['Codebase Intelligence', 'Workflow Orchestration', 'Runtime Evidence', 'Validation Lab']) {
   if (!productText.includes(`roleLabel: '${role}'`)) {
     errors.push(`my-dev-kit Ecosystem is missing module role: ${role}`);
   }

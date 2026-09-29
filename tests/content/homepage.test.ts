@@ -11,6 +11,9 @@ describe('M7 homepage view model', () => {
 
     expect(first.profile.name).toBe('Dai Le');
     expect(first.featuredProducts[0]?.item.title).toBe('my-dev-kit Ecosystem');
+    expect(first.featuredProducts).toHaveLength(1);
+    expect(first.featuredProducts[0]?.item.summary).toContain('browser/runtime evidence');
+    expect(first.featuredProducts[0]?.item.positioning).toContain('Four local-first tools');
     expect(first.featuredProducts.map(({ item }) => item.id)).toEqual(
       second.featuredProducts.map(({ item }) => item.id),
     );

@@ -33,10 +33,23 @@ means the file exists but nothing in `src/app` currently imports it.
 | `ProjectCard.tsx` | Project card: status, focus label, description, notes, role, tags (`showTags` prop), links | Live (Archived projects section) |
 | `ProjectGrid.tsx` | Grid layout for `ProjectCard`, `quiet`/`showTags` pass-through | Live |
 | `ProjectLinkList.tsx` | External/internal link list for a project card | Live |
-| `ProductArchitectureVisual.tsx` | **The my-dev-kit relationship diagram** — vertical panel layout for the three modules, packet/connector visuals | Live (`/projects/my-dev-kit`) |
+| `ProductArchitectureVisual.tsx` | **The my-dev-kit relationship diagram** — four products around a vertical core workflow, bounded repository evidence, external implementation actor, Observer correction loop, and optional Lab assurance lane; owns local topology and composes shared `components/diagrams` primitives | Live (`/projects/my-dev-kit`) |
 | `ProductLinks.tsx` | GitHub + npm link row inside each product panel | Live |
-| `RoadmapTimeline.tsx` | Compact ascending version-history timeline inside a product panel's Roadmap section | Live |
-| `RoadmapToggle.tsx` | Client component: accessible collapsible "Roadmap" button (`aria-expanded`/`aria-controls`) | Live |
+| `RoadmapTimeline.tsx` | Bounded Recent/Current/Next release snapshot inside each product panel; consumes shared `.diagram-timeline*` styles from `src/styles/diagrams.css` | Live |
+| `RoadmapToggle.tsx` | Client component: accessible collapsible "Release snapshot" button (`aria-expanded`/`aria-controls`) | Live |
+
+## Shared diagram primitives (`src/components/diagrams`)
+
+Styled by the central `src/styles/diagrams.css`; topology and content stay with the caller.
+
+| Component | Owns | Status |
+|---|---|---|
+| `DiagramCanvas.tsx` | Diagram surface (`.diagram-canvas`) | Live (via `ProductArchitectureVisual`) |
+| `DiagramNode.tsx` | Primary / secondary / artifact node roles | Live (via `ProductArchitectureVisual`) |
+| `DiagramConnectorPath.tsx` | SVG connector path styling (primary / secondary / feedback; data / control) | Live (via `ProductArchitectureVisual`) |
+| `DiagramArrowMarker.tsx` | Shared arrowhead marker | Live (via `ProductArchitectureVisual`) |
+| `DiagramLabel.tsx` | Connector label surface | Live (via `ProductArchitectureVisual`) |
+| `DiagramSummary.tsx` | Visually hidden accessible summary | Live (via `ProductArchitectureVisual`) |
 
 ## Product/index components (`src/components/products`)
 
@@ -59,7 +72,7 @@ means the file exists but nothing in `src/app` currently imports it.
 | Component | Owns | Status |
 |---|---|---|
 | `ContactForm.tsx` | Client form: fields, client validation, `POST /api/contact`, success/error state | Live |
-| `ContactCard.tsx` | Single contact-channel card (kind-labeled) | Live (used where `ContactChannel` records are rendered) |
+| `ContactCard.tsx` | Single contact-channel card (kind-labeled) | **Orphaned** (only consumer is the orphaned `ContactPanel`; no live route renders it) |
 | `ContactPanel.tsx` | — | **Orphaned** (legacy channel-panel layout; contact page now renders `ContactForm` directly) |
 
 ## Roadmap components (`src/components/roadmap`)
@@ -72,7 +85,7 @@ means the file exists but nothing in `src/app` currently imports it.
 Note: the previous full-page phase/lane/milestone roadmap display chain (`RoadmapShowcase`,
 `RoadmapTimeline`, `RoadmapPhaseCard`, `RoadmapMilestoneList`, `RoadmapStatusBadge`,
 `RoadmapProgressRail`) was removed when `/projects/my-dev-kit` moved to per-module collapsible
-version timelines; the underlying `src/content/roadmaps.ts` data and its adapters remain in use
+release snapshots; the underlying `src/content/roadmaps.ts` data and its adapters remain in use
 for `getRoadmapPreview()`.
 
 ## Gallery and writing components
