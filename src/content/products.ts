@@ -179,6 +179,9 @@ export const productIndex = [
     category: 'developer-tooling',
     featured: false,
     displayPriority: 40,
-    links: [],
+    links: [
+      { id: 'iworkhere-space-website', label: 'Website', href: 'https://iworkhere.space', kind: 'website', external: true },
+      { id: 'iworkhere-space-repository', label: 'GitHub', href: 'https://github.com/dailephd/iworkhere.space', kind: 'repository', external: true },
+    ],
   },
 ] as const satisfies readonly ProductIndexItem[];

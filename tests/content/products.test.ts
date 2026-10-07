@@ -136,7 +136,7 @@ describe('product index adapters', () => {
     expect(getProductCardViewModels().find(({ item }) => item.slug === 'le-crawler')?.roadmapPreview).toBeUndefined();
   });
 
-  it('lists iworkhere.space as an unlinked standard product after Le Crawler', () => {
+  it('lists iworkhere.space as a linked standard product after Le Crawler', () => {
     const item = getProductIndexItemBySlug('iworkhere-space');
     expect(item).toMatchObject({
       id: 'product-index-iworkhere-space',
@@ -146,7 +146,22 @@ describe('product index adapters', () => {
       category: 'developer-tooling',
       featured: false,
       displayPriority: 40,
-      links: [],
+      links: [
+        {
+          id: 'iworkhere-space-website',
+          label: 'Website',
+          href: 'https://iworkhere.space',
+          kind: 'website',
+          external: true,
+        },
+        {
+          id: 'iworkhere-space-repository',
+          label: 'GitHub',
+          href: 'https://github.com/dailephd/iworkhere.space',
+          kind: 'repository',
+          external: true,
+        },
+      ],
     });
     expect(item).not.toHaveProperty('detailHref');
     expect(item).not.toHaveProperty('roadmapSlug');
