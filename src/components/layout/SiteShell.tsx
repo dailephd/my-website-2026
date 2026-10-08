@@ -18,7 +18,6 @@ export default function SiteShell({ children }: { children: ReactNode }) {
       >
         Skip to main content
       </a>
-      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[34rem] bg-[radial-gradient(circle_at_50%_0%,var(--color-glow),transparent_68%)]" />
       <Header brandLabel={profile.business?.name ?? profile.name} navigationLinks={navigationLinks} />
       <main className="flex-1" id="main-content" tabIndex={-1}>
         <PageContainer>{children}</PageContainer>

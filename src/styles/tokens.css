@@ -1,26 +1,47 @@
+/* Shape, typography and legacy-alias tokens plus the DEFAULT scheme (Mineral Research, light).
+ * Every palette/mode scheme lives in tokens.css (mineral light), theme.css (mineral dark) and
+ * palettes.css (the other eight). Derivation notes: docs/DESIGN.md "Five-palette appearance system". */
 :root {
-  --color-background: #edeff3;
-  --color-surface: #f2f4f8;
-  --color-card: #f6f7fa;
-  --color-elevated: #fbfbfd;
-  --color-text-primary: #151924;
-  --color-text-secondary: #4a5262;
-  --color-text-muted: #687284;
-  --color-border: #cbd1dc;
-  --color-border-strong: #aeb7c7;
-  --color-accent-violet: #6d3ee8;
-  --color-accent-cyan: #087b91;
-  --color-focus-ring: #087b91;
-  --color-focus: var(--color-focus-ring);
-  --color-on-accent: #f7f8fb;
-  --color-selection: rgb(124 58 237 / 20%);
-  --color-glow: rgb(109 62 232 / 13%);
-  --color-glow-cyan: rgb(8 123 145 / 10%);
-  --color-highlight: rgb(255 255 255 / 72%);
-  --shadow-card: 0 18px 55px rgb(35 42 56 / 9%);
-  --shadow-card-hover: 0 24px 70px rgb(35 42 56 / 14%);
-  --shadow-control: 0 7px 24px rgb(35 42 56 / 11%);
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: var(--font-sans);
+  --font-eyebrow: var(--font-sans);
   --radius-control: 0.75rem;
   --radius-card: 1.25rem;
   --radius-panel: 1.75rem;
+  --radius-sm: 0.5rem;
+  /* Compatibility aliases: legacy "violet" = secondary (control) role, "cyan" = primary (data/link) role.
+     The names no longer describe hue. Migrate consumers to --color-accent-primary / -secondary. */
+  --color-accent-violet: var(--color-accent-secondary);
+  --color-accent-cyan: var(--color-accent-primary);
+  --color-focus: var(--color-focus-ring);
+  --color-glow-cyan: var(--color-glow-secondary);
+  /* Hover fill of primary actions and the logo's accent stroke; Original overrides both to the violet role. */
+  --color-action-hover: var(--color-accent-primary);
+  --color-logo-accent: var(--color-accent-primary);
+  /* Neutral aliases for components that predate the semantic token names. */
+  --color-bg: var(--color-background);
+  --color-surface-elevated: var(--color-elevated);
+  --color-background: #f2f0e7;
+  --color-surface: #e3e3d8;
+  --color-card: #f9f8f3;
+  --color-elevated: #fcfcfa;
+  --color-text-primary: #1c2926;
+  --color-text-secondary: #404b47;
+  --color-text-muted: #5a635e;
+  --color-border: #cbccc4;
+  --color-border-strong: #787f79;
+  --color-accent-primary: #0f716a;
+  --color-accent-secondary: #b8683f;
+  --color-accent-secondary-text: #8c5638;
+  --color-focus-ring: #0f716a;
+  --color-on-accent: #f2f0e7;
+  --color-selection: rgb(15 113 106 / 22%);
+  --color-glow: rgb(15 113 106 / 16%);
+  --color-glow-secondary: rgb(184 104 63 / 12%);
+  --color-highlight: rgb(255 255 255 / 65%);
+
+
+  --shadow-card: 0 18px 50px rgb(146 150 144 / 12%);
+  --shadow-card-hover: 0 24px 64px rgb(146 150 144 / 19%);
+  --shadow-control: 0 7px 22px rgb(146 150 144 / 14%);
 }

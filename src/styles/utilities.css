@@ -58,7 +58,7 @@
   background:
     linear-gradient(135deg, var(--color-highlight), transparent 36%),
     radial-gradient(circle at 84% 14%, var(--color-glow), transparent 31%),
-    radial-gradient(circle at 70% 82%, var(--color-glow-cyan), transparent 28%),
+    radial-gradient(circle at 70% 82%, var(--color-glow-secondary), transparent 28%),
     var(--color-card);
 }
 
@@ -93,4 +93,127 @@
   .premium-card-interactive:hover {
     transform: none;
   }
+}
+
+
+/* ---------- Card material (shared Card / .premium-card) ---------- */
+
+.premium-card::after {
+  position: absolute;
+  z-index: -1;
+  content: '';
+  pointer-events: none;
+}
+
+:root:not([data-palette]) .premium-card::after,
+:root[data-palette='mineral'] .premium-card::after {
+  inset: 0 1.25rem auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-accent-primary), transparent);
+  opacity: 0.5;
+}
+
+:root[data-palette='oxblood'] .premium-card::after {
+  inset: 6px;
+  border: 1px solid var(--color-border);
+  border-radius: max(2px, calc(var(--radius-card) - 6px));
+  opacity: 0.8;
+}
+
+:root[data-palette='signal'] .premium-card::after {
+  inset: 8px;
+  background:
+    linear-gradient(color-mix(in srgb, var(--color-accent-primary) 34%, transparent) 0 0) top left / 14px 1px no-repeat,
+    linear-gradient(color-mix(in srgb, var(--color-accent-primary) 34%, transparent) 0 0) top left / 1px 14px no-repeat,
+    linear-gradient(color-mix(in srgb, var(--color-accent-primary) 34%, transparent) 0 0) top right / 14px 1px no-repeat,
+    linear-gradient(color-mix(in srgb, var(--color-accent-primary) 34%, transparent) 0 0) top right / 1px 14px no-repeat,
+    linear-gradient(color-mix(in srgb, var(--color-accent-primary) 34%, transparent) 0 0) bottom left / 14px 1px no-repeat,
+    linear-gradient(color-mix(in srgb, var(--color-accent-primary) 34%, transparent) 0 0) bottom left / 1px 14px no-repeat,
+    linear-gradient(color-mix(in srgb, var(--color-accent-primary) 34%, transparent) 0 0) bottom right / 14px 1px no-repeat,
+    linear-gradient(color-mix(in srgb, var(--color-accent-primary) 34%, transparent) 0 0) bottom right / 1px 14px no-repeat;
+}
+
+:root[data-palette='cobalt'] .premium-card::after {
+  display: none;
+}
+
+:root[data-palette='cobalt'][data-theme] {
+  --shadow-card: 5px 5px 0 color-mix(in srgb, var(--color-accent-secondary) 24%, transparent);
+  --shadow-card-hover: 8px 8px 0 color-mix(in srgb, var(--color-accent-secondary) 34%, transparent);
+}
+
+:root[data-palette='amber'] .premium-card::after {
+  inset: 5px 0;
+  border-block: 1px solid var(--color-border);
+  opacity: 0.9;
+}
+
+/* Original cards carry no material frame, as in the pre-redesign site. */
+:root[data-palette='original'] .premium-card::after {
+  display: none;
+}
+
+/* ---------- Section dividers ---------- */
+
+.section-shell + .section-shell::before {
+  background: linear-gradient(90deg, transparent, var(--color-border-strong), transparent);
+}
+
+.section-shell + .section-shell::after {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-accent-secondary);
+  content: '';
+  transform: translate(-50%, -50%);
+}
+
+:root[data-palette='oxblood'] .section-shell + .section-shell::after {
+  border-radius: 0;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+:root[data-palette='signal'] .section-shell + .section-shell::after {
+  border-radius: 0;
+  background: var(--color-accent-primary);
+}
+
+:root[data-palette='cobalt'] .section-shell + .section-shell::after {
+  border-radius: 50% 0;
+}
+
+:root[data-palette='amber'] .section-shell + .section-shell::after {
+  width: 9px;
+  height: 9px;
+  border: 1px solid var(--color-accent-secondary);
+  background: transparent;
+}
+
+:root[data-palette='original'] .section-shell + .section-shell::after {
+  display: none;
+}
+
+/* ---------- Typography (shared hierarchy; faces differ per palette) ---------- */
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+}
+
+.eyebrow {
+  font-family: var(--font-eyebrow);
+}
+
+
+:root[data-palette='original'] .hero-backdrop {
+  background:
+    linear-gradient(90deg, transparent, var(--color-accent-primary), transparent) 50% 3rem / calc(100% - 6rem) 1px no-repeat,
+    linear-gradient(135deg, var(--color-highlight), transparent 36%),
+    radial-gradient(circle at 84% 14%, var(--color-glow), transparent 31rem),
+    radial-gradient(circle at 70% 82%, var(--color-glow-secondary), transparent 28rem),
+    var(--color-card);
 }

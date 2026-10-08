@@ -19,7 +19,7 @@ export default function PublicationCard({ publication }: { publication: Publicat
     <Card as="article" className="premium-card-interactive">
       {doiUrl ? (
         <a
-          className="group block break-words text-xl font-semibold tracking-tight hover:text-[var(--color-accent-cyan)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-focus)]"
+          className="group block break-words text-xl font-semibold tracking-tight hover:text-[var(--color-accent-primary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-focus)]"
           href={doiUrl}
           rel="noreferrer"
           target="_blank"
@@ -56,7 +56,7 @@ export default function PublicationCard({ publication }: { publication: Publicat
       {doiLabel && doiUrl ? (
         <p className="mt-2 text-sm">
           <a
-            className="text-[var(--color-accent-cyan)] underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-focus)]"
+            className="text-[var(--color-accent-primary)] underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-focus)]"
             href={doiUrl}
             rel="noreferrer"
             target="_blank"

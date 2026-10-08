@@ -21,7 +21,7 @@ export default function ContactCard({ channel }: { channel: ContactChannel }) {
       <h3 className="mt-4 text-xl font-semibold">{channel.label}</h3>
       <p className="mt-2 flex-1 text-[var(--color-text-secondary)]">{channel.description}</p>
       <a
-        className="mt-5 font-medium text-[var(--color-accent-cyan)] underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-focus)]"
+        className="mt-5 font-medium text-[var(--color-accent-primary)] underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-focus)]"
         href={channel.href}
         rel={channel.external ? 'noreferrer' : undefined}
         target={channel.external ? '_blank' : undefined}

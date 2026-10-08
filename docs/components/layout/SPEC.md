@@ -10,7 +10,7 @@ Define the M1 application shell that consistently frames every public route.
 - `Header` renders the profile-owned brand label and primary navigation.
 - `Footer` renders profile attribution and footer navigation.
 - `PageContainer` and `Container` provide responsive width and spacing constraints.
-- `ThemeProvider` wraps the shell, and `ThemeToggle` is exposed in the header.
+- `ThemeProvider` wraps the shell, and `AppearanceControl` is exposed in the header.
 
 ## Inputs and outputs
 

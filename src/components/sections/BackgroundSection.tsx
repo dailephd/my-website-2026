@@ -10,7 +10,7 @@ export default function BackgroundSection({ content }: { content: HomepageConten
       <div className="grid gap-6 sm:grid-cols-2">
         {content.cards.map((card) => (
           <Card as="article" className="premium-card-interactive flex h-full flex-col" key={card.id}>
-            <p className="text-sm font-medium text-[var(--color-accent-cyan)]">{card.subtitle}</p>
+            <p className="text-sm font-medium text-[var(--color-accent-primary)]">{card.subtitle}</p>
             <h3 className="mt-2 text-xl font-semibold">{card.title}</h3>
             <p className="mt-3 text-[var(--color-text-secondary)]">{card.body}</p>
             <p className="mt-2 text-sm text-[var(--color-text-muted)]">{card.supportingText}</p>

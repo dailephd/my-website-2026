@@ -23,10 +23,11 @@ const requiredPaths = [
   'src/types/theme.ts',
   'src/lib/theme.ts',
   'src/components/theme/ThemeProvider.tsx',
-  'src/components/theme/ThemeToggle.tsx',
+  'src/components/theme/AppearanceControl.tsx',
   'src/components/theme/theme-script.tsx',
   'src/styles/tokens.css',
   'src/styles/theme.css',
+  'src/styles/palettes.css',
 ];
 
 const requiredDocs = [
@@ -107,11 +108,11 @@ for (const [file, contents] of [
   }
 }
 
-if (!tokenText.includes('--color-background: #edeff3')) {
-  errors.push('Light theme must define the approved soft-grey background token.');
+if (!tokenText.includes('--color-background: #f2f0e7')) {
+  errors.push('Light theme must define the approved Mineral Research warm-paper background token.');
 }
-if (!themeText.includes('--color-background: #1a1d23')) {
-  errors.push('Dark theme must define the approved charcoal background token.');
+if (!themeText.includes('--color-background: #141e1c')) {
+  errors.push('Dark theme must define the approved Mineral Research green-charcoal background token.');
 }
 
 const ecosystemPageText = readFileSync(

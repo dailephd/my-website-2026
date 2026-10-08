@@ -8,8 +8,8 @@ means the file exists but nothing in `src/app` currently imports it.
 
 | Component | Owns | Status |
 |---|---|---|
-| `SiteShell.tsx` | Page shell: skip link, background glow, `Header`, `main` landmark, `Footer` | Live |
-| `Header.tsx` | Sticky header: brand link + `SiteLogoMark`, primary nav, theme toggle | Live |
+| `SiteShell.tsx` | Page shell: skip link, `Header`, `main` landmark, `Footer` | Live |
+| `Header.tsx` | Sticky header: brand link + `SiteLogoMark`, primary nav, Appearance control | Live |
 | `Footer.tsx` | Footer nav and copyright | Live |
 | `NavLink.tsx` | Client component nav link with `aria-current="page"` | Live |
 | `SiteLogoMark.tsx` | Theme-aware stacked "DL" monogram SVG (navbar + reusable) | Live |
@@ -109,9 +109,9 @@ retained in the repository but do not back any live page.
 
 | Component | Owns | Status |
 |---|---|---|
-| `ThemeProvider.tsx` | Applies/persists light/dark/system theme | Live |
-| `ThemeToggle.tsx` | Accessible theme control button in the header | Live |
-| `theme-script.tsx` | Inline pre-hydration script to avoid theme flash | Live |
+| `ThemeProvider.tsx` | Owns palette and light/dark/system mode; applies and persists both | Live |
+| `AppearanceControl.tsx` | Header "Appearance" button and dialog (palette and color mode radio groups) | Live |
+| `theme-script.tsx` | Inline pre-hydration script that applies palette and mode before first paint | Live |
 
 ## SEO helpers (`src/lib/seo`, plus `src/components/seo`)
 

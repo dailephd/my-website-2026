@@ -30,3 +30,5 @@ claude.txt
 public/files/README.md
 .my-dev-kit/
 .junie/
+.my-dev-kit-workflow/
+.my-dev-kit-context/

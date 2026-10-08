@@ -16,13 +16,9 @@ export default function HomeHero({
     <section aria-labelledby="home-heading" className="pb-16 pt-10 sm:pb-24 sm:pt-16">
       <Card className="hero-backdrop relative overflow-hidden rounded-[var(--radius-panel)] p-7 sm:p-12 lg:p-16">
         <div aria-hidden="true" className="quiet-grid pointer-events-none absolute inset-0" />
-        <div aria-hidden="true" className="absolute inset-x-12 top-0 h-px bg-gradient-to-r from-transparent via-[var(--color-accent-cyan)] to-transparent opacity-60" />
-        <div
-          aria-hidden="true"
-          className="absolute -right-16 -top-20 h-72 w-72 rounded-full bg-[var(--color-accent-violet)] opacity-10 blur-3xl"
-        />
         <div className="relative max-w-4xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--color-accent-cyan)]">
+          <p className="eyebrow flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.2em] text-[var(--color-accent-primary)]">
+            <span aria-hidden="true" className="h-px w-10 bg-[var(--color-accent-secondary)]" />
             {copy.eyebrow}
           </p>
           <h1 id="home-heading" className="mt-5 text-5xl font-semibold tracking-[-0.045em] sm:text-7xl">

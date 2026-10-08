@@ -45,7 +45,7 @@ export default function SiteLogoMark({
       />
       <path
         d="M88 78H124C155 78 176 95 176 118C176 141 155 158 124 158H88"
-        stroke="var(--color-accent-violet, #7C3AED)"
+        stroke="var(--color-logo-accent, var(--color-accent-primary, #0F716A))"
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="22"

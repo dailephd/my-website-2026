@@ -17,14 +17,10 @@ export default function ProductFamilyHero({ family }: { family: ProductFamily })
     <section aria-labelledby="product-family-heading">
       <Card className="hero-backdrop relative overflow-hidden rounded-[var(--radius-panel)] p-7 sm:p-12">
         <div aria-hidden="true" className="quiet-grid pointer-events-none absolute inset-0" />
-        <div
-          aria-hidden="true"
-          className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[var(--color-accent-cyan)] opacity-10 blur-3xl"
-        />
         <div className="relative max-w-4xl">
           <div className="flex flex-wrap items-center gap-3">
             <Badge>{statusLabels[family.status]}</Badge>
-            <span className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--color-accent-violet)]">
+            <span className="eyebrow text-xs font-semibold uppercase tracking-[0.16em] text-[var(--color-accent-secondary-text)]">
               Connected product family
             </span>
           </div>

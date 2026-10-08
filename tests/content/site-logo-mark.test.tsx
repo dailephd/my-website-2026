@@ -19,7 +19,7 @@ describe('SiteLogoMark', () => {
     expect(markup).toContain('var(--color-surface, #F5F6F8)');
     expect(markup).toContain('var(--color-border, #D1D5DB)');
     expect(markup).toContain('var(--color-text-secondary, #4B5563)');
-    expect(markup).toContain('var(--color-accent-violet, #7C3AED)');
+    expect(markup).toContain('var(--color-accent-primary, #0F716A)');
   });
 
   it('exposes an accessible title by default', () => {

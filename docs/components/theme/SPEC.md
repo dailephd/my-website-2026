@@ -1,38 +1,30 @@
-# Theme Components Specification
+# Theme and appearance
 
 ## Purpose
 
-Define the implemented M2 theme contract for light, dark, and system-aware presentation.
+Define the six-palette, three-color-mode appearance contract. Visual rules live in `docs/DESIGN.md`.
 
-## Responsibilities
+## Owners
 
-- `theme-script.tsx` reads the persisted preference and applies the effective theme before visible paint.
-- `ThemeProvider` owns preference state, effective state, persistence, and system-preference updates.
-- `ThemeToggle` cycles through system, light, and dark with visible text and an accessible state label.
-- Semantic tokens in `src/styles` control all M1 shell and UI colors.
+- `ThemeProvider` owns palette and color mode, persistence, and live system preference updates.
+- `theme-script.tsx` applies palette and resolved color mode before first paint.
+- `AppearanceControl` exposes palette and color mode with accessible native radio groups.
+- `src/lib/theme.ts` validates stored values and applies `data-palette`, `data-theme`,
+  `data-theme-preference`, and the `dark` class.
+- Palette tokens live in `src/styles/tokens.css`, `theme.css`, and `palettes.css`; shared static
+  palette treatments live in `src/styles/utilities.css`; diagrams live in `diagrams.css`.
 
-## Inputs and outputs
+## Contract
 
-- Input preference: `light`, `dark`, or `system`.
-- Effective output: `light` or `dark`.
-- Storage key: `my-website-2026-theme`.
-- DOM output: `html.dark`, `data-theme`, and `data-theme-preference`.
+- Six internal palette IDs: `mineral`, `oxblood`, `signal`, `cobalt`, `amber`, `original`.
+- Public palette labels are Mineral Research, Oxblood Atelier, Signal Green, Cobalt & Terracotta,
+  Amber & Graphite, and Violet & Graphite.
+- `mineral` is the default palette. Modes are `light`, `dark`, and `system`.
+- Palette and mode keep their existing storage keys. No effects preference or `data-fx` attribute exists.
+- Unavailable storage falls back to defaults without disabling in-memory preference changes.
+- Palette styling preserves static identity across all twelve combinations. Ordinary hover, focus,
+  and accessible theme transitions respect reduced-motion preferences.
 
-## Accessibility notes
+## Non-goals
 
-- The toggle is a native keyboard-operable button.
-- Its visible label and `aria-label` communicate preference and effective state without color.
-- Focus uses the shared focus-ring token.
-- Theme transitions are disabled under `prefers-reduced-motion: reduce`.
-
-## Failure behavior
-
-- Invalid stored values fall back to `system`.
-- Unavailable browser storage does not prevent in-memory theme switching.
-- System preference changes update the effective theme only while preference is `system`.
-
-## M12 premium visual tokens
-
-Approved soft-grey and charcoal backgrounds remain unchanged. Shared tokens now include strong
-borders, dual restrained glows, panel radii, highlight layers, and hover shadows. CSS-only grid
-and radial motifs are decorative and non-animated.
+No special palette animation system, effect artwork, or diagram animation.

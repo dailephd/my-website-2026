@@ -35,7 +35,7 @@ export default function ProjectCard({
           'flex h-full flex-col',
           quiet ? 'shadow-none' : 'premium-card-interactive',
           project.featured &&
-            'border-[var(--color-accent-violet)] bg-[var(--color-elevated)] shadow-[var(--shadow-card-hover)]',
+            'border-[var(--color-accent-secondary)] bg-[var(--color-elevated)] shadow-[var(--shadow-card-hover)]',
         )}
       >
         <div className="flex flex-wrap items-center gap-2">
@@ -46,7 +46,7 @@ export default function ProjectCard({
         </div>
 
         {project.featured ? (
-          <p className="mt-5 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-accent-violet)]">
+          <p className="eyebrow mt-5 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-accent-secondary-text)]">
             Featured project
           </p>
         ) : null}

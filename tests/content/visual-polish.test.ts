@@ -7,9 +7,9 @@ describe('M12 visual polish contract', () => {
   const utilities = readFileSync('src/styles/utilities.css', 'utf8');
   const globals = readFileSync('src/app/globals.css', 'utf8');
 
-  it('preserves approved soft-grey and charcoal backgrounds', () => {
-    expect(tokens).toContain('--color-background: #edeff3');
-    expect(theme).toContain('--color-background: #1a1d23');
+  it('uses the Mineral Research warm-paper and green-charcoal defaults', () => {
+    expect(tokens).toContain('--color-background: #f2f0e7');
+    expect(theme).toContain('--color-background: #141e1c');
     expect(`${tokens}${theme}`).not.toMatch(/--color-background:\s*(#fff(?:fff)?|#000(?:000)?|white|black)/i);
   });
 

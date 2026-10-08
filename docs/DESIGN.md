@@ -55,78 +55,87 @@ Roadmaps are structured data, not copied markdown. The design must support rich 
 
 ## Core visual system
 
+The site has six selectable color palettes and three color modes. Palette and mode are the only
+appearance preferences. All six palettes share the same page structure, content, routes, typography
+hierarchy, and accessible controls.
+
+### Six-palette appearance system
+
+`ThemeProvider` owns the selected palette and color mode. `theme-script.tsx` applies them before first
+paint, with the same validated values as `src/lib/theme.ts`. The server fallback is Mineral Research
+in light mode. Palette and mode persist in `my-website-2026-palette` and `my-website-2026-theme`.
+Unavailable storage falls back to Mineral and system mode for the session. The system mode follows
+operating-system color preference. No special-effects preference exists.
+
+| ID | Display name | Character |
+| --- | --- | --- |
+| `mineral` (default) | Mineral Research | Scientific, warm, calm, architectural |
+| `oxblood` | Oxblood Atelier | Editorial, intimate, crafted |
+| `signal` | Signal Green | Instrumental, precise, research-oriented |
+| `cobalt` | Cobalt & Terracotta | Technical, confident, geometric |
+| `amber` | Amber & Graphite | Warm, measured, scholarly |
+| `original` | Violet & Graphite | Graphite surfaces, violet emphasis, cyan data accents |
+
+The `original` identifier is an internal persistence contract. The public palette name is **Violet &
+Graphite**. Its graphite surfaces, violet accent, cyan data/system accents, violet-led and cyan
+atmospheric balance, violet logo stroke, violet primary-action hover, and cyan hero eyebrow are
+preserved as static styling. It remains optional; Mineral Research is the default.
+
+### Twelve effective color schemes and token architecture
+
+Each palette has light and dark colors. Brand anchors are defined in `tokens.css` (Mineral light),
+`theme.css` (Mineral dark), and `palettes.css` (the other five palettes). Shared material treatments,
+static atmospheric gradients, typography accents, and interaction feedback live in `utilities.css`.
+`diagrams.css` remains the central owner of diagram styling and topology stays with its components.
+
+Semantic roles include background, surfaces, text, borders, primary and secondary accents, focus,
+selection, atmospheric glows, and shadows. Primary accents carry links, data/system emphasis, and
+focus; secondary accents carry control/orchestration and ornament roles. Hue may vary per palette
+without changing semantic meaning. Compatibility aliases for historical cyan/violet token names
+remain documented in `tokens.css`; new code uses semantic names.
+
+The twelve palette/mode combinations retain their static colors, material styling, card treatments,
+hover/focus feedback, diagram colors, and restrained gradients. Reduced-motion support remains for
+ordinary UI transitions and hover interactions. There is no palette animation system, decorative
+animation artwork, or effects setting.
+
+### Appearance control
+
+The shared header's **Appearance** button opens a keyboard-operable dialog with two native radio
+fieldsets: Palette and Color mode. Escape, Close, outside press, or focus leaving closes the dialog;
+focus returns to the trigger. It fits mobile viewports. No third preference or effects fieldset is
+rendered.
+
+### Accessibility and performance expectations
+
+- WCAG AA for text and UI components in all twelve schemes; the historical Violet & Graphite values retain their documented, test-pinned exceptions. State is never conveyed by color alone.
+- Focus ring (3px, `--color-focus-ring`) is visible in every scheme.
+- No horizontal overflow at 360–1440px; decoration does not interfere with controls.
+- Static rendering is preserved; client-side appearance code is limited to the control and preference provider.
+
 ### Light mode
 
-Light mode is soft grey, not white.
-
-Required characteristics:
-
-- Backgrounds: warm or neutral light greys
-- Surfaces: clearly separated from the page background without harsh contrast
-- Borders: subtle, visible, refined
-- Text: dark neutral tones with strong readability
-
-Avoid:
-
-- Pure white full-page backgrounds
-- High-glare surfaces
-- Sterile clinical contrast
+Light schemes use warm or soft tinted paper tones, never pure white backgrounds, with clearly
+separated surfaces, refined borders, and dark text with strong readability. Avoid pure white
+full-page backgrounds, high-glare surfaces, and sterile clinical contrast.
 
 ### Dark mode
 
-Dark mode is charcoal grey, not black.
-
-Required characteristics:
-
-- Backgrounds: deep charcoal and graphite tones
-- Surfaces: layered darker greys with visible separation
-- Borders: subtle but legible edge definition
-- Text: high-contrast off-white or cool light grey
-
-Avoid:
-
-- Pure black full-page backgrounds
-- Neon-on-black hacker aesthetics
-- Overly saturated glow fields
+Dark schemes use deep tinted charcoal (green, plum, navy, graphite), never pure black, with layered
+surfaces, legible borders, and high-contrast off-white text. Avoid pure black full-page backgrounds,
+neon-on-black aesthetics, and overly saturated glow fields.
 
 ### Accent colors
 
-Primary accents:
+Each palette supplies a primary and a secondary accent (see above); gold-style optional accents are
+retired. Accent use must remain controlled, direct attention rather than dominate, and keep gradients
+subtle and localized.
 
-- Violet for premium technical emphasis
-- Cyan for system, data, or diagrammatic emphasis
+### Token authority
 
-Optional accent:
-
-- Sparse muted gold for featured labels or selective premium emphasis only
-
-Rules:
-
-- Accent use must remain controlled.
-- Accent colors should direct attention, not dominate the interface.
-- Accent gradients should be subtle and localized.
-
-### Implemented M2 token authority
-
-The production token source is `src/styles/tokens.css`, with dark overrides in
-`src/styles/theme.css`.
-
-| Semantic token | Light | Dark |
-| --- | --- | --- |
-| Background | `#EDEFF3` | `#1A1D23` |
-| Surface | `#F5F6F8` | `#20242C` |
-| Card | `#F1F3F6` | `#262B35` |
-| Elevated | `#FAFAFB` | `#2D3340` |
-| Primary text | `#111827` | `#F3F4F6` |
-| Secondary text | `#4B5563` | `#CBD5E1` |
-| Muted text | `#6B7280` | `#94A3B8` |
-| Border | `#D1D5DB` | `#3A4150` |
-| Violet accent | `#7C3AED` | `#A78BFA` |
-| Cyan accent | `#087F9A` | `#22D3EE` |
-
-Components must consume semantic variables rather than embedding mode-specific colors.
-The M2 transition duration is 180 ms for color, background, border, and shadow only.
-Reduced-motion preference removes these transitions.
+The production token sources are `tokens.css`, `theme.css`, and `palettes.css` as described above.
+Components consume semantic variables and never embed mode- or palette-specific colors. The transition
+duration is 180 ms for color, background, border, and shadow only, and reduced motion removes it.
 
 ## Surfaces and card design
 
@@ -379,7 +388,7 @@ Visual tone:
 - editorial and product-oriented
 - not a chaotic photo dump
 
-## Motion and visual effects
+## Motion and interaction feedback
 
 Allowed:
 
@@ -442,7 +451,7 @@ A "Skip to main content" link is the first focusable element in SiteShell. It is
 ### Focus state expectations
 
 - Global `:focus-visible` applies a 3px outline using `--color-focus-ring` with 3px offset.
-- Focus ring uses cyan in light mode and in dark mode for visibility across themes.
+- Focus ring uses the active palette primary accent, verified at 3:1 or better in all ten schemes.
 - All interactive elements (links, buttons, toggle) receive visible focus states without additional style overrides.
 
 ### Reduced-motion behavior
@@ -525,10 +534,10 @@ they are replaced, preventing broken or misleading social previews.
 
 ## M12 implemented visual system
 
-- Light mode retains the approved soft grey; dark mode retains the approved charcoal.
+- Light schemes use tinted soft paper tones and dark schemes tinted charcoal (see the six-palette system above).
 - Solid premium surfaces use restrained inset highlights, borders, and dimensional shadows.
-- Violet and cyan appear as sparse labels, rails, focus states, and radial atmosphere.
-- The hero and closing CTA use CSS-only quiet grids and static radial glow.
+- Primary and secondary palette accents appear as sparse labels, rails, focus states, and radial atmosphere.
+- Hero panels and body surfaces use static palette-scoped radial gradients.
 - Cards share subtle two-pixel hover lift; reduced motion removes the transform and transitions.
 - Section separators and larger spacing establish a deliberate narrative rhythm.
 
@@ -550,8 +559,9 @@ copy. Writing’s empty state looks intentional; Contact emphasizes pathways wit
 
 Before accepting visual work, verify:
 
-- light mode is soft grey, not white
-- dark mode is charcoal grey, not black
+- light schemes are tinted paper, not white
+- dark schemes are tinted charcoal, not black
+- every palette/mode combination keeps AA contrast and reads as the same site
 - accent colors are controlled
 - cards feel premium and solid
 - `my-dev-kit Ecosystem` reads as one family

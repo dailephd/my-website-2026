@@ -20,7 +20,7 @@ test('brand link renders the DL logo mark without disrupting header layout', asy
   await expect(brandLink.locator('svg')).toHaveAttribute('viewBox', '0 0 256 256');
 
   await expect(page.getByRole('navigation', { name: 'Primary navigation' })).toBeVisible();
-  await expect(page.getByRole('button', { name: /Theme preference/ })).toBeVisible();
+  await expect(page.getByRole('button', { name: /^Appearance/ })).toBeVisible();
 });
 
 test('favicon and apple touch icon links are declared in the document head', async ({ page }) => {

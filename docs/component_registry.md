@@ -12,9 +12,9 @@
 | `SectionHeader` | UI | implemented | Typed section heading and description |
 | `HomeHero` | section | implemented | Renders profile and CTA props |
 | `PlannedPage` | section | orphaned | Marks routes reserved for later milestones; not imported by any route |
-| `ThemeScript` | theme | implemented | Applies persisted/system theme before visible paint (`theme-script.tsx`) |
-| `ThemeProvider` | theme | implemented | Owns preference, effective theme, persistence, and system updates |
-| `ThemeToggle` | theme | implemented | Cycles system, light, and dark with accessible state text |
+| `ThemeScript` | theme | implemented | Applies persisted palette and mode before visible paint (`theme-script.tsx`) |
+| `ThemeProvider` | theme | implemented | Owns palette and mode preference, effective theme, persistence, and system updates |
+| `AppearanceControl` | theme | implemented | Header dialog with palette and color mode radio groups |
 | `ProjectCard` | selected work | implemented | Renders one project’s typed summary, status, role, stack, and links |
 | `ProjectGrid` | selected work | implemented | Renders featured/standard responsive project collections and empty state |
 | `ProjectLinkList` | selected work | implemented | Renders optional safe project links |

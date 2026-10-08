@@ -37,7 +37,7 @@ export default function ProductCard({
   return (
     <article className="h-full">
       <Card
-        className={`premium-card-interactive flex h-full flex-col ${item.featured ? 'border-[var(--color-accent-violet)] bg-[var(--color-elevated)] shadow-[var(--shadow-card-hover)]' : ''}`}
+        className={`premium-card-interactive flex h-full flex-col ${item.featured ? 'border-[var(--color-accent-secondary)] bg-[var(--color-elevated)] shadow-[var(--shadow-card-hover)]' : ''}`}
       >
         {showBadges && !isDuplicatedFamilyStatusRow ? (
           <div className="flex flex-wrap gap-2">
@@ -46,18 +46,18 @@ export default function ProductCard({
           </div>
         ) : null}
         {item.featured ? (
-          <p className="mt-5 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--color-accent-violet)]">
+          <p className="eyebrow mt-5 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--color-accent-secondary-text)]">
             Featured product
           </p>
         ) : null}
         <Heading className="mt-3 text-2xl font-semibold">{item.title}</Heading>
-        <p className="mt-2 text-sm font-medium text-[var(--color-accent-cyan)]">{categories[item.category]}</p>
+        <p className="mt-2 text-sm font-medium text-[var(--color-accent-primary)]">{categories[item.category]}</p>
         <p className="mt-4 text-[var(--color-text-secondary)]">{item.summary}</p>
         <p className="mt-3 text-sm text-[var(--color-text-muted)]">{item.positioning}</p>
         <div className="mt-6 flex flex-wrap gap-4">
           {item.detailHref ? (
             <Link
-              className="premium-link font-medium text-[var(--color-accent-cyan)] hover:underline"
+              className="premium-link font-medium text-[var(--color-accent-primary)] hover:underline"
               href={item.detailHref}
             >
               Explore product
@@ -66,7 +66,7 @@ export default function ProductCard({
           {showLinks
             ? item.links.map((link) => (
                 <Link
-                  className="premium-link font-medium text-[var(--color-accent-cyan)] hover:underline"
+                  className="premium-link font-medium text-[var(--color-accent-primary)] hover:underline"
                   href={link.href}
                   key={link.id}
                   rel={link.external ? 'noreferrer' : undefined}

@@ -5,7 +5,7 @@ import ContactCard from './ContactCard';
 export default function ContactPanel({ panel }: { panel: ContactPanelViewModel }) {
   return (
     <section aria-labelledby="contact-pathways-heading">
-      <Card className="hero-backdrop rounded-[var(--radius-panel)] border-[var(--color-accent-violet)] p-7 sm:p-9">
+      <Card className="hero-backdrop rounded-[var(--radius-panel)] border-[var(--color-accent-secondary)] p-7 sm:p-9">
         <h2 className="text-2xl font-semibold" id="contact-pathways-heading">{panel.heading}</h2>
         <p className="mt-3 max-w-3xl text-[var(--color-text-secondary)]">{panel.summary}</p>
         {!panel.hasDirectEmail ? (

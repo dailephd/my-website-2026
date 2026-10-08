@@ -23,7 +23,7 @@ export default function ProjectScreenshot({ item }: { item: GalleryItem }) {
         {item.caption ? <p className="mt-2 text-sm text-[var(--color-text-secondary)]">{item.caption}</p> : null}
         {item.link ? (
           <a
-            className="mt-4 inline-block font-medium text-[var(--color-accent-cyan)] underline-offset-4 hover:underline"
+            className="mt-4 inline-block font-medium text-[var(--color-accent-primary)] underline-offset-4 hover:underline"
             href={item.link.href}
             rel={item.link.external ? 'noreferrer' : undefined}
             target={item.link.external ? '_blank' : undefined}

@@ -63,7 +63,7 @@ defined in next.config.ts)
 
 src/components/ — see docs/COMPONENT_MAP.md for the live/orphaned breakdown
 ├── layout/        SiteShell, Header, Footer, NavLink, SiteLogoMark, PageContainer, MobileNav*
-├── theme/         ThemeProvider, ThemeToggle, theme-script
+├── theme/         ThemeProvider, AppearanceControl, theme-script
 ├── sections/      HomeHero, FeaturedWorkSection, TechnicalFocusSection, BackgroundSection,
 │                  GalleryPreviewSection*, PlannedPage*
 ├── projects/      ProjectCard, ProjectGrid, ProjectLinkList, ProductArchitectureVisual
@@ -97,7 +97,7 @@ src/lib/
 src/types/          content, project, product, publication, contact, home, roadmap, seo, gallery*,
                      writing*, resume*, theme
 
-src/styles/          tokens.css, theme.css, utilities.css
+src/styles/          tokens.css, theme.css, palettes.css, utilities.css
 
 public/
 ├── favicon.ico

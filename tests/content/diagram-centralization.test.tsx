@@ -22,8 +22,8 @@ describe('central diagram style authority', () => {
     for (const declaration of [
       '--diagram-canvas-bg: var(--color-surface)',
       '--diagram-primary-node-bg: var(--color-elevated)',
-      '--diagram-flow-data: var(--color-accent-cyan)',
-      '--diagram-flow-control: var(--color-accent-violet)',
+      '--diagram-flow-data: var(--color-accent-primary)',
+      '--diagram-flow-control: var(--color-accent-secondary)',
       '--diagram-focus: var(--color-focus)',
       '--diagram-primary-node-radius: 1.25rem',
       '--diagram-artifact-radius: 1rem',

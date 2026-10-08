@@ -20,8 +20,8 @@
   --diagram-text-primary: var(--color-text-primary);
   --diagram-text-secondary: var(--color-text-secondary);
   --diagram-text-muted: var(--color-text-muted);
-  --diagram-flow-data: var(--color-accent-cyan);
-  --diagram-flow-control: var(--color-accent-violet);
+  --diagram-flow-data: var(--color-accent-primary);
+  --diagram-flow-control: var(--color-accent-secondary);
   --diagram-focus: var(--color-focus);
   --diagram-shadow: var(--shadow-card);
 

@@ -2,28 +2,31 @@
   color-scheme: light;
 }
 
+/* Mineral Research dark (default palette). Other palettes override via palettes.css. */
 :root.dark,
 :root[data-theme='dark'] {
   color-scheme: dark;
-  --color-background: #1a1d23;
-  --color-surface: #1d222b;
-  --color-card: #232935;
-  --color-elevated: #2a3140;
-  --color-text-primary: #f1f3f7;
-  --color-text-secondary: #c5ccda;
-  --color-text-muted: #929db0;
-  --color-border: #384151;
-  --color-border-strong: #526077;
-  --color-accent-violet: #a98cf8;
-  --color-accent-cyan: #42cbe3;
-  --color-focus-ring: #42cbe3;
-  --color-focus: var(--color-focus-ring);
-  --color-on-accent: #171a21;
-  --color-selection: rgb(167 139 250 / 28%);
-  --color-glow: rgb(169 140 248 / 13%);
-  --color-glow-cyan: rgb(66 203 227 / 10%);
+  --color-background: #141e1c;
+  --color-surface: #22302c;
+  --color-card: #22302c;
+  --color-elevated: #2f3c39;
+  --color-text-primary: #ecede5;
+  --color-text-secondary: #c9ccc5;
+  --color-text-muted: #a3a7a1;
+  --color-border: #3b4340;
+  --color-border-strong: #828883;
+  --color-accent-primary: #68c9ba;
+  --color-accent-secondary: #e1a17c;
+  --color-accent-secondary-text: #e1a17c;
+  --color-focus-ring: #68c9ba;
+  --color-on-accent: #141e1c;
+  --color-selection: rgb(104 201 186 / 32%);
+  --color-glow: rgb(104 201 186 / 15%);
+  --color-glow-secondary: rgb(225 161 124 / 11%);
   --color-highlight: rgb(255 255 255 / 6%);
-  --shadow-card: 0 22px 62px rgb(5 7 11 / 35%);
-  --shadow-card-hover: 0 28px 78px rgb(5 7 11 / 48%);
-  --shadow-control: 0 8px 26px rgb(5 7 11 / 30%);
+
+
+  --shadow-card: 0 18px 50px rgb(0 0 0 / 38%);
+  --shadow-card-hover: 0 24px 64px rgb(0 0 0 / 52%);
+  --shadow-control: 0 7px 22px rgb(0 0 0 / 32%);
 }

@@ -23,7 +23,7 @@ export default function FeaturedWorkSection({
           title={copy.heading}
         />
         <Link
-          className="premium-link mb-7 rounded-sm font-medium text-[var(--color-accent-cyan)] hover:underline"
+          className="premium-link mb-7 rounded-sm font-medium text-[var(--color-accent-primary)] hover:underline"
           href={routes.projects}
         >
           View all projects

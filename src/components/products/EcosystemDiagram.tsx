@@ -26,7 +26,7 @@ export default function EcosystemDiagram({ modules }: { modules: readonly Produc
           {modules.map((productModule, index) => (
             <Fragment key={productModule.id}>
               <li className="premium-card-interactive rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--color-elevated)] p-5 shadow-[var(--shadow-control)]">
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--color-accent-violet)]">
+                <p className="eyebrow text-xs font-semibold uppercase tracking-[0.14em] text-[var(--color-accent-secondary-text)]">
                   Step {index + 1}
                 </p>
                 <p className="mt-3 font-semibold">{productModule.roleLabel}</p>
@@ -37,7 +37,7 @@ export default function EcosystemDiagram({ modules }: { modules: readonly Produc
               {index < modules.length - 1 ? (
                 <li
                   aria-hidden="true"
-                  className="flex items-center justify-center text-2xl text-[var(--color-accent-cyan)]"
+                  className="flex items-center justify-center text-2xl text-[var(--color-accent-primary)]"
                 >
                   <span className="rotate-90 md:rotate-0">→</span>
                 </li>

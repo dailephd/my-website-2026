@@ -29,9 +29,9 @@ for (const route of routes) {
   });
 }
 
-test('theme toggle has an accessible name', async ({ page }) => {
+test('appearance control has an accessible name', async ({ page }) => {
   await page.goto('/');
-  const toggle = page.getByRole('button', { name: /Theme preference/ });
+  const toggle = page.getByRole('button', { name: /^Appearance/ });
   await expect(toggle).toBeVisible();
 });
 

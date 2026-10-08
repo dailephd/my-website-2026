@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import NavLink from '@/components/layout/NavLink';
 import SiteLogoMark from '@/components/layout/SiteLogoMark';
-import ThemeToggle from '@/components/theme/ThemeToggle';
+import AppearanceControl from '@/components/theme/AppearanceControl';
 import Container from '@/components/ui/Container';
 import type { NavigationLink } from '@/types/content';
 
@@ -33,7 +33,7 @@ export default function Header({
               ))}
             </ul>
           </nav>
-          <ThemeToggle />
+          <AppearanceControl />
         </div>
       </Container>
     </header>

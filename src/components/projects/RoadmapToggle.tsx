@@ -12,7 +12,7 @@ export default function RoadmapToggle({ children }: { children: ReactNode }) {
       <button
         aria-controls={panelId}
         aria-expanded={open}
-        className="theme-transition inline-flex min-h-9 items-center gap-1.5 rounded-[var(--radius-control)] border border-[var(--color-border)] bg-[var(--color-elevated)] px-3 py-1.5 text-sm font-semibold text-[var(--color-text-primary)] hover:border-[var(--color-accent-cyan)]"
+        className="theme-transition inline-flex min-h-9 items-center gap-1.5 rounded-[var(--radius-control)] border border-[var(--color-border)] bg-[var(--color-elevated)] px-3 py-1.5 text-sm font-semibold text-[var(--color-text-primary)] hover:border-[var(--color-accent-primary)]"
         onClick={() => setOpen((value) => !value)}
         type="button"
       >

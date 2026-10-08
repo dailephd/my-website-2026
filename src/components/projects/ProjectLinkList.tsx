@@ -12,7 +12,7 @@ export default function ProjectLinkList({ links }: { links: readonly ProjectLink
       {links.map((link) => (
         <li key={link.id}>
           <Link
-            className="rounded-sm text-sm font-medium text-[var(--color-accent-cyan)] underline decoration-transparent underline-offset-4 hover:decoration-current"
+            className="rounded-sm text-sm font-medium text-[var(--color-accent-primary)] underline decoration-transparent underline-offset-4 hover:decoration-current"
             href={link.href}
             rel={link.external ? 'noreferrer' : undefined}
             target={link.external ? '_blank' : undefined}

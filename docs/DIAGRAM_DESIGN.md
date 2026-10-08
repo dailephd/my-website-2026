@@ -87,7 +87,7 @@ Use a polished developer-education technical infographic style with:
 - Clear system relationships
 - Visible connector shafts
 - Proportionate arrowheads
-- Restrained violet and cyan accents
+- Restrained primary and secondary palette accents
 - Consistent semantic colors
 - Moderate corner rounding
 - Subtle command-center atmosphere
@@ -352,7 +352,7 @@ Use:
 - A document, package, file, or archive icon
 - A slightly stronger border
 - A compact description
-- A restrained violet or cyan accent
+- A restrained primary or secondary palette accent
 
 Do not use novelty shapes that reduce readability.
 
@@ -417,7 +417,7 @@ A primary orchestration or control flow may use:
 
 - `var(--accent-primary)`
 
-Do not choose between those colors arbitrarily. Use cyan for primary system or data movement and violet for orchestration or control flow.
+Do not choose between those colors arbitrarily. Use the primary accent (`--diagram-flow-data`) for primary system or data movement and the secondary accent (`--diagram-flow-control`) for orchestration or control flow. Hues come from the active palette (docs/DESIGN.md); the role distinction, not the hue, carries the meaning.
 
 ### 8.2 Secondary Connectors
 
@@ -551,13 +551,13 @@ Use existing tokens from `DESIGN.md`.
 
 Primary system or data flow:
 
-- `var(--accent-secondary)`
-- Cyan family
+- `var(--diagram-flow-data)` (maps to `--color-accent-primary`)
+- Primary accent family
 
 Orchestration, control, alternate processing, or coordination:
 
-- `var(--accent-primary)`
-- Violet family
+- `var(--diagram-flow-control)` (maps to `--color-accent-secondary`)
+- Secondary accent family
 
 Successful continuation, completion, valid state, committed state:
 
