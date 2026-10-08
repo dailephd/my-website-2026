@@ -3,6 +3,7 @@
 Read and follow:
 
 @agents.txt
+@manifest.txt
 
 Claude Code users should also read:
 

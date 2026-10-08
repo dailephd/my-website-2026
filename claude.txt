@@ -1,5 +1,8 @@
 my-website-2026 Claude Code quick instructions
 
+MANDATORY COMPANION MANIFEST
+Before inspecting or changing this repository, read root manifest.txt in full alongside this guide. It defines current directory ownership and the required owner/test preflight. Some older paths, routes, visual rules, and example commands below are historical; verify them against the current tree, docs/CONTRACT.md, docs/DESIGN.md, and manifest.txt. Do not execute stale absolute-path examples or reintroduce superseded routes. Record material conflicts instead of guessing.
+
 Project identity
 
 - `my-website-2026`

@@ -1,0 +1,656 @@
+MY-WEBSITE-2026 — REPOSITORY STRUCTURE AND AGENT OWNERSHIP MANIFEST
+Version: 1.0 (read-only GitHub audit; 2026-10-08)
+Repository: https://github.com/dailephd/my-website-2026
+Inspected ref: main @ 60b76a568dff3ce29888abfe81d8ea78cbea70bb
+Intended destination in the local repository: manifest.txt (repository root)
+Authoritative local working directory reported by the user: C:\Users\daile\Projects\my-website-2026
+Evidence: recursive GitHub tree (327 entries; 60 tracked directories; tree not truncated),
+         repository agent guides, architecture/contract/component map, design/workflow docs,
+         package scripts and selected implementation owners.
+
+IMPORTANT SCOPE NOTE
+This is an as-committed GitHub MAIN inventory, not a scan of the user's Windows
+working directory. An agent must compare it against its ACTUAL local checkout,
+including untracked and ignored paths, before altering any file. GitHub tree
+presence proves tracked path existence, not that a component is reachable at
+runtime. 'Live', 'orphaned' and 'legacy' labels below reflect the current
+component map and targeted source inspection; verify dependencies before removal.
+
+==========================================================================
+00. MANDATORY BOOTSTRAP AND INSTRUCTION HIERARCHY
+==========================================================================
+
+ALL CODING AGENTS, INCLUDING CLAUDE CODE AND CODEX, MUST DO THIS BEFORE
+EXPLORING OR EDITING SOURCE, TESTS, SCRIPTS, DOCUMENTATION OR DEPLOYMENT CONFIG:
+
+  1. Locate the actual Git repository root; verify git branch, HEAD and status.
+  2. Read repository-root AGENTS.md and CLAUDE.md when present; these are entrypoints.
+  3. Read agents.txt (full agent operating guide).
+  4. Claude Code must ALSO read claude.txt; other agents read it when applicable.
+  5. Read this root manifest.txt IN FULL, in the SAME preflight phase.
+  6. Read task-relevant current project contract/design documents identified here.
+  7. Resolve the existing owner and nearest test using the current tree and
+     bounded my-dev-kit retrieval before writing code.
+  8. Present a short scope/owner/test/validation map and only then proceed.
+
+REQUIRED BOOTSTRAP RULE FOR AGENT ENTRYPOINTS:
+  AGENTS.md and CLAUDE.md should both explicitly direct agents to read:
+      @manifest.txt
+  in addition to their existing @agents.txt and @claude.txt references.
+  The start of agents.txt and claude.txt should also point to manifest.txt.
+  Until those links are added and committed, this document cannot FORCE agents
+  that never discover it to read it. Installing the links is a separate,
+  narrow repository edit; it is NOT performed by producing this artifact.
+
+If required instructions conflict:
+  - Explicit, latest user-approved task scope decides what may change.
+  - Actual current source, dependency graph, tests, and runtime evidence decide
+    what is IMPLEMENTED, but never silently overturn an approved future plan.
+  - docs/CONTRACT.md and docs/DOMAIN_MODEL.md define intended route/data behavior.
+  - docs/DESIGN.md defines the current color/visual design authority.
+  - docs/DIAGRAM_DESIGN.md governs diagram-specific visual grammar.
+  - docs/ARCHITECTURE.md and this manifest define layer placement/ownership.
+  - docs/COMPONENT_MAP.md records live/orphaned component classifications.
+  - Agent guides and legacy scaffold docs can be stale: log any contradiction.
+  - Do not quietly pick whichever version is easiest to implement. Escalate a
+    material conflict and propose a scoped correction with evidence.
+
+A manifest is a LOCATION/OWNERSHIP MAP, not permission to create, modify, move,
+archive, delete, commit, push or deploy files. This is not a cleanup allowlist.
+
+==========================================================================
+01. PROJECT IDENTITY AND NON-NEGOTIABLE ARCHITECTURE
+==========================================================================
+
+Project: dailephd LLC's business, technical projects, AI work and scientific
+background website. Next.js 15 App Router, React 19, TypeScript, Tailwind 3,
+Vitest, Playwright; Resend is used ONLY for the contact email flow.
+
+There is ONE website application. No monorepo, apps/, packages/, separate CMS,
+Postgres, ORM, Python analysis service, extra API service, cloned content
+package, or parallel frontend design-system architecture.
+
+Dependency direction (simplified):
+  src/types -> src/content -> src/lib/content -> src/app -> feature components
+  src/lib/seo -> src/app/metadata + src/components/seo
+  src/components/ui -> shared presentational behavior only
+  src/components/theme + src/styles -> shared site appearance
+  src/app/api/contact -> src/lib/server -> external Resend provider
+
+Use existing types, records, adapters, route configuration and components.
+Do not import React into src/content; do not put project-specific records in
+src/components/ui; do not hardcode content arrays in src/app routes; do not
+import feature/page-level components into lower content/type layers.
+
+REAL CURRENT PUBLIC ROUTES (from src/app and src/lib/routes.ts):
+  /                         src/app/page.tsx
+  /projects                 src/app/projects/page.tsx
+  /projects/my-dev-kit      src/app/projects/my-dev-kit/page.tsx
+  /publications             src/app/publications/page.tsx
+  /about                    src/app/about/page.tsx
+  /contact                  src/app/contact/page.tsx
+  POST /api/contact         src/app/api/contact/route.ts
+  /work                     PERMANENT REDIRECT to /projects in next.config.ts
+
+NOT ACTIVE ROUTES: /products, /products/my-dev-kit, /writing; do not rebuild
+legacy page trees to make obsolete tests pass. Never infer a route from an
+orphaned component or a historical milestone document.
+
+CURRENT APPEARANCE CONTRACT:
+  Six palette IDs: mineral, oxblood, signal, cobalt, amber, original.
+  Labels: Mineral Research; Oxblood Atelier; Signal Green;
+          Cobalt & Terracotta; Amber & Graphite; Violet & Graphite.
+  Default palette: mineral. Modes: light / dark / system.
+  No special-effects Off/Quiet/Expressive feature, no PaletteEffects owner,
+  no data-fx state. Ordinary hover/focus/reduced-motion-safe transitions remain.
+  Preserve the established Violet & Graphite historical brand identity.
+
+CURRENT ECOSYSTEM STORY:
+  Four connected modules: my-dev-kit, my-dev-kit-orchestrator,
+  my-frontend-observer, my-dev-kit-lab.
+  my-dev-kit = bounded static repository evidence;
+  Orchestrator = workflow/lifecycle management, NOT agent execution;
+  Observer = browser/runtime evidence, NOT source editing;
+  Lab = OPTIONAL assurance, NOT a mandatory pipeline stage;
+  a human or coding agent performs source edits.
+
+==========================================================================
+02. COMPLETE TRACKED DIRECTORY OWNERSHIP INVENTORY
+==========================================================================
+
+Exactly 60 directories were returned by the recursive GitHub MAIN tree.
+Entries marked 'legacy', 'orphaned', 'reserved', or 'asset placeholder' are
+NOT deletion approvals. Check actual imports, runtime and retained plans first.
+
+PATH                                           ROLE / OWNERSHIP
+----                                           ----------------
+
+.github/                                       GitHub collaboration and automation policy;
+                                               .github/pull_request_template.md owns PR template.
+.github/workflows/                             ci.yml owns GitHub typecheck/lint/content/link/
+                                               unit/build checks and Docker check if configured;
+                                               vercel-preview-checks.yml owns PR validation.
+                                               Not the Vercel production deployment engine.
+
+docs/                                          Maintainer-facing project architecture, current
+                                               contracts, design, workflows and milestone history.
+docs/_template/                                LEGACY planning templates (SPEC/PLAN/PROMPT);
+                                               not runtime code, do not auto-apply to all tasks.
+docs/components/                               Historical component/feature plan/spec library;
+                                               these are often milestone-era references, NOT a
+                                               live component inventory; current authority is
+                                               docs/COMPONENT_MAP.md + actual source.
+docs/components/contact/                       Historical ContactCard/ContactPanel/channel
+                                               specification. Current live contact is ContactForm.
+docs/components/content/                       Historical local content and adapter conventions;
+                                               check present src/content and src/lib/content.
+docs/components/gallery/                       Legacy gallery plans/specs, no live gallery route.
+docs/components/layout/                        Layout shell/spec history; compare live SiteShell,
+                                               Header, Footer and AppearanceControl wiring.
+docs/components/product-cards/                 Historical product-family/index cards plan/spec;
+                                               older three-step diagram language may be stale.
+docs/components/project-cards/                 Project card and archived work design history.
+docs/components/publication-cards/             Publication card UX/spec history; compare current
+                                               PublicationCard and its behavior contract.
+docs/components/roadmap/                       Historical roadmap UI plans, some old widgets
+                                               removed; current detail page uses release snapshots.
+docs/components/seo/                           SEO specification/history; current source lives
+                                               under src/lib/seo and src/app metadata routes.
+docs/components/theme/                         Theme plan and CURRENT six-palette spec; inspect
+                                               spec alongside docs/DESIGN.md and implementation.
+docs/components/writing/                       Legacy writing plans/specs; /writing not routed.
+
+public/                                        Next.js static assets exposed from site root.
+public/files/                                  Public downloadable files; resume.pdf exists.
+                                               README.md describes file handling; protect privacy.
+public/icons/                                  SVG logo/favicons, raster icon variants and
+                                               apple touch icon; site.webmanifest is in public/.
+public/images/                                 Public static imagery grouped by subject/purpose.
+public/images/gallery/                         Asset placeholder README only; no gallery media
+                                               files tracked at inspected commit.
+public/images/og/                              Existing Open Graph PNG previews + README;
+                                               generated assets have explicit build scripts.
+public/images/profile/                         README placeholder for future verified profile art.
+public/images/projects/                        Project asset grouping; README placeholder.
+public/images/projects/my-dev-kit/             Dedicated my-dev-kit project imagery placeholder;
+                                               README only at inspected commit.
+
+scripts/                                       One-off utilities, dev setup, validation and
+                                               release readiness. Not app runtime components.
+
+src/                                           Website application source root.
+src/app/                                       Next.js route segments, root layout, metadata,
+                                               styles entry, 404, sitemap and robots.
+src/app/about/                                 /about route page, profile/research/education;
+                                               obtain content via adapters.
+src/app/api/                                   Route-handler API boundary; do not create new
+                                               services or server modules here by default.
+src/app/api/contact/                           POST /api/contact; validates/honeypot/errors then
+                                               calls src/lib/server/send-contact-email.ts.
+src/app/contact/                               /contact page, ContactForm and profile links.
+src/app/projects/                              /projects index, current product catalog followed
+                                               by archived ProjectCards.
+src/app/projects/my-dev-kit/                   /projects/my-dev-kit, live ecosystem architecture
+                                               visual and four product panels/release snapshots.
+src/app/publications/                          /publications page, verified records only.
+
+src/components/                                Reusable React UI, arranged by presentation role.
+src/components/contact/                        ContactForm LIVE. ContactCard and ContactPanel
+                                               ORPHANED per current component map; do not revive
+                                               as a replacement for the working form.
+src/components/diagrams/                       LIVE shared DiagramCanvas, Node, ConnectorPath,
+                                               ArrowMarker, Label, Summary; styles from
+                                               src/styles/diagrams.css; no local duplicate grammar.
+src/components/gallery/                        GalleryEmptyState/Grid/MediaCard/ProjectScreenshot
+                                               retained but not reachable from live routes.
+src/components/layout/                         LIVE shell/navigation/header/footer/logo/container;
+                                               MobileNav.tsx is an orphaned placeholder.
+src/components/products/                       ProductCard/ProductGrid (index), ProductFamilyHero
+                                               (ecosystem detail). EcosystemDiagram and
+                                               EcosystemModuleCard are orphaned older variants.
+src/components/projects/                       Archived ProjectCard/Grid/links; LIVE
+                                               ProductArchitectureVisual (ecosystem topology),
+                                               ProductLinks, RoadmapTimeline, RoadmapToggle.
+src/components/publications/                   PublicationList/Card including author/DOI,
+                                               abstract and BibTeX behavior.
+src/components/roadmap/                        RoadmapPreview and RoadmapUpdatedLabel utilities;
+                                               avoid resurrecting removed full roadmap UI.
+                                               Check actual live import of optional preview.
+src/components/sections/                       HomeHero, FeaturedWorkSection, TechnicalFocus,
+                                               BackgroundSection LIVE; GalleryPreviewSection
+                                               and PlannedPage are orphaned per component map.
+src/components/seo/                            JsonLd structured-data renderer; values built
+                                               through src/lib/seo.
+src/components/theme/                          LIVE ThemeProvider, AppearanceControl,
+                                               theme-script (palette + light/dark/system),
+                                               persisted/prepaint state.
+src/components/ui/                             Generic, domain-agnostic Card/Badge/LinkButton/
+                                               SectionHeader/Container; Button and
+                                               VisuallyHidden documented as orphaned.
+src/components/writing/                        WritingCard and WritingEmptyState retained;
+                                               no current live writing route.
+
+src/content/                                   Local typed website content. Single source for
+                                               copy/links/projects/products/roadmaps/publications;
+                                               do not duplicate records in components or pages.
+src/lib/                                       Cross-cutting pure helpers, adapter/model,
+                                               theme logic, server helper boundary, routes.
+src/lib/content/                               get-* adapters, validation, filtering/sorting,
+                                               view models and barrel exports. Do not clone
+                                               adapter logic in pages or a parallel data layer.
+src/lib/seo/                                   Per-route metadata, Open Graph, absolute URLs,
+                                               and structured-data builders.
+src/lib/server/                                Server-only external-provider helper;
+                                               send-contact-email.ts uses Resend; no DB layer.
+src/styles/                                    CSS semantic tokens, color palettes, theme,
+                                               shared static utilities, centralized diagrams.
+                                               No effect animation subsystem; no per-route CSS
+                                               forks of shared visual primitives.
+src/types/                                     Reusable type definitions for structured domain
+                                               records and appearance state. No React views.
+
+tests/                                         Test root and shared test setup.
+tests/accessibility/                           Basic a11y unit/invariant tests.
+tests/content/                                 Vitest content, API, UI component, design-token,
+                                               helper, validation and release-readiness tests.
+tests/e2e/                                     Playwright route, navigation, appearance, product,
+                                               contact, accessibility, responsive, SEO tests;
+                                               currently includes stale /work/gallery expectations.
+
+DASHBOARD COUNT CHECK: The inventory above must continue to cover EVERY folder
+present in the current tracked Git tree. If the local tree contains more paths,
+they must be classified before editing; never silently adopt a new folder.
+
+==========================================================================
+03. EXACT FILE-LEVEL OWNERSHIP ANCHORS (READ BEFORE CHANGING)
+==========================================================================
+
+ROUTES / NAVIGATION / SEO
+  src/lib/routes.ts                     route keys for internal navigation
+  next.config.ts                        legacy /work -> /projects permanent redirect
+  src/app/layout.tsx                    root ThemeScript/ThemeProvider/SiteShell,
+                                        metadata icons/manifest and JSON-LD
+  src/app/page.tsx                      homepage component assembly only
+  src/app/projects/page.tsx             current products + archived projects
+  src/app/projects/my-dev-kit/page.tsx   ecosystem detail page
+  src/app/about/page.tsx                about profile display
+  src/app/publications/page.tsx         publications display
+  src/app/contact/page.tsx              contact display
+  src/app/not-found.tsx                 Next.js not-found view
+  src/app/robots.ts                     robots content
+  src/app/sitemap.ts                    sitemap derived from site metadata
+  src/lib/seo/metadata.ts               routeMetadata, buildPageMetadata
+  src/lib/seo/open-graph.ts             OG image builder
+  src/lib/seo/site-url.ts               NEXT_PUBLIC_SITE_URL resolution
+  src/lib/seo/structured-data.ts        schema/JSON-LD builders
+
+STRUCTURED CONTENT
+  src/content/profile.ts                business/person intro, scientific background,
+                                        AI evaluation/profile/education content
+  src/content/home.ts                   homepage copy and section descriptions
+  src/content/links.ts                  nav/CTA/footer link records
+  src/content/projects.ts               project records (incl archived)
+  src/content/products.ts               my-dev-kit family/modules and product index
+                                        (BioLit, Le Crawler, iworkhere.space)
+  src/content/roadmaps.ts               structured roadmap lanes/phases/milestones
+  src/content/publications.ts           verified publication records
+  src/content/contact.ts                contact copy/profile links
+  src/content/resume.ts                 resume download metadata; check active consumer
+  src/content/gallery.ts                gallery records retained, not live route
+  src/content/writing.ts                writing records retained, not live route
+  src/content/index.ts                  content exports, including dormant records
+  src/content/legacy-import-notes.md    placeholder notes; not implementation authority
+  src/lib/content/get-*.ts              domain-specific adapters; sorting/filters,
+                                        validation and ready-to-render models
+  src/lib/content/validate-content.ts   content validation helpers
+  src/lib/content/index.ts              adapter exports (exports != live-route reachability)
+
+PRESENTATION / DESIGN
+  src/components/layout/SiteShell.tsx   shell, header/main/footer and skip link
+  src/components/layout/Header.tsx      live nav and appearance selection
+  src/components/theme/ThemeProvider.tsx palette/mode state + persistence
+  src/components/theme/AppearanceControl.tsx accessibility-aware controls
+  src/components/theme/theme-script.tsx pre-hydration preference initialization
+  src/lib/theme.ts                      validators / application of palette & mode
+  src/lib/constants.ts                  palette IDs, labels, storage keys, defaults
+  src/types/theme.ts                    palette and color-mode types
+  src/styles/tokens.css                 Mineral/default semantic tokens
+  src/styles/theme.css                  Mineral dark-mode tokens
+  src/styles/palettes.css               alternative light/dark palette definitions
+  src/styles/utilities.css              shared cards, surfaces, hero style, interaction
+  src/styles/diagrams.css               global diagram visual roles / node/connector
+  src/app/globals.css                   stylesheet import order + global styling
+  src/components/projects/ProductArchitectureVisual.tsx
+                                        LIVE exact ecosystem topology and content;
+                                        use shared diagram primitives; do not duplicate
+  src/components/projects/RoadmapTimeline.tsx
+                                        per-module release snapshot display
+  src/components/products/ProductCard.tsx
+                                        shared product/index card
+  src/components/products/ProductGrid.tsx
+                                        featured/standard products placement
+  src/components/publications/PublicationCard.tsx
+                                        publication rendering behavior (DOI/abstract/BibTeX)
+  src/components/contact/ContactForm.tsx
+                                        client-side contact form UX and validation
+
+SERVER / INTEGRATION
+  src/app/api/contact/route.ts          request validation + API status semantics
+  src/lib/server/send-contact-email.ts  only live email-provider helper
+  scripts/send-contact-test.mjs         opt-in REAL contact email; do not run casually
+  scripts/sync-publications.mjs         optional network ORCID sync; opt-in only
+
+TOOLS / INFRA
+  scripts/validate-content.mjs         structured record validation
+  scripts/validate-links.mjs           route/URL/SEO link checks
+  scripts/lint.mjs                     repository-specific constraints
+  scripts/check-release-readiness.mjs  pre-release gate runner, not deployer
+  scripts/generate-favicons.mjs        derived favicon asset generation
+  scripts/generate-og-images.ts        OG image generator; verify current invocation
+  scripts/import-legacy-content.ts    historical migration tool; not normal update path
+  scripts/Check-DevEnv.ps1             Windows dev prereq checking
+  scripts/Start-Dev.ps1                Windows dev helper
+  scripts/Start-DockerDesktop.ps1      optional Docker Desktop startup helper
+  .github/workflows/ci.yml            GitHub source checks
+  .github/workflows/vercel-preview-checks.yml  preview/PR source validation
+  Dockerfile / docker-compose.yml     optional local production-style container
+  vercel.json                          Vercel Next.js framework config
+
+CONFIGURATION / FILE HYGIENE
+  package.json, package-lock.json       scripts and dependency ownership
+  tsconfig.json                         TypeScript/path alias config
+  vitest.config.ts, tests/setup.ts      unit/component test configuration
+  playwright.config.ts                  browser E2E config and development port
+  tailwind.config.ts, postcss.config.js styling build configuration
+  .eslintrc.json, .prettierrc           lint/format config
+  .env.example                          documented variable NAMES only; no secrets
+  .gitignore, .dockerignore             ignore boundaries; check actual Git index
+  next-env.d.ts                         Next.js generated declaration contract
+  AGENTS.md / CLAUDE.md                 coding-agent entrypoints (already tracked)
+  agents.txt / claude.txt               detailed agent instructions (already tracked)
+  README.md                             user-facing repo overview and operations
+
+==========================================================================
+04. DESIGNATED DOCUMENTATION AUTHORITIES
+==========================================================================
+
+  docs/PROJECT_OVERVIEW.md    current business/site purpose and route context
+  docs/ARCHITECTURE.md        current layers, dependency rules and app structure
+  docs/CONTRACT.md            behavioral API, route, content, UI requirements
+  docs/DOMAIN_MODEL.md        content-domain type ownership
+  docs/COMPONENT_MAP.md       component live/orphan mapping
+  docs/DESIGN.md              six-palette website design, contrast and UI principles
+  docs/DIAGRAM_DESIGN.md      shared diagram layout, paths, labels and interactions
+  docs/DIAGRAMS.md            Mermaid explanations of site architecture/workflow
+  docs/CI_CD.md               GitHub Actions + Vercel integration policy
+  docs/WORKFLOWS.md           local/content/publication/contact/release procedures
+  docs/RELEASE_READINESS.md    release gates and known manual checks
+  docs/QA_CHECKLIST.md        human-facing route/visual/accessibility checks
+  docs/BRANCHING.md           branch, commit, merge and push policies
+  docs/ROADMAP.md             agreed future direction, not code status by itself
+  docs/milestones.json        milestone history/planned sequence; do not erase
+  docs/project_tree.txt       textual directory map; verify against actual Git tree
+  docs/component_registry.md  broad component inventory, includes historical items
+  docs/dev_logging.md         historical change log; do not overwrite with summary
+  docs/lower_level_rules.md   TODO scaffold: NOT an implemented rules authority
+  docs/components/*/PLAN.md  historical plans; not auto-authorized future work
+  docs/components/*/SPEC.md  historical/current specifications; compare source
+  docs/_template/*          scaffolding for old plans/prompts only
+
+AGENT READ CHOICES BY TASK (always after the bootstrap):
+  Feature/content: ARCHITECTURE + CONTRACT + DOMAIN_MODEL + relevant tests.
+  UI/theme: DESIGN + COMPONENT_MAP + current theme/style owners.
+  Diagram: DESIGN + DIAGRAM_DESIGN + components/diagrams + diagrams.css.
+  Contact/API: CONTRACT + ContactForm + route.ts + send-contact-email + tests.
+  SEO: CONTRACT + src/lib/seo + src/app/{robots,sitemap} + SEO tests.
+  Docs cleanup: complete affected document + its historical state as needed.
+  Release/deploy: BRANCHING + RELEASE_READINESS + CI_CD + current external proof.
+
+==========================================================================
+05. HIGH-PRIORITY DOCUMENTATION DRIFT AND CLEANUP CANDIDATES
+==========================================================================
+
+These are OBSERVED discrepancies/candidates, not instructions to delete or
+silently overwrite anything:
+
+D1. agents.txt and claude.txt identify a legacy Z: drive path and list older
+    /work, /products, /products/my-dev-kit, /writing routes as current. The
+    actual source has /projects, /projects/my-dev-kit, /publications, /about,
+    /contact; /work is redirect-only. Refresh these guides deliberately.
+
+D2. agents.txt / claude.txt still prescribe a violet/cyan-only visual system.
+    Current production has six palettes, Mineral default; Violet & Graphite
+    is one selectable palette, not the global default. docs/DESIGN.md is the
+    current design authority. Ensure agent guides and stale QA docs agree.
+
+D3. agents.txt's example my-dev-kit index path points OUTSIDE the project root
+    and at an obsolete Z: path. Fix to use project-contained index/tool/tmp
+    storage under .my-dev-kit-context/ and .my-dev-kit-workflow/.
+
+D4. docs/ARCHITECTURE.md has a legacy line saying browser storage is "theme
+    preference only"; current source stores palette AND color mode separately.
+    It also contains an older global violet/cyan-only invariant. Reconcile
+    factual claims without compressing unrelated architecture.
+
+D5. docs/PROJECT_PLAN.md still says M13/M14 planned; other documentation and
+    scripts show later quality/release work occurred. Treat as status drift
+    requiring proper milestone/history comparison, NOT license to drop plans.
+
+D6. docs/QA_CHECKLIST.md still describes a single violet/cyan visual identity;
+    it also references three ecosystem panels, whereas four modules are in the
+    current live diagram. Reconcile against the actual route and current tests.
+
+D7. docs/components/product-cards/SPEC.md and other milestone-era specs can
+    describe the superseded 3-product pipeline. Do not use their old structure
+    as implementation requirements for ProductArchitectureVisual.
+
+D8. docs/COMPONENT_MAP.md versus docs/component_registry.md may disagree over
+    reachability of optional RoadmapPreview/UpdatedLabel and other items. Run
+    current import/reachability analysis before a deletion decision.
+
+D9. docs/lower_level_rules.md remains largely TODO; it is not sufficient as a
+    convention enforcement mechanism. Put durable new rules in the agent
+    guides/manifest and executable checks where justified.
+
+D10. Current tests/e2e/ include legacy /work and gallery expectations, and
+     old contact and iworkhere.space assertions. Release report reported ten
+     stale E2E failures. Determine exact current failures and protect current
+     behavior before changing or removing tests.
+
+D11. Component families documented as orphaned:
+     - src/components/layout/MobileNav.tsx
+     - src/components/sections/GalleryPreviewSection.tsx, PlannedPage.tsx
+     - src/components/products/EcosystemDiagram.tsx, EcosystemModuleCard.tsx
+     - src/components/contact/ContactCard.tsx, ContactPanel.tsx
+     - src/components/gallery/*
+     - src/components/writing/*
+     - src/components/ui/Button.tsx, VisuallyHidden.tsx
+     Related dormant content/adapters/types may still be imported by tests,
+     barrels or reserved for planned work. Never bulk-delete just from names.
+
+D12. The Violet & Graphite palette has historically reported contrast floors
+     below WCAG AA for some functional text/border roles. Treat accessibility
+     correction as a separate approved, measured visual change, not a broad
+     conversion of the brand palette.
+
+D13. AGENTS.md and CLAUDE.md currently forward to agents.txt/claude.txt but
+     DO NOT mention manifest.txt. Install that hook explicitly so the manifest
+     is actually read by future agents.
+
+D14. Root .gitignore includes AGENTS.md, CLAUDE.md, agents.txt, claude.txt
+     even though they are CURRENTLY TRACKED in Git. Ignore patterns do not
+     retroactively untrack existing files. Do not assume agent instructions
+     are uncommitted or hidden from Git. Inspect `git ls-files` when changing
+     instruction visibility, and make a separate, approved decision.
+
+D15. Core manifest instructions must be checked against both README and live
+     source after a restructuring. Do not allow new folders without inventory
+     update or silently remove existing ownership entries.
+
+CLEANUP ORDER RECOMMENDED (separate reviewed tasks):
+  Phase A — install manifest + agent-guide hooks, reconcile factual guide drift.
+  Phase B — inventory and verify live imports/orphaned files; issue KEEP/MOVE/
+            ARCHIVE/DELETE proposals with evidence; no removal by default.
+  Phase C — reconcile stale E2E assertions with current approved route/content.
+  Phase D — decide accessibility refinements with real computed-style evidence.
+  Phase E — after user-approved changes, update mapping docs/tests and release.
+
+==========================================================================
+06. AGENT PLACEMENT DECISION CHECKLIST (MANDATORY)
+==========================================================================
+
+Before CREATING A FILE, answer all of:
+  What is its responsibility? Which CURRENT directory already owns it?
+  What existing file/class/function should be extended instead?
+  What imports it and what does it import?
+  Does its proposed dependency direction obey docs/ARCHITECTURE.md?
+  Which content/adapters/types/tests require changes together?
+  Does the proposed feature create a parallel API, component, CSS token,
+  diagram primitive, roadmap store, content registry, server utility, or route?
+  Which current user-visible behavior must remain unchanged?
+
+Placement rules:
+  New page or route-handler                 -> existing segment in src/app/
+  New structured site content              -> existing file in src/content/
+  Content shape or invariant               -> src/types/ + adapter/validator
+  Sorting/filtering/content view-model     -> src/lib/content/ (existing owner)
+  Cross-page generic presentational UI     -> src/components/ui/ (no domain data)
+  Feature-specific rendering               -> matching src/components/<feature>/
+  Homepage narrative sections              -> src/components/sections/
+  Header/footer/shell                      -> src/components/layout/
+  Palette persistence/selection            -> src/components/theme/ + src/lib/theme.ts
+  Shared palette CSS semantics             -> src/styles/ (no palette-specific forks)
+  Shared diagram geometry grammar          -> src/components/diagrams/ + diagrams.css
+  Ecosystem flow TOPOLOGY                  -> ProductArchitectureVisual.tsx
+  Site metadata / JSON-LD                 -> src/lib/seo/ + src/app metadata
+  Contact server-provider integration      -> src/lib/server/ (not another service)
+  Static download, icon, OG, image asset   -> public/ matching asset subfolder
+  Validation/generation task               -> existing scripts/ owner
+  Unit/component/integration test          -> tests/content/ or tests/accessibility/
+  Browser-route E2E                        -> tests/e2e/
+  Project documentation                    -> docs/ existing authority
+  Temporary context/report/cache           -> project-local ignored workflow roots
+
+When unsure: STOP and return OWNER_UNRESOLVED with 1-3 candidate current
+owners and the exact additional evidence needed. Do not create a new layer.
+
+==========================================================================
+07. SAFE CLEANUP WORKFLOW AND ANTI-DRIFT GUARANTEES
+==========================================================================
+
+A. BEFORE PROPOSING DELETIONS
+  1. Snapshot Git branch, HEAD, tracked/untracked status and diff.
+  2. Enumerate the exact target paths (including ignored/generated paths).
+  3. Find static imports, exports, dynamic imports, alias re-exports,
+     Next.js route entrypoints, tests, scripts, deployment references and
+     documentation references.
+  4. Distinguish LIVE, TEST_ONLY, RESERVED/PLANNED, HISTORICAL, GENERATED,
+     UNKNOWN. Do not equate 'orphaned' with 'safe to remove'.
+  5. Check milestone/plan intent and published URL/resource compatibility.
+  6. Produce a file-by-file ledger: path; actual purpose; importer/caller;
+     affected routes; tests; proposed KEEP/MOVE/ARCHIVE/DELETE; evidence;
+     risks; exact user approval for deletion.
+  7. Stop and request approval for destructive removal or breaking routes.
+
+B. WHILE IMPLEMENTING AUTHORIZED CLEANUP
+  - Prefer deleting obsolete expectations/unused code ONLY after verifying
+    the replacement's actual behavior and tests; no blanket file deletion.
+  - Never replace complete docs/roadmaps with short summaries. Preserve the
+    planned/historical meaning and version sequence.
+  - No 'test.skip' or weakened tests merely to make CI green.
+  - Do not repair stale E2E by restoring removed routes/pages.
+  - No unexplained code migrations, dependency installs, styling redesign,
+    token-role inversions, private URL exposure or changes to client content.
+  - Test route/API behavior separately from static source correctness.
+  - Existing four-tool ecosystem semantics, optional Lab, Observer role,
+    archive ordering and six-palette appearance are protected boundaries.
+  - Do not generate a new manifest from stale docs: compare against Git tree.
+
+C. VALIDATION CHECKPOINTS
+  Focused checks: nearest tests for changed files and impacted contracts.
+  Normal project check: npm run ci (typecheck, lint, validate content/links,
+  unit tests, production build). NOTE: npm run ci DOES NOT run Playwright E2E.
+  Release gate: npm run check:release (not deployment or E2E).
+  User-visible changes: appropriate tests/e2e/ + headless visual/runtime
+  verification; use native Frontend Observer for supported spatial evidence.
+  External integration contact-email test and ORCID sync are opt-in ONLY.
+  Do not claim PASS when a required check failed, was skipped or not runnable.
+
+D. GIT / DEPLOYMENT AUTHORITY
+  - Never commit, push, merge, tag, release, change Vercel project or deploy
+    without explicit task-specific user permission.
+  - Stage reviewed exact paths, not `git add .` or `git add -A`.
+  - Never stage .my-dev-kit-context/, .my-dev-kit-workflow/,
+    .my-dev-kit-orchestrator/, .vercel/, .next/, node_modules/, screenshot,
+    log, local temp or credentials. Those paths need project-local ignore
+    hygiene; do not blindly broaden ignore rules.
+  - Do not reset/clean/stash/discard other people's uncommitted work.
+  - Verify remote/main before any authorized push; no force push.
+  - GitHub main -> Vercel integration may deploy production automatically;
+    validate exact deployment SHA instead of assuming a push deployed it.
+
+E. DOCUMENTATION/INVENTORY CHANGE RULE
+  If adding, deleting, moving, or renaming a directory or major component:
+    - update manifest.txt ownership entry;
+    - update docs/COMPONENT_MAP.md if reachability changed;
+    - update docs/component_registry.md if inventory changed;
+    - update docs/ARCHITECTURE.md only if architecture truly changed;
+    - update docs/project_tree.txt only if actual tree changed;
+    - preserve older documented plans and historical records;
+    - add/adjust tests that protect the changed contract.
+  Do this in the same authorized code change, not as a speculative rewrite.
+
+==========================================================================
+08. REQUIRED TASK PREFLIGHT AND REPORT SHAPE
+==========================================================================
+
+Every coding-agent task must report (briefly, before editing):
+  INSTRUCTION_READS: AGENTS.md, CLAUDE.md, agents.txt, claude.txt (as
+    applicable), manifest.txt — paths and versions actually present.
+  REPO_BASE: branch, HEAD, tracked/untracked state.
+  TASK_SCOPE: requested change, explicit non-goals and protected behavior.
+  OWNER_MAP: existing source files/symbols and their responsibilities.
+  RETRIEVAL: my-dev-kit indexed roots, search/lookup/slice/source evidence
+    when needed, and any justified full-file fallback.
+  TEST_MAP: nearest tests and final release/visual gates.
+  CHANGE_BOUNDARY: exact files likely to change and explicit forbidden areas.
+  DISCREPANCIES: conflicting or stale docs, with evidence.
+
+Every task's final report must include:
+  - actual files added/edited/moved/deleted; no inferred file names;
+  - path placement justification and preserved dependency direction;
+  - tests/commands with actual exit codes, separately E2E vs npm run ci;
+  - live runtime/Observer results when required, or precise limitation;
+  - documentation and manifest updates needed/completed;
+  - known baseline failures vs new regressions;
+  - git status, commit/push/deployment status by actual authorization;
+  - remaining blockers or NONE.
+
+Do not fabricate execution, file states, route presence, link availability,
+performance, publication, deployment, or accessibility certification.
+
+==========================================================================
+09. INSTALLATION / ENFORCEMENT NOTES (NOT PERFORMED BY THIS FILE)
+==========================================================================
+
+This manifest was produced outside the repository. To activate it, a separate
+coding-agent task with explicit approval should:
+  1. Copy manifest.txt BYTE-FOR-BYTE to the actual repository root.
+  2. In tracked AGENTS.md, add `@manifest.txt` to the existing read list.
+  3. In tracked CLAUDE.md, add `@manifest.txt` to the existing read list.
+  4. Prepend one short line to agents.txt and claude.txt:
+     "Before code or documentation changes, read manifest.txt alongside
+      this instruction file; follow the existing directory ownership map."
+  5. Reconcile obsolete route/path/design instructions in the agent guides
+     against current checked source; do not blindly replace entire guides.
+  6. Add a narrow repository preflight/documentation check (existing
+     scripts/lint.mjs or check-release-readiness.mjs if appropriate) that
+     verifies presence of manifest.txt and entrypoint references. This is
+     optional implementation work requiring a separate explicit approval;
+     the document's presence alone cannot prove an agent read it.
+  7. Validate exact files and Git diff; DO NOT commit/push unless authorized.
+
+LAST VERIFIED GITHUB SOURCE:
+  https://github.com/dailephd/my-website-2026/tree/60b76a568dff3ce29888abfe81d8ea78cbea70bb
+
+END OF MANIFEST

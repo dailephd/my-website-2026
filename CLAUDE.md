@@ -3,6 +3,7 @@
 Read and follow:
 
 @claude.txt
+@manifest.txt
 
 For the full coding-agent operating manual, also read:
 
