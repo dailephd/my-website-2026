@@ -127,11 +127,14 @@ for (const viewport of diagramViewports) {
   });
 }
 
-test('work page project cards visible at mobile viewport', async ({ page }) => {
+test('legacy /work URL redirects to mobile-safe current project cards', async ({ page }) => {
   await page.setViewportSize(mobileViewport);
   await page.goto('/work');
-  await expect(page.getByRole('heading', { level: 1, name: 'Selected work' })).toBeVisible();
-  await expect(page.getByRole('heading', { level: 3, name: 'my-dev-kit', exact: true })).toBeVisible();
+  await expect(page).toHaveURL(/\/projects$/);
+  await expect(page.getByRole('heading', { level: 1, name: 'Technical projects' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'my-dev-kit Ecosystem' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'BioLit' })).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
 });
 
 test('contact page cards visible at mobile viewport', async ({ page }) => {
