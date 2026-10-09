@@ -1,5 +1,9 @@
 # Product Ecosystem Components Specification
 
+> Historical M4/M6 design record. Its three-stage ecosystem flow predates the current four-product
+> architecture. Current route and diagram ownership are documented in `docs/CONTRACT.md`,
+> `docs/COMPONENT_MAP.md`, and `docs/DIAGRAM_DESIGN.md`.
+
 ## Purpose
 
 Define the M4 presentation of the my-dev-kit Ecosystem as one connected product family.

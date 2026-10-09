@@ -26,7 +26,7 @@ For type shapes see `docs/DOMAIN_MODEL.md`; this document focuses on *behavior*.
 | `/publications` | Renders only verified `Publication` records from `src/content/publications.ts` — no invented citations |
 | `/about` | Dai Le's professional background, research background, and education; primary identity surface for the individual (as opposed to the business-first homepage) |
 | `/contact` | Contact form (`ContactForm` → `POST /api/contact`) plus GitHub/LinkedIn profile links |
-| `/work` | 301 redirect to `/projects` (`next.config.ts`), not a page |
+| `/work` | Permanent HTTP 308 redirect to `/projects` (`next.config.ts`), not a page |
 
 Every route must be present in `routeMetadata` (`src/lib/seo/metadata.ts`); `sitemap.ts` derives
 strictly from that object, so a route not listed there cannot appear in the sitemap, and a

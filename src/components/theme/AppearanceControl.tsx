@@ -17,7 +17,7 @@ import { PALETTES, THEME_PREFERENCES } from '@/lib/constants';
 const themeLabels = { light: 'Light', dark: 'Dark', system: 'System' } as const;
 
 const optionLabel =
-  'theme-transition flex min-h-10 cursor-pointer items-center gap-2 rounded-[var(--radius-control)] border border-[var(--color-border)] bg-[var(--color-card)] px-3 py-2 text-sm font-medium text-[var(--color-text-secondary)] hover:border-[var(--color-border-strong)] peer-checked:border-[var(--color-accent-primary)] peer-checked:bg-[var(--color-elevated)] peer-checked:text-[var(--color-text-primary)] peer-checked:shadow-[inset_0_0_0_1px_var(--color-accent-primary)] peer-focus-visible:outline peer-focus-visible:outline-[3px] peer-focus-visible:outline-offset-2 peer-focus-visible:outline-[var(--color-focus-ring)]';
+  'theme-transition flex min-h-10 cursor-pointer items-center gap-2 rounded-[var(--radius-control)] border border-[var(--color-border-strong)] bg-[var(--color-card)] px-3 py-2 text-sm font-medium text-[var(--color-text-secondary)] hover:border-[var(--color-border-strong)] peer-checked:border-[var(--color-accent-primary)] peer-checked:bg-[var(--color-elevated)] peer-checked:text-[var(--color-text-primary)] peer-checked:shadow-[inset_0_0_0_1px_var(--color-accent-primary)] peer-focus-visible:outline peer-focus-visible:outline-[3px] peer-focus-visible:outline-offset-2 peer-focus-visible:outline-[var(--color-focus-ring)]';
 
 function RadioOption({
   checked,
@@ -108,7 +108,7 @@ export default function AppearanceControl() {
         aria-controls={open ? panelId : undefined}
         aria-expanded={open}
         aria-haspopup="dialog"
-        className="theme-transition inline-flex min-h-10 items-center justify-center gap-2 rounded-[var(--radius-control)] border border-[var(--color-border)] bg-[var(--color-elevated)] px-3 py-2 text-sm font-medium text-[var(--color-text-secondary)] shadow-[var(--shadow-control)] hover:border-[var(--color-accent-primary)] hover:text-[var(--color-text-primary)]"
+        className="theme-transition inline-flex min-h-10 items-center justify-center gap-2 rounded-[var(--radius-control)] border border-[var(--color-border-strong)] bg-[var(--color-elevated)] px-3 py-2 text-sm font-medium text-[var(--color-text-secondary)] shadow-[var(--shadow-control)] hover:border-[var(--color-accent-primary)] hover:text-[var(--color-text-primary)]"
         data-appearance-trigger=""
         onClick={() => setOpen((value) => !value)}
         ref={buttonRef}
@@ -138,7 +138,7 @@ export default function AppearanceControl() {
               Appearance settings
             </h2>
             <button
-              className="rounded-[var(--radius-control)] border border-[var(--color-border)] px-3 py-1.5 text-sm font-medium text-[var(--color-text-secondary)] hover:border-[var(--color-accent-primary)] hover:text-[var(--color-text-primary)]"
+              className="rounded-[var(--radius-control)] border border-[var(--color-border-strong)] px-3 py-1.5 text-sm font-medium text-[var(--color-text-secondary)] hover:border-[var(--color-accent-primary)] hover:text-[var(--color-text-primary)]"
               onClick={() => close(true)}
               type="button"
             >

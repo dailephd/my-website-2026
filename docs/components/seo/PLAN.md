@@ -1,5 +1,8 @@
 # SEO Components Plan
 
+> Historical M11 delivery record. It described seven then-current page configurations; the live
+> route contract is six pages plus the `/work` redirect in `docs/CONTRACT.md`.
+
 ## M11 completion
 
 - Added URL, metadata, social-preview, and structured-data helpers.

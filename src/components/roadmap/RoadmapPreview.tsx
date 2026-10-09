@@ -31,7 +31,7 @@ export default function RoadmapPreview({
           </div>
         ))}
       </div>
-      <Link className="mt-6 inline-block text-sm font-medium text-[var(--color-accent-primary)] underline-offset-4 hover:underline" href={href}>
+      <Link className="mt-6 inline-block text-sm font-medium text-[var(--color-accent-primary-text)] underline-offset-4 hover:underline" href={href}>
         View full roadmap
       </Link>
     </Card>

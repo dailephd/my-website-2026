@@ -1,5 +1,9 @@
 # Roadmap Components Plan
 
+> Historical M5/M12 milestone record. The full dashboard chain described below is not the current
+> public rendering; current reachability and retained preview behavior are recorded in
+> `docs/COMPONENT_MAP.md`.
+
 ## M5 completion
 
 - Added roadmap, lane, phase, milestone, link, status, and priority contracts.

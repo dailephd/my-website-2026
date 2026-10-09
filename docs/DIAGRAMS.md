@@ -65,7 +65,7 @@ flowchart TD
   About["/about"]
   Contact["/contact"]
   Detail["/projects/my-dev-kit"]
-  Work["/work (301 redirect only)"]
+  Work["/work (HTTP 308 redirect only)"]
 
   Home --> Nav
   Nav --> Projects

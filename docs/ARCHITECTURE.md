@@ -44,7 +44,7 @@ docs/             this documentation
    in as props.
 7. **`components/layout` + `components/theme`** — `SiteShell`, `Header`, `Footer`, `NavLink`,
    `SiteLogoMark`, `ThemeProvider`/`AppearanceControl`/`theme-script`. Own the page shell, navigation,
-   and palette / light-dark-system switching persisted under the existing palette and theme keys. Shared static palette styling lives in src/styles/utilities.css.
+   and six-palette / light-dark-system switching persisted under the existing palette and theme keys. Shared static palette styling lives in `src/styles/utilities.css`.
 8. **`src/app`** — route pages compose feature components with data from adapters; owns
    route-level `metadata`, `sitemap.ts`, `robots.ts`, and the single API route.
 
@@ -122,7 +122,7 @@ exact API contract.
   (`src/content/products.ts`).
 - **Vercel** — deployment target (not performed by local tooling).
 - **Resend** — contact-form email delivery provider.
-- **Browser `localStorage`** — theme preference persistence only; no other client-side storage.
+- **Browser `localStorage`** — palette and color-mode preferences persist under their existing keys; no special-effects preference exists.
 - **External links** — npm package links, GitHub repository links, LinkedIn — all use
   `target="_blank" rel="noreferrer"`.
 
@@ -134,8 +134,7 @@ exact API contract.
   the single source of truth for roadmap-preview data; per-product version history
   (`ProductModule.versionRoadmap`) is a separate, simpler model rendered inside each product
   panel's collapsible Roadmap section on `/projects/my-dev-kit`.
-- Design invariant: soft grey light mode, charcoal dark mode, restrained violet/cyan accents —
-  see `docs/DESIGN.md`.
+- Design invariant: six selectable palettes, Mineral Research default, Light/Dark/System modes, and Violet & Graphite historical identity — see `docs/DESIGN.md`.
 - Accessibility invariant: semantic landmarks, one `h1` per route, visible focus states,
   keyboard-reachable interactive elements, status conveyed as text (not color alone).
 - SEO/route invariant: `sitemap.ts` derives strictly from `routeMetadata`

@@ -1,5 +1,8 @@
 # Layout Components Plan
 
+> Historical M1/M7/M12 delivery record. The older planned-route placeholders and responsive TODOs
+> below describe their original milestone state; current shell ownership is in `docs/COMPONENT_MAP.md`.
+
 ## M1 implementation
 
 - Compose the root shell from `Header`, `PageContainer`, and `Footer`.

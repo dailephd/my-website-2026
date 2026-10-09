@@ -57,8 +57,17 @@ test('standard product cards show BioLit, Le Crawler, and iworkhere.space in ord
   await expect(iworkhere.getByText('Developer tooling', { exact: true })).toBeVisible();
   await expect(iworkhere.getByText('A collection of client-side utility tools built as an offline-capable Progressive Web App.')).toBeVisible();
   await expect(iworkhere.getByRole('link', { name: 'Explore product' })).toHaveCount(0);
-  await expect(iworkhere.getByRole('link')).toHaveCount(0);
-  await expect(page.locator('a[href="https://github.com/dailephd/iworkhere.space"]')).toHaveCount(0);
+  const website = iworkhere.getByRole('link', { name: 'Website', exact: true });
+  const repository = iworkhere.getByRole('link', { name: 'GitHub', exact: true });
+  await expect(website).toHaveAttribute('href', 'https://iworkhere.space');
+  await expect(website).toHaveAttribute('target', '_blank');
+  await expect(website).toHaveAttribute('rel', 'noreferrer');
+  await expect(repository).toHaveAttribute('href', 'https://github.com/dailephd/iworkhere.space');
+  await expect(repository).toHaveAttribute('target', '_blank');
+  await expect(repository).toHaveAttribute('rel', 'noreferrer');
+  await expect(iworkhere.getByRole('link')).toHaveCount(2);
+  await expect(iworkhere.locator('a[href^="/projects/"]')).toHaveCount(0);
+  await expect(iworkhere.locator('a[href*="npmjs.com"]')).toHaveCount(0);
 });
 
 test('projects page renders the archived projects section after current project content', async ({ page }) => {

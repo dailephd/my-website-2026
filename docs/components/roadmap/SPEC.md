@@ -1,5 +1,9 @@
 # Roadmap Components Specification
 
+> Historical specification for the former full lane/phase/milestone dashboard. Current public
+> roadmap presentation uses per-product release snapshots; the data model remains in use for the
+> live product-index preview. See `docs/COMPONENT_MAP.md` and `docs/CONTRACT.md`.
+
 ## Purpose
 
 Render structured roadmap data as an accessible product strategy dashboard.

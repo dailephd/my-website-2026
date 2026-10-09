@@ -124,6 +124,68 @@ NOT deletion approvals. Check actual imports, runtime and retained plans first.
 
 PATH                                           ROLE / OWNERSHIP
 ----                                           ----------------
+<!-- TRACKED-DIRECTORY-INVENTORY:START -->
+.github
+.github/workflows
+docs
+docs/_template
+docs/components
+docs/components/contact
+docs/components/content
+docs/components/gallery
+docs/components/layout
+docs/components/product-cards
+docs/components/project-cards
+docs/components/publication-cards
+docs/components/roadmap
+docs/components/seo
+docs/components/theme
+docs/components/writing
+public
+public/files
+public/icons
+public/images
+public/images/gallery
+public/images/og
+public/images/profile
+public/images/projects
+public/images/projects/my-dev-kit
+scripts
+src
+src/app
+src/app/about
+src/app/api
+src/app/api/contact
+src/app/contact
+src/app/projects
+src/app/projects/my-dev-kit
+src/app/publications
+src/components
+src/components/contact
+src/components/diagrams
+src/components/gallery
+src/components/layout
+src/components/products
+src/components/projects
+src/components/publications
+src/components/roadmap
+src/components/sections
+src/components/seo
+src/components/theme
+src/components/ui
+src/components/writing
+src/content
+src/lib
+src/lib/content
+src/lib/seo
+src/lib/server
+src/styles
+src/types
+tests
+tests/accessibility
+tests/content
+tests/e2e
+<!-- TRACKED-DIRECTORY-INVENTORY:END -->
 
 .github/                                       GitHub collaboration and automation policy;
                                                .github/pull_request_template.md owns PR template.
@@ -203,11 +265,14 @@ src/components/diagrams/                       LIVE shared DiagramCanvas, Node, 
                                                src/styles/diagrams.css; no local duplicate grammar.
 src/components/gallery/                        GalleryEmptyState/Grid/MediaCard/ProjectScreenshot
                                                retained but not reachable from live routes.
-src/components/layout/                         LIVE shell/navigation/header/footer/logo/container;
-                                               MobileNav.tsx is an orphaned placeholder.
+src/components/layout/                         LIVE shell/navigation/header/footer/logo/container.
+                                               MobileNav.tsx was removed in Stage 2E; responsive
+                                               navigation is owned by Header.tsx / NavLink.tsx.
 src/components/products/                       ProductCard/ProductGrid (index), ProductFamilyHero
-                                               (ecosystem detail). EcosystemDiagram and
-                                               EcosystemModuleCard are orphaned older variants.
+                                               (ecosystem detail). The former EcosystemDiagram
+                                               and EcosystemModuleCard sources were removed in
+                                               Stage 2C; ProductArchitectureVisual is the live
+                                               four-product architecture owner.
 src/components/projects/                       Archived ProjectCard/Grid/links; LIVE
                                                ProductArchitectureVisual (ecosystem topology),
                                                ProductLinks, RoadmapTimeline, RoadmapToggle.
@@ -217,16 +282,19 @@ src/components/roadmap/                        RoadmapPreview and RoadmapUpdated
                                                avoid resurrecting removed full roadmap UI.
                                                Check actual live import of optional preview.
 src/components/sections/                       HomeHero, FeaturedWorkSection, TechnicalFocus,
-                                               BackgroundSection LIVE; GalleryPreviewSection
-                                               and PlannedPage are orphaned per component map.
+                                               BackgroundSection LIVE; GalleryPreviewSection is
+                                               test-only. PlannedPage.tsx was removed in Stage 2E;
+                                               the App Router and not-found.tsx own route behavior.
 src/components/seo/                            JsonLd structured-data renderer; values built
                                                through src/lib/seo.
 src/components/theme/                          LIVE ThemeProvider, AppearanceControl,
                                                theme-script (palette + light/dark/system),
                                                persisted/prepaint state.
 src/components/ui/                             Generic, domain-agnostic Card/Badge/LinkButton/
-                                               SectionHeader/Container; Button and
-                                               VisuallyHidden documented as orphaned.
+                                               SectionHeader/Container. Button.tsx and
+                                               VisuallyHidden.tsx were removed in Stage 2E;
+                                               feature-owned native buttons and existing sr-only
+                                               markup/utility provide current behavior.
 src/components/writing/                        WritingCard and WritingEmptyState retained;
                                                no current live writing route.
 
@@ -254,8 +322,14 @@ tests/accessibility/                           Basic a11y unit/invariant tests.
 tests/content/                                 Vitest content, API, UI component, design-token,
                                                helper, validation and release-readiness tests.
 tests/e2e/                                     Playwright route, navigation, appearance, product,
-                                               contact, accessibility, responsive, SEO tests;
-                                               currently includes stale /work/gallery expectations.
+                                               contact, accessibility, responsive, SEO and
+                                               ecosystem behavior tests. Stage 2A and Stage 2C
+                                               ran `npm run test:e2e` on the dirty
+                                               docs/repository-structure-cleanup-r1 worktree;
+                                               both passed 244/244 (0 failed, 0 skipped).
+                                               Stage 2C reran after the two component deletions
+                                               on 2026-10-09; see its local audit report. These
+                                               results do not establish deployed production state.
 
 DASHBOARD COUNT CHECK: The inventory above must continue to cover EVERY folder
 present in the current tracked Git tree. If the local tree contains more paths,
@@ -410,8 +484,8 @@ AGENT READ CHOICES BY TASK (always after the bootstrap):
 05. HIGH-PRIORITY DOCUMENTATION DRIFT AND CLEANUP CANDIDATES
 ==========================================================================
 
-These are OBSERVED discrepancies/candidates, not instructions to delete or
-silently overwrite anything:
+This section preserves initial audit findings as history. Current resolution status is recorded
+after D15 below; the original statements must not be read as current instructions when marked resolved.
 
 D1. agents.txt and claude.txt identify a legacy Z: drive path and list older
     /work, /products, /products/my-dev-kit, /writing routes as current. The
@@ -452,19 +526,27 @@ D9. docs/lower_level_rules.md remains largely TODO; it is not sufficient as a
     convention enforcement mechanism. Put durable new rules in the agent
     guides/manifest and executable checks where justified.
 
-D10. Current tests/e2e/ include legacy /work and gallery expectations, and
-     old contact and iworkhere.space assertions. Release report reported ten
-     stale E2E failures. Determine exact current failures and protect current
-     behavior before changing or removing tests.
+D10. HISTORICAL: the release report identified ten stale E2E expectations.
+     Stage 2A reconciled their current behavior assertions. Its full local run
+     against the uncommitted worktree on docs/repository-structure-cleanup-r1
+     passed 244/244 tests (0 failed, 0 skipped); see
+     .my-dev-kit-context/reports/repository-cleanup-stage2a-e2e.md. This is
+     local uncommitted validation, not evidence that production includes those
+     changes. Later E2E runs must be reported separately from npm run ci.
 
-D11. Component families documented as orphaned:
-     - src/components/layout/MobileNav.tsx
-     - src/components/sections/GalleryPreviewSection.tsx, PlannedPage.tsx
-     - src/components/products/EcosystemDiagram.tsx, EcosystemModuleCard.tsx
+D11. HISTORICAL FINDING: component families documented as orphaned at initial audit:
+     - HISTORICAL ONLY, removed in Stage 2E (Git history retains source):
+       src/components/layout/MobileNav.tsx;
+       src/components/sections/PlannedPage.tsx;
+       src/components/ui/Button.tsx, VisuallyHidden.tsx.
+       Current owners: Header/NavLink; App Router/not-found; native buttons in
+       feature owners; existing accessible markup and sr-only utility.
+     - src/components/sections/GalleryPreviewSection.tsx
+     - HISTORICAL ONLY: src/components/products/EcosystemDiagram.tsx and
+       EcosystemModuleCard.tsx (removed in Stage 2C; Git history retains source)
      - src/components/contact/ContactCard.tsx, ContactPanel.tsx
      - src/components/gallery/*
      - src/components/writing/*
-     - src/components/ui/Button.tsx, VisuallyHidden.tsx
      Related dormant content/adapters/types may still be imported by tests,
      barrels or reserved for planned work. Never bulk-delete just from names.
 
@@ -487,11 +569,22 @@ D15. Core manifest instructions must be checked against both README and live
      source after a restructuring. Do not allow new folders without inventory
      update or silently remove existing ownership entries.
 
+STATUS UPDATE — STAGE 1, 2026-10-08 (evidence: repository-structure-cleanup-stage1.md)
+  D1-D4: RESOLVED. Agent guides, route contract, palette/mode contract, index paths, and storage wording now match current owners.
+  D5: RESOLVED. PROJECT_PLAN records M1-M14 complete using dev log and production release evidence; future ROADMAP content remains.
+  D6-D9: RESOLVED. QA and component ownership were checked against source/tests; historical specs are labeled; current map/registry distinguish live, test-only, and historical reachability.
+  D10: RESOLVED IN STAGE 2A. The local uncommitted branch run passed 244/244 (0 failed, 0 skipped); evidence is in repository-cleanup-stage2a-e2e.md. This does not establish deployed production state.
+  D11: RECONCILED. Suspected components are classified with route/test import evidence; no deletion is authorized by reachability.
+  D12: HISTORICAL RELEASE FINDING. The published release recorded contrast exceptions. The current worktree contains later local accessibility refinements outside this Stage 1 scope; verify their ownership separately before treating the production contract as changed.
+  D13: RESOLVED. Root entrypoints and guides reference manifest.txt.
+  D14: VERIFIED, NO CHANGE. Instruction files are tracked; ignore rules do not affect tracked files.
+  D15: RESOLVED. Tracked directory inventory is explicit and checked by scripts/check-repository-structure.mjs.
+
 CLEANUP ORDER RECOMMENDED (separate reviewed tasks):
   Phase A — install manifest + agent-guide hooks, reconcile factual guide drift.
   Phase B — inventory and verify live imports/orphaned files; issue KEEP/MOVE/
             ARCHIVE/DELETE proposals with evidence; no removal by default.
-  Phase C — reconcile stale E2E assertions with current approved route/content.
+  Phase C — completed by Stage 2A: reconcile stale E2E assertions with current approved route/content.
   Phase D — decide accessibility refinements with real computed-style evidence.
   Phase E — after user-approved changes, update mapping docs/tests and release.
 

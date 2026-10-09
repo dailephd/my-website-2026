@@ -36,6 +36,7 @@ function schemeBlock(palette: string, mode: Mode): string {
 function tokenMap(block: string) {
   const map: Record<string, string> = {};
   for (const [, name, value] of block.matchAll(/(--[\w-]+):\s*([^;]+);/g)) map[name] = value.trim();
+  map['--color-accent-primary-text'] ??= 'var(--color-accent-primary)';
   return map;
 }
 
@@ -73,6 +74,7 @@ const required = [
   '--color-border',
   '--color-border-strong',
   '--color-accent-primary',
+  '--color-accent-primary-text',
   '--color-accent-secondary',
   '--color-accent-secondary-text',
   '--color-focus-ring',
@@ -113,20 +115,20 @@ describe('ten palette/mode schemes', () => {
           const grounds = ['--color-background', '--color-surface', '--color-card', '--color-elevated'].map(
             (name) => tokens[name],
           );
-          const min = (name: string) => Math.min(...grounds.map((ground) => contrast(tokens[name], ground)));
-          // Original reproduces the pre-redesign values verbatim, so a few roles sit below the AA
-          // floor the newer palettes were derived to meet. The measured floors are pinned here (and
-          // documented in docs/DESIGN.md) so any further regression still fails.
-          const original = palette === 'original';
-          const floor = (aa: number, measured: number) => (original ? measured : aa);
-          const light = mode === 'light';
+          const color = (name: string): string => {
+            const value = tokens[name];
+            const variable = value.match(/^var\((--[\w-]+)\)$/)?.[1];
+            return variable ? tokens[variable] : value;
+          };
+          const min = (name: string) => Math.min(...grounds.map((ground) => contrast(color(name), ground)));
           expect(min('--color-text-primary')).toBeGreaterThanOrEqual(7);
-          expect(min('--color-text-secondary')).toBeGreaterThanOrEqual(floor(7, 6.8));
-          expect(min('--color-text-muted')).toBeGreaterThanOrEqual(floor(4.5, light ? 4.2 : 4.5));
-          expect(min('--color-accent-primary')).toBeGreaterThanOrEqual(floor(4.5, light ? 4.2 : 4.5));
+          expect(min('--color-text-secondary')).toBeGreaterThanOrEqual(4.5);
+          expect(min('--color-text-muted')).toBeGreaterThanOrEqual(4.5);
+          expect(min('--color-accent-primary-text')).toBeGreaterThanOrEqual(4.5);
+          expect(min('--color-accent-primary')).toBeGreaterThanOrEqual(3);
           expect(min('--color-accent-secondary-text')).toBeGreaterThanOrEqual(4.5);
           expect(min('--color-accent-secondary')).toBeGreaterThanOrEqual(3);
-          expect(min('--color-border-strong')).toBeGreaterThanOrEqual(floor(3, light ? 1.7 : 2));
+          expect(min('--color-border-strong')).toBeGreaterThanOrEqual(3);
           expect(min('--color-focus-ring')).toBeGreaterThanOrEqual(3);
           expect(
             contrast(tokens['--color-on-accent'], tokens['--color-accent-primary']),
@@ -149,11 +151,12 @@ describe('Violet & Graphite restoration', () => {
       '--color-elevated': '#fbfbfd',
       '--color-text-primary': '#151924',
       '--color-text-secondary': '#4a5262',
-      '--color-text-muted': '#687284',
+      '--color-text-muted': '#616c7f',
       '--color-border': '#cbd1dc',
-      '--color-border-strong': '#aeb7c7',
+      '--color-border-strong': '#6e7b91',
       '--color-accent-secondary': '#6d3ee8',
       '--color-accent-primary': '#087b91',
+      '--color-accent-primary-text': '#006d82',
       '--color-focus-ring': '#087b91',
       '--color-on-accent': '#f7f8fb',
       '--color-selection': 'rgb(124 58 237 / 20%)',
@@ -176,9 +179,10 @@ describe('Violet & Graphite restoration', () => {
       '--color-text-secondary': '#c5ccda',
       '--color-text-muted': '#929db0',
       '--color-border': '#384151',
-      '--color-border-strong': '#526077',
+      '--color-border-strong': '#71819a',
       '--color-accent-secondary': '#a98cf8',
       '--color-accent-primary': '#42cbe3',
+      '--color-accent-primary-text': '#42cbe3',
       '--color-focus-ring': '#42cbe3',
       '--color-on-accent': '#171a21',
       '--color-selection': 'rgb(167 139 250 / 28%)',
@@ -221,6 +225,7 @@ describe('token architecture', () => {
   it('keeps legacy violet/cyan names only as documented compatibility aliases', () => {
     expect(css.tokens).toContain('--color-accent-violet: var(--color-accent-secondary)');
     expect(css.tokens).toContain('--color-accent-cyan: var(--color-accent-primary)');
+    expect(css.tokens).toContain('--color-accent-primary-text: var(--color-accent-primary)');
     expect(css.palettes).not.toMatch(/accent-(violet|cyan)/);
   });
 

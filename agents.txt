@@ -6,7 +6,7 @@ Before inspecting or changing this repository, read root manifest.txt in full al
 Project identity
 
 - Project name: `my-website-2026`
-- Project path: `Z:\Users\newuser\Projects\my-website-2026`
+- Project path: `C:\Users\daile\Projects\my-website-2026`
 - Repository type: single Next.js website repository
 - Purpose: build Dai Le's premium personal website, portfolio, and product-lab website
 - Publication target: GitHub
@@ -79,14 +79,14 @@ Current website scope
 
 - Main routes:
   - `/`
-  - `/work`
-  - `/products`
-  - `/products/my-dev-kit`
-  - `/writing`
+  - `/projects`
+  - `/projects/my-dev-kit`
+  - `/publications`
   - `/about`
   - `/contact`
-- The site presents Dai Le as a software developer, AI builder, PhD-trained scientist, and product-focused technical founder.
-- The site showcases selected projects, product-lab work, roadmaps, publications, writing, resume/contact links, and gallery/media assets.
+- `/work` permanently redirects to `/projects`; `/products`, `/products/my-dev-kit`, and `/writing` are not current routes.
+- The homepage presents dailephd LLC and selected technical projects; `/about` presents Dai Le's professional, research, and education background.
+- The site includes the my-dev-kit ecosystem, archived projects, verified publications, a contact form, and professional links. Gallery and writing records are not live route contracts.
 
 Design direction
 
@@ -96,7 +96,9 @@ Design direction
 - Elegant, classy, modern, sophisticated, startup-like, lightly game-inspired
 - Light mode uses soft grey, not pure white
 - Dark mode uses charcoal grey, not pure black
-- Violet/cyan accents
+- Six palettes: Mineral Research (default), Oxblood Atelier, Signal Green, Cobalt & Terracotta, Amber & Graphite, and Violet & Graphite
+- Light, Dark, and System modes; Appearance offers palette and color mode only
+- Preserve Violet & Graphite's historical visual identity and the six-palette design contract
 - Solid premium cards
 - Restrained glow
 - Clean typography
@@ -157,11 +159,10 @@ Any new or changed public diagram, architecture map, workflow diagram, or timeli
 
 my-dev-kit retrieval workflow
 
-Use the published npm package:
-
-`npx @dailephd/my-dev-kit`
-
-Do not use `Z:\Users\newuser\Projects\my-dev-kit-v1` unless the task is explicitly about local my-dev-kit development.
+Use the published, version-pinned my-dev-kit package already installed under
+`.my-dev-kit-workflow/tools/mdk` (the local package manifest records its version). Do not use a
+separate checkout unless the task explicitly targets my-dev-kit package development. Keep the
+index, slices, caches, and other task output under `.my-dev-kit-workflow/` or `.my-dev-kit-context/`.
 
 Use source roots that actually exist. Expected roots after scaffold:
 
@@ -172,7 +173,7 @@ Use source roots that actually exist. Expected roots after scaffold:
 
 Suggested index command:
 
-`npx @dailephd/my-dev-kit index --root "Z:\Users\newuser\Projects\my-website-2026" --src "src" --src "tests" --src "docs" --src "scripts" --out "Z:\Users\newuser\Projects\my-website-2026.my-dev-kit" --call-graph --json`
+`node ".my-dev-kit-workflow/tools/mdk/node_modules/@dailephd/my-dev-kit/dist/cli.js" index --root "." --src "src" --src "tests" --src "docs" --src "scripts" --out ".my-dev-kit-workflow/indexes/current" --call-graph --json`
 
 If a source root does not exist yet, inspect the repo and adjust the command. Do not invent directories.
 
@@ -190,19 +191,19 @@ Examples
 
 Search:
 
-`npx @dailephd/my-dev-kit search --index "Z:\Users\newuser\Projects\my-website-2026.my-dev-kit" --query "RoadmapPreview roadmap status" --limit 20 --json`
+`node ".my-dev-kit-workflow/tools/mdk/node_modules/@dailephd/my-dev-kit/dist/cli.js" search --index ".my-dev-kit-workflow/indexes/current" --query "RoadmapPreview roadmap status" --limit 20 --json`
 
 Lookup:
 
-`npx @dailephd/my-dev-kit lookup --index "Z:\Users\newuser\Projects\my-website-2026.my-dev-kit" --node "<node-id>" --depth 1 --json`
+`node ".my-dev-kit-workflow/tools/mdk/node_modules/@dailephd/my-dev-kit/dist/cli.js" lookup --index ".my-dev-kit-workflow/indexes/current" --node "<node-id>" --depth 1 --json`
 
 Slice:
 
-`npx @dailephd/my-dev-kit slice --index "Z:\Users\newuser\Projects\my-website-2026.my-dev-kit" --node "<node-id>" --depth 2 --direction both --out "Z:\Users\newuser\Projects\my-website-2026.my-dev-kit\task-slice.json" --json`
+`node ".my-dev-kit-workflow/tools/mdk/node_modules/@dailephd/my-dev-kit/dist/cli.js" slice --index ".my-dev-kit-workflow/indexes/current" --node "<node-id>" --depth 2 --direction both --out ".my-dev-kit-workflow/indexes/task-slice.json" --json`
 
 Source:
 
-`npx @dailephd/my-dev-kit source --index "Z:\Users\newuser\Projects\my-website-2026.my-dev-kit" --node "<symbol-node-id>" --max-lines 160 --format numbered`
+`node ".my-dev-kit-workflow/tools/mdk/node_modules/@dailephd/my-dev-kit/dist/cli.js" source --index ".my-dev-kit-workflow/indexes/current" --node "<symbol-node-id>" --max-lines 160 --format numbered`
 
 Full-file read rule
 

@@ -4,6 +4,10 @@
 
 This document is the forward-looking project roadmap narrative for `my-website-2026`. It summarizes direction, delivery phases, milestone intent, and explicit v1 boundaries. It complements `docs/milestones.json` rather than replacing it.
 
+> The detailed M1-M14 phases below preserve original milestone scope. All M1-M14 milestones are
+> complete; current routes and appearance behavior are governed by `docs/CONTRACT.md` and
+> `docs/DESIGN.md`. Future direction remains planning, not implemented behavior.
+
 ## Product direction
 
 `my-website-2026` moves from an initial scaffold to a public v1 personal website and product-lab site for Dai Le.
@@ -248,16 +252,15 @@ When adding or changing milestones, preserve these rules:
 
 ## Post-M14 status
 
-The planned M1–M14 implementation milestone sequence is complete. The website builds cleanly,
-passes all validation gates, and is ready for the following separate deployment workflow:
+The planned M1–M14 implementation milestone sequence is complete. The site was later released through the separately authorized GitHub/Vercel production workflow. The original checklist below is preserved as milestone history; see .my-dev-kit-context/reports/six-palette-production-release.md for release evidence and retain remaining asset-quality tasks as future follow-up.
 
 1. Review final git diff for the M13 and M14 feature branch.
 2. Commit staged changes.
 3. Open a pull request to `main`.
 4. Push to GitHub after review.
 5. Configure Vercel project and set `NEXT_PUBLIC_SITE_URL` to the production domain.
-6. Deploy a Vercel preview and verify all seven public routes.
+6. Deploy a Vercel preview and verify the then-current public routes.
 7. Promote to production when preview looks correct.
 8. Add real 1200×630 OG images to `public/images/og/` and replace the placeholder resume PDF.
 
-These steps are not part of the M14 milestone and have not been performed.
+The GitHub and Vercel publication steps were performed in the separate production release.

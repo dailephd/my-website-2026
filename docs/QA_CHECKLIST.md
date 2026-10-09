@@ -5,8 +5,8 @@ See `docs/RELEASE_READINESS.md` for the automated checklist this complements.
 
 ## Visual check
 
-- [ ] Light mode: soft grey backgrounds, not pure white; violet/cyan accents used sparingly.
-- [ ] Dark mode: charcoal backgrounds, not pure black; accents remain legible, not glary.
+- [ ] Check all six palettes in Light, Dark, and System modes; Mineral Research is the default.
+- [ ] Violet & Graphite retains its historical graphite/violet/cyan identity and meets current functional contrast requirements.
 - [ ] Navbar logo (`SiteLogoMark`) reads clearly at header size in both themes.
 - [ ] No layout shift or overlapping elements on any of the six routes.
 
@@ -23,7 +23,7 @@ See `docs/RELEASE_READINESS.md` for the automated checklist this complements.
 - [ ] `/about`: Dai Le's professional/research background renders completely.
 - [ ] `/projects`: current products/projects render, followed by "Archived projects"; archived
       cards show title/description/notes but no tag pills.
-- [ ] `/projects/my-dev-kit`: three product panels each show a GitHub link, an npm link, and a
+- [ ] `/projects/my-dev-kit`: four product panels each show a GitHub link, an npm link, and a
       working Roadmap toggle with an ascending version timeline.
 - [ ] No placeholder or invented content anywhere.
 

@@ -42,9 +42,14 @@ test('skip link is visible on focus', async ({ page }) => {
   await expect(skipLink).toBeFocused();
 });
 
-test('status badges on work page render text', async ({ page }) => {
-  await page.goto('/work');
-  await expect(page.getByText('Active', { exact: true }).first()).toBeVisible();
+test('project status badges expose their status as text', async ({ page }) => {
+  await page.goto('/projects');
+  const standardSection = page.locator('section[aria-labelledby="product-experiments-heading"]');
+  const crawler = standardSection.locator('article').filter({
+    has: page.getByRole('heading', { name: 'Le Crawler' }),
+  });
+
+  await expect(crawler.getByText('Status: In development', { exact: true })).toBeVisible();
 });
 
 test('status badges no longer render on the ecosystem page', async ({ page }) => {

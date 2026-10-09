@@ -5,7 +5,7 @@ import { useRef, useState } from 'react';
 type FormStatus = 'idle' | 'sending' | 'success' | 'error';
 
 const FIELD_STYLES =
-  'w-full rounded-[var(--radius-sm)] border border-[var(--color-border)] bg-[var(--color-surface-elevated)] px-3 py-2 text-sm text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:border-[var(--color-accent-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--color-accent-primary)]';
+  'w-full rounded-[var(--radius-sm)] border border-[var(--color-border-strong)] bg-[var(--color-surface-elevated)] px-3 py-2 text-sm text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] focus:border-[var(--color-accent-primary)] focus:outline-none focus:ring-1 focus:ring-[var(--color-accent-primary)]';
 
 const LABEL_STYLES = 'mb-1 block text-sm font-medium text-[var(--color-text-primary)]';
 
@@ -158,7 +158,7 @@ export default function ContactForm() {
         <button
           type="submit"
           disabled={status === 'sending'}
-          className="rounded-[var(--radius-sm)] bg-[var(--color-accent-primary)] px-5 py-2 text-sm font-semibold text-[var(--color-bg)] hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-focus)] disabled:cursor-not-allowed disabled:opacity-50"
+          className="rounded-[var(--radius-sm)] bg-[var(--color-accent-primary-text)] px-5 py-2 text-sm font-semibold text-[var(--color-bg)] hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-focus)] disabled:cursor-not-allowed disabled:opacity-50"
         >
           {status === 'sending' ? 'Sending...' : 'Submit'}
         </button>
@@ -166,7 +166,7 @@ export default function ContactForm() {
           type="button"
           onClick={handleClear}
           disabled={status === 'sending'}
-          className="rounded-[var(--radius-sm)] border border-[var(--color-border)] px-5 py-2 text-sm font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-focus)] disabled:cursor-not-allowed disabled:opacity-50"
+          className="rounded-[var(--radius-sm)] border border-[var(--color-border-strong)] px-5 py-2 text-sm font-medium text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-focus)] disabled:cursor-not-allowed disabled:opacity-50"
         >
           Clear message
         </button>

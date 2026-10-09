@@ -54,7 +54,7 @@ secrets. Verify env vars are configured in Vercel before deploying.
 
 - [ ] `/`, `/projects`, `/projects/my-dev-kit`, `/publications`, `/about`, `/contact` all build
       and render.
-- [ ] `/work` redirects (301) to `/projects` — confirm no page exists at `src/app/work/`.
+- [ ] `/work` redirects (HTTP 308) to `/projects` — confirm no page exists at `src/app/work/`.
 - [ ] No `/products`, `/products/my-dev-kit`, or `/writing` routes exist or are linked from
       navigation.
 - [ ] No internal link points at a removed route.

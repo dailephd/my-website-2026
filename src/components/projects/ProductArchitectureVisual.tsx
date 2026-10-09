@@ -212,7 +212,7 @@ function ModulePanel({ productModule }: { productModule: ProductModule }) {
       <div className="flex items-start gap-3">
         <div aria-hidden="true" className="mt-0.5 shrink-0 text-[var(--color-accent-secondary-text)]">{getIcon(moduleId)}</div>
         <div className="min-w-0 flex-1">
-          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[var(--color-accent-primary)]">{productModule.roleLabel}</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[var(--color-accent-primary-text)]">{productModule.roleLabel}</p>
           <h3 className="mt-1 break-words text-xl font-semibold tracking-tight" id={'arch-node-' + moduleId + '-heading'}>{productModule.title}</h3>
           <p className="mt-1 text-sm font-medium text-[var(--color-text-primary)]">{productModule.layerLabel}</p>
           <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[var(--color-text-secondary)]">{productModule.summary}</p>
@@ -238,7 +238,7 @@ function EvidenceCard() {
       <div className="flex items-start justify-center gap-3">
         <span aria-hidden="true" className="mt-0.5 text-[var(--color-accent-primary)]"><EvidenceIcon /></span>
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[var(--color-accent-primary)]">Supplied evidence</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[var(--color-accent-primary-text)]">Supplied evidence</p>
           <p className="mt-1 text-base font-semibold text-[var(--color-text-primary)]" id="arch-node-evidence-heading">Bounded Repository Evidence</p>
           <p className="mt-1 text-sm text-[var(--color-text-secondary)]">Selected source, graph, context, and retrieval provenance supplied to the workflow.</p>
         </div>

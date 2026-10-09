@@ -1,5 +1,9 @@
 # Gallery Components Spec
 
+> Historical M9 specification for retained gallery components. No live gallery route currently
+> exists; current route ownership is in `docs/CONTRACT.md`, and reachability is in
+> `docs/COMPONENT_MAP.md`. Preserve this document as design history.
+
 ## Component purpose
 
 Define the gallery and media presentation system for optimized image and screenshot display.

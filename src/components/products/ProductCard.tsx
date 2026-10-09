@@ -51,13 +51,13 @@ export default function ProductCard({
           </p>
         ) : null}
         <Heading className="mt-3 text-2xl font-semibold">{item.title}</Heading>
-        <p className="mt-2 text-sm font-medium text-[var(--color-accent-primary)]">{categories[item.category]}</p>
+        <p className="mt-2 text-sm font-medium text-[var(--color-accent-primary-text)]">{categories[item.category]}</p>
         <p className="mt-4 text-[var(--color-text-secondary)]">{item.summary}</p>
         <p className="mt-3 text-sm text-[var(--color-text-muted)]">{item.positioning}</p>
         <div className="mt-6 flex flex-wrap gap-4">
           {item.detailHref ? (
             <Link
-              className="premium-link font-medium text-[var(--color-accent-primary)] hover:underline"
+              className="premium-link font-medium text-[var(--color-accent-primary-text)] hover:underline"
               href={item.detailHref}
             >
               Explore product
@@ -66,7 +66,7 @@ export default function ProductCard({
           {showLinks
             ? item.links.map((link) => (
                 <Link
-                  className="premium-link font-medium text-[var(--color-accent-primary)] hover:underline"
+                  className="premium-link font-medium text-[var(--color-accent-primary-text)] hover:underline"
                   href={link.href}
                   key={link.id}
                   rel={link.external ? 'noreferrer' : undefined}

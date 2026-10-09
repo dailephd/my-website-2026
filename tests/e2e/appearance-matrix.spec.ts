@@ -106,7 +106,8 @@ for (const palette of palettes) {
 
       expect(styles.body).toBe(want.bg);
       expect(styles.h1).toBe(want.fg);
-      expect(styles.eyebrow).toBe(want.primary);
+      const expectedEyebrow = palette === 'original' && mode === 'light' ? 'rgb(0, 109, 130)' : want.primary;
+      expect(styles.eyebrow).toBe(expectedEyebrow);
 
       // Readable navigation and hero: contrast against the surfaces they sit on.
       const surface = await page.evaluate(() => {
