@@ -1,5 +1,9 @@
 # Product Ecosystem Components Plan
 
+> Historical M4/M6 plan. Current product records and the four-product architecture are owned by
+> `src/content/products.ts`, `src/components/projects/ProductArchitectureVisual.tsx`, and
+> `docs/COMPONENT_MAP.md`.
+
 ## M4 implementation
 
 - Define one product-family record and three ordered modules.

@@ -1,5 +1,8 @@
 # Publication Cards Spec
 
+> Historical M8 component plan. Current publication route and card behavior are specified in
+> `docs/CONTRACT.md`; the current homepage composition does not imply a publication preview.
+
 ## Component purpose
 
 Define reusable publication presentation components for credibility and research-history sections.

@@ -1,6 +1,7 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
+import { validateRepositoryStructure } from './check-repository-structure.mjs';
 
 const repoRoot = process.cwd();
 
@@ -51,6 +52,8 @@ const unresolvedPlaceholderPatterns = [
 ];
 
 const errors = [];
+
+errors.push(...validateRepositoryStructure({ root: repoRoot }));
 
 for (const relativePath of requiredPaths) {
   const absolutePath = path.join(repoRoot, relativePath);

@@ -15,7 +15,7 @@ channel.
 
 ## Local path
 
-`Z:\Users\newuser\Projects\my-website-2026`
+`C:\Users\daile\Projects\my-website-2026`
 
 ## Publication and deployment targets
 
@@ -38,8 +38,9 @@ channel.
 
 - Single website repository — not a monorepo, no `apps/`/`packages/` split.
 - Website-owned content lives locally under `src/content`; no external CMS or content package.
-- Premium dual-mode grey interface: soft grey light mode (not pure white), charcoal dark mode
-  (not pure black), restrained violet/cyan accents.
+- Six selectable palettes with Mineral Research as default and Light, Dark, and System color modes.
+  Violet & Graphite preserves the historical graphite, violet, and cyan identity. There is no
+  special-effects preference.
 
 ## Public routes
 
@@ -51,7 +52,7 @@ channel.
 | `/publications` | Live — verified publication records |
 | `/about` | Live — Dai Le's professional and research background |
 | `/contact` | Live — contact form and professional profile links |
-| `/work` | **Removed.** Permanently redirects (301) to `/projects` via `next.config.ts` |
+| `/work` | Permanent redirect (308) to `/projects` via `next.config.ts`; not a live page |
 | `/products`, `/products/my-dev-kit` | **Removed.** Superseded by `/projects`, `/projects/my-dev-kit` |
 | `/writing` | **Removed.** No replacement route; `src/content/writing.ts` is retained but unused by any route |
 

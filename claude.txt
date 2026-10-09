@@ -6,7 +6,7 @@ Before inspecting or changing this repository, read root manifest.txt in full al
 Project identity
 
 - `my-website-2026`
-- Root: `Z:\Users\newuser\Projects\my-website-2026`
+- Root: `C:\Users\daile\Projects\my-website-2026`
 - Single Next.js website repository
 - Purpose: Dai Le personal website, portfolio, and product-lab site
 - Publish on GitHub
@@ -31,9 +31,9 @@ First steps
 
 Tooling rule
 
-- Prefer graph-guided retrieval with the published package:
-  - `npx @dailephd/my-dev-kit`
-- Do not use local `Z:\Users\newuser\Projects\my-dev-kit-v1` unless the task explicitly targets local my-dev-kit development.
+- Prefer graph-guided retrieval with the published, version-pinned my-dev-kit package already
+  installed under `.my-dev-kit-workflow/tools/mdk`; outputs belong under the project-local workflow
+  or context roots. Do not use a separate package checkout unless explicitly developing that package.
 - Retrieval order:
   1. index
   2. search
@@ -46,7 +46,9 @@ Tooling rule
 
 Current website scope
 
-- Main routes: `/`, `/work`, `/products`, `/products/my-dev-kit`, `/writing`, `/about`, `/contact`
+- Current public routes: `/`, `/projects`, `/projects/my-dev-kit`, `/publications`, `/about`, `/contact`.
+- `/work` permanently redirects to `/projects`; `/products`, `/products/my-dev-kit`, and `/writing` are not current routes.
+- Appearance has six palettes (Mineral Research is default) and Light/Dark/System modes; there is no special-effects preference.
 - Local content source: `src/content`
 - Roadmap source: `src/content/roadmaps.ts`
 - Product-family story:
@@ -89,7 +91,8 @@ Content and design rules
   - personal technical founder ownership
   - soft grey light mode, not pure white
   - charcoal grey dark mode, not pure black
-  - violet/cyan accents
+  - six palettes: Mineral Research (default), Oxblood Atelier, Signal Green, Cobalt & Terracotta, Amber & Graphite, Violet & Graphite
+  - Light/Dark/System modes and no special-effects preference
   - solid premium cards
   - restrained glow
   - clean typography

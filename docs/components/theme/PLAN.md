@@ -1,5 +1,9 @@
 # Theme Components Plan
 
+> Historical M2 dual-mode implementation plan. The current six-palette, Light/Dark/System contract
+> is documented in `docs/DESIGN.md` and `docs/COMPONENT_MAP.md`; preserve the original milestone
+> decisions below as history.
+
 ## M2 implementation
 
 - Define theme preference and effective-theme types.

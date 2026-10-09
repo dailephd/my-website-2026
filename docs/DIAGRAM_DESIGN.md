@@ -2,7 +2,7 @@
 
 ## 1. Purpose
 
-This file defines the visual grammar, composition rules, connector rules, responsive behavior, accessibility requirements, implementation constraints, and AI-agent instructions for technical diagrams used on the Dai Le personal website and product lab.
+This file defines the visual grammar, composition rules, connector rules, responsive behavior, accessibility requirements, implementation constraints, and AI-agent instructions for technical diagrams used on the dailephd LLC website and product lab.
 
 It applies to public-facing:
 

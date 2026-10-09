@@ -480,7 +480,9 @@ A "Skip to main content" link is the first focusable element in SiteShell. It is
 
 - The body element has `overflow-x: hidden` and `overflow-wrap: break-word`.
 - All grids collapse to single-column at small viewports.
-- EcosystemDiagram arrows rotate 90° on mobile via `rotate-90 md:rotate-0`.
+- Historical: the removed `EcosystemDiagram` rotated its arrows on mobile. The current
+  four-product `ProductArchitectureVisual` owns responsive diagram layout; see
+  `docs/COMPONENT_MAP.md` and `tests/e2e/responsive.spec.ts`.
 - Header wraps via `flex-wrap` at narrow widths.
 - Container uses `px-5 sm:px-8` for safe mobile edge padding.
 

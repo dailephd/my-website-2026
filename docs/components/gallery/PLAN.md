@@ -1,5 +1,8 @@
 # Gallery Components Plan
 
+> Historical M9 implementation record. The `/work` gallery integration is no longer a live route;
+> current route ownership is in `docs/CONTRACT.md`. This record is not a request to restore it.
+
 ## M9 implementation
 
 - Added media, screenshot, grid, and empty-state components.

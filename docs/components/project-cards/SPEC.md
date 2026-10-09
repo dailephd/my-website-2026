@@ -1,5 +1,8 @@
 # Project Cards Specification
 
+> Historical M3 design record. References to `/work` describe the original route; the current
+> selected/archive project presentation is on `/projects` and owned by `docs/CONTRACT.md`.
+
 ## Purpose
 
 Define the M3 selected-work presentation backed by `src/content/projects.ts`.

@@ -3,7 +3,7 @@
 ## Identity
 
 - **Name:** `my-website-2026`
-- **Repository location:** `Z:\Users\newuser\Projects\my-website-2026`
+- **Repository location:** `C:\Users\daile\Projects\my-website-2026`
 - **Publication target:** GitHub
 - **Deployment target:** Vercel
 
@@ -48,9 +48,9 @@ Dai Le as founder/technical lead detailed on the About page.
 | About | `/about` | Dai Le's professional background, research background, education |
 | Contact | `/contact` | Contact form (email via Resend) + professional profile links (GitHub, LinkedIn) |
 
-Removed routes (`/work`, `/products`, `/products/my-dev-kit`, `/writing`) are documented in
-`README.md` and `docs/ARCHITECTURE.md`. `/work` is kept only as a permanent redirect to
-`/projects` for link continuity; the others have no route at all.
+`/work` is a permanent redirect to `/projects` for link continuity. `/products`,
+`/products/my-dev-kit`, and `/writing` are not current routes. Historical plans mentioning these
+paths describe earlier milestone intent, not the current route contract.
 
 ## What this project intentionally does not have
 

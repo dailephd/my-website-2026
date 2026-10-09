@@ -33,12 +33,12 @@ docs/ (active, current)
 ├── DIAGRAMS.md                           all 8 required Mermaid diagrams
 ├── BRANCHING.md
 ├── QA_CHECKLIST.md
-├── DESIGN.md                             visual design system authority (unchanged)
+├── DESIGN.md                             six-palette visual design authority
 ├── CI_CD.md
 ├── ROADMAP.md
 ├── PROJECT_PLAN.md
 ├── dev_logging.md
-├── milestones.json                       M1-M14 milestone history (left as-is; not re-validated)
+├── milestones.json                       detailed M1-M14 specifications (history, not execution status)
 └── project_tree.txt                      this file
 
 docs/ (legacy scaffold — retained, not the active architecture guide)
@@ -61,28 +61,29 @@ src/app/ — routes (App Router)
 (no /work, /products, /products/my-dev-kit, or /writing route files — /work is a redirect only,
 defined in next.config.ts)
 
-src/components/ — see docs/COMPONENT_MAP.md for the live/orphaned breakdown
-├── layout/        SiteShell, Header, Footer, NavLink, SiteLogoMark, PageContainer, MobileNav*
+src/components/ — see docs/COMPONENT_MAP.md for live, test-only, and historical reachability
+├── layout/        SiteShell, Header, Footer, NavLink, SiteLogoMark, PageContainer
 ├── theme/         ThemeProvider, AppearanceControl, theme-script
 ├── sections/      HomeHero, FeaturedWorkSection, TechnicalFocusSection, BackgroundSection,
-│                  GalleryPreviewSection*, PlannedPage*
+│                  GalleryPreviewSection*
 ├── projects/      ProjectCard, ProjectGrid, ProjectLinkList, ProductArchitectureVisual
 │                  (my-dev-kit relationship diagram), ProductLinks, RoadmapTimeline, RoadmapToggle
-├── products/      ProductCard, ProductGrid, ProductFamilyHero, EcosystemDiagram*,
-│                  EcosystemModuleCard*
+├── products/      ProductCard, ProductGrid, ProductFamilyHero
 ├── publications/  PublicationCard, PublicationList
-├── contact/       ContactForm, ContactCard, ContactPanel*
+├── contact/       ContactForm; ContactCard/ContactPanel* (test-only historical layout)
 ├── roadmap/       RoadmapPreview, RoadmapUpdatedLabel
-├── gallery/*      GalleryEmptyState, GalleryGrid, MediaCard, ProjectScreenshot
-├── writing/*      WritingCard, WritingEmptyState
-├── ui/            Card, Badge, LinkButton, SectionHeader, Container, Button*, VisuallyHidden*
+├── gallery/*      GalleryEmptyState, GalleryGrid, MediaCard, ProjectScreenshot (test-only; no route)
+├── writing/*      WritingCard, WritingEmptyState (test-only; no route)
+├── ui/            Card, Badge, LinkButton, SectionHeader, Container
 └── seo/           JsonLd
-(* = orphaned; not imported by any current route — see docs/COMPONENT_MAP.md)
+(* = no live route consumer; see docs/COMPONENT_MAP.md for test-only vs historical status.
+MobileNav, PlannedPage, Button, and VisuallyHidden were removed in Stage 2E; retained plan/history
+references describe their former implementations, not files in the current tree.)
 
 src/content/ — source of truth (see README.md content table)
 ├── profile.ts, links.ts, projects.ts, products.ts, publications.ts, contact.ts, home.ts,
 │   roadmaps.ts
-├── gallery.ts*, writing.ts*, resume.ts       (* orphaned — no live route consumes these)
+├── gallery.ts*, writing.ts*, resume.ts       (* retained records; no live route consumes gallery/writing)
 ├── index.ts
 └── legacy-import-notes.md
 
@@ -109,7 +110,7 @@ public/
 └── site.webmanifest  now referenced from src/app/layout.tsx metadata.manifest
 
 scripts/
-├── validate-content.mjs, validate-links.mjs, lint.mjs   validation gates
+├── validate-content.mjs, validate-links.mjs, lint.mjs   validation gates (lint includes the structure guard)
 ├── check-release-readiness.mjs                          orchestrates the full gate chain
 ├── generate-favicons.mjs                                sharp-based PNG export from SVG source
 ├── sync-publications.mjs                                optional ORCID sync (opt-in, network)
