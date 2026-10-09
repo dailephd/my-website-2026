@@ -81,6 +81,18 @@ Graphite**. Its graphite surfaces, violet accent, cyan data/system accents, viol
 atmospheric balance, violet logo stroke, violet primary-action hover, and cyan hero eyebrow are
 preserved as static styling. It remains optional; Mineral Research is the default.
 
+Violet & Graphite preserves its historical background, surfaces, primary text, violet and cyan brand
+colors, and decorative borders. Functional muted copy uses `#616c7f` in light mode. Cyan text roles
+use the separate `--color-accent-primary-text` token (`#006d82` in light mode); the brand cyan
+`--color-accent-primary` remains `#087b91` for focus and data accents. Meaningful interactive
+boundaries use the stronger `--color-border-strong` (`#6e7b91` light, `#71819a` dark); decorative
+card and page borders retain their historical values. The resulting minimum contrast across the
+four page/surface/card/elevated grounds is 4.61:1 for muted text, 5.20:1 for cyan text, 3.72:1 for
+light functional boundaries, and 3.29:1 for dark functional boundaries. Secondary body text remains
+at its historical color; its 6.82:1 minimum exceeds the 4.5:1 normal-text AA requirement. Dark-mode
+functional cyan text uses the unchanged `#42cbe3` brand cyan. The light contact submit control uses
+the darker functional cyan as its background so its historical light label keeps normal-text contrast.
+
 ### Twelve effective color schemes and token architecture
 
 Each palette has light and dark colors. Brand anchors are defined in `tokens.css` (Mineral light),
@@ -108,7 +120,7 @@ rendered.
 
 ### Accessibility and performance expectations
 
-- WCAG AA for text and UI components in all twelve schemes; the historical Violet & Graphite values retain their documented, test-pinned exceptions. State is never conveyed by color alone.
+- WCAG AA for normal text and meaningful UI boundaries in all twelve schemes. Functional colors are distinct from brand accents where needed; state is never conveyed by color alone.
 - Focus ring (3px, `--color-focus-ring`) is visible in every scheme.
 - No horizontal overflow at 360–1440px; decoration does not interfere with controls.
 - Static rendering is preserved; client-side appearance code is limited to the control and preference provider.

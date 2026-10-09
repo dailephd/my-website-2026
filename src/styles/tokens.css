@@ -31,6 +31,7 @@
   --color-border: #cbccc4;
   --color-border-strong: #787f79;
   --color-accent-primary: #0f716a;
+  --color-accent-primary-text: var(--color-accent-primary);
   --color-accent-secondary: #b8683f;
   --color-accent-secondary-text: #8c5638;
   --color-focus-ring: #0f716a;

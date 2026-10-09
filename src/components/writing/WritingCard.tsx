@@ -34,7 +34,7 @@ export default function WritingCard({ item }: { item: WritingItem }) {
       ) : null}
       {item.href ? (
         <a
-          className="mt-5 font-medium text-[var(--color-accent-primary)] underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-focus)]"
+          className="mt-5 font-medium text-[var(--color-accent-primary-text)] underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-focus)]"
           href={item.href}
           rel={item.external ? 'noreferrer' : undefined}
           target={item.external ? '_blank' : undefined}

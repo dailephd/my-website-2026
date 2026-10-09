@@ -13,7 +13,7 @@ export default function ProductLinks({ links }: { links: readonly ProductLink[] 
       {github ? (
         <li>
           <Link
-            className="premium-link rounded-sm text-sm font-medium text-[var(--color-accent-primary)] underline decoration-transparent underline-offset-4 hover:decoration-current"
+            className="premium-link rounded-sm text-sm font-medium text-[var(--color-accent-primary-text)] underline decoration-transparent underline-offset-4 hover:decoration-current"
             href={github.href}
             rel="noreferrer"
             target="_blank"
@@ -25,7 +25,7 @@ export default function ProductLinks({ links }: { links: readonly ProductLink[] 
       {npm ? (
         <li>
           <Link
-            className="premium-link rounded-sm text-sm font-medium text-[var(--color-accent-primary)] underline decoration-transparent underline-offset-4 hover:decoration-current"
+            className="premium-link rounded-sm text-sm font-medium text-[var(--color-accent-primary-text)] underline decoration-transparent underline-offset-4 hover:decoration-current"
             href={npm.href}
             rel="noreferrer"
             target="_blank"

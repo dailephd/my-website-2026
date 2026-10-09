@@ -17,7 +17,7 @@ export default function HomeHero({
       <Card className="hero-backdrop relative overflow-hidden rounded-[var(--radius-panel)] p-7 sm:p-12 lg:p-16">
         <div aria-hidden="true" className="quiet-grid pointer-events-none absolute inset-0" />
         <div className="relative max-w-4xl">
-          <p className="eyebrow flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.2em] text-[var(--color-accent-primary)]">
+          <p className="eyebrow flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.2em] text-[var(--color-accent-primary-text)]">
             <span aria-hidden="true" className="h-px w-10 bg-[var(--color-accent-secondary)]" />
             {copy.eyebrow}
           </p>
