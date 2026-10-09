@@ -12,7 +12,9 @@ const inventoryMarkers = '<!-- TRACKED-DIRECTORY-INVENTORY:START -->\n<!-- TRACK
 let roots: string[] = [];
 
 function fixture() {
-  const root = mkdtempSync(path.join(process.cwd(), '.my-dev-kit-workflow', 'structure-check-'));
+  const workflowRoot = path.join(process.cwd(), '.my-dev-kit-workflow');
+  mkdirSync(workflowRoot, { recursive: true });
+  const root = mkdtempSync(path.join(workflowRoot, 'structure-check-'));
   roots.push(root);
   for (const file of ['manifest.txt', ...entrypoints, ...requiredDocs]) {
     const target = path.join(root, file);
