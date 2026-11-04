@@ -64,6 +64,8 @@ describe('shared diagram primitives', () => {
     );
     expect(html).toContain('diagram-connector diagram-connector--primary diagram-connector--control');
     expect(html).toContain('marker-end="url(#m)"');
+    expect(html).toContain('aria-hidden="true" class="diagram-connector-clearance diagram-connector-clearance--primary" d="M0 0 V1"');
+    expect(html.match(/marker-end=/g)).toHaveLength(1);
     expect(html).not.toMatch(/stroke/);
 
     const feedback = renderToStaticMarkup(<svg><DiagramConnectorPath d="M0 0" variant="feedback" /></svg>);

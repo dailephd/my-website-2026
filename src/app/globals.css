@@ -2,6 +2,8 @@
 @import '../styles/theme.css';
 @import '../styles/palettes.css';
 @import '../styles/utilities.css';
+@import '../styles/art-tokens.css';
+@import '../styles/art.css';
 @import '../styles/diagrams.css';
 
 @tailwind base;

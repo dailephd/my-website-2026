@@ -5,7 +5,24 @@ const paletteKey = 'my-website-2026-palette';
 const trigger = (page: Page) => page.getByRole('button', { name: /^Appearance/ });
 const dialog = (page: Page) => page.getByRole('dialog', { name: 'Appearance settings' });
 const html = (page: Page) => page.locator('html');
-const choose = (page: Page, name: string) => dialog(page).locator(`label:text-is(\"${name}\")`).click();
+const choose = (page: Page, name: string) => dialog(page).getByText(name, { exact: true }).click();
+
+test('One Dark preserves the ordinary mode through reload and exit', async ({ page }) => {
+  await page.goto('/');
+  await trigger(page).click();
+  await choose(page, 'Light');
+  await choose(page, 'One Dark');
+  await expect(html(page)).toHaveAttribute('data-theme', 'dark');
+  await expect(dialog(page).getByRole('radio', { name: 'Light', exact: true })).toBeDisabled();
+  expect(await page.evaluate(key => localStorage.getItem(key), themeKey)).toBe('light');
+  await page.reload();
+  await expect(html(page)).toHaveAttribute('data-palette', 'onedark');
+  await expect(html(page)).toHaveAttribute('data-theme', 'dark');
+  await trigger(page).click();
+  await choose(page, 'Mineral Research');
+  await expect(html(page)).toHaveAttribute('data-theme', 'light');
+  await expect(html(page)).toHaveAttribute('data-theme-preference', 'light');
+});
 
 async function clearStorage(page: Page) {
   await page.goto('/');
@@ -13,11 +30,11 @@ async function clearStorage(page: Page) {
   await page.reload();
 }
 
-test('first paint defaults to Mineral Research / system with no effects preference', async ({ page }) => {
+test('first paint defaults to Violet & Graphite / system with no effects preference', async ({ page }) => {
   await clearStorage(page);
   await page.evaluate(() => localStorage.setItem('my-website-2026-fx', 'expressive'));
   await page.reload();
-  await expect(html(page)).toHaveAttribute('data-palette', 'mineral');
+  await expect(html(page)).toHaveAttribute('data-palette', 'original');
   await expect(html(page)).toHaveAttribute('data-theme-preference', 'system');
   await expect(html(page)).not.toHaveAttribute('data-fx', /.+/);
   expect(await page.evaluate(() => localStorage.getItem('my-website-2026-fx'))).toBe('expressive');
@@ -41,13 +58,13 @@ test('palette and color mode persist across reload and navigation', async ({ pag
   await expect(html(page)).toHaveAttribute('data-theme-preference', 'dark');
 });
 
-test('all six palettes can be selected and persisted with their approved labels', async ({ page }) => {
+test('all seven palettes can be selected and persisted with their approved labels', async ({ page }) => {
   await clearStorage(page);
   await page.evaluate((key) => localStorage.setItem(key, 'cobalt'), paletteKey);
   await page.reload();
   const palettes = [
     ['mineral', 'Mineral Research'], ['oxblood', 'Oxblood Atelier'], ['signal', 'Signal Green'],
-    ['cobalt', 'Cobalt & Terracotta'], ['amber', 'Amber & Graphite'], ['original', 'Violet & Graphite'],
+    ['cobalt', 'Cobalt & Terracotta'], ['amber', 'Amber & Graphite'], ['original', 'Violet & Graphite'], ['onedark', 'One Dark'],
   ];
   for (const [id, label] of palettes) {
     if (!(await dialog(page).isVisible())) await trigger(page).click();
@@ -55,7 +72,7 @@ test('all six palettes can be selected and persisted with their approved labels'
     await expect(html(page)).toHaveAttribute('data-palette', id);
     await expect.poll(() => page.evaluate((key) => localStorage.getItem(key), paletteKey)).toBe(id);
   }
-  await expect(dialog(page).getByRole('radio')).toHaveCount(9);
+  await expect(dialog(page).getByRole('radio')).toHaveCount(10);
   await expect(dialog(page).getByRole('group', { name: /effects/i })).toHaveCount(0);
 });
 
@@ -73,7 +90,7 @@ test('invalid stored values fall back before hydration', async ({ page }) => {
   await page.goto('/');
   await page.evaluate(([a, b]) => { localStorage.setItem(a, 'violet'); localStorage.setItem(b, 'sepia'); }, [paletteKey, themeKey]);
   await page.reload();
-  await expect(html(page)).toHaveAttribute('data-palette', 'mineral');
+  await expect(html(page)).toHaveAttribute('data-palette', 'original');
   await expect(html(page)).toHaveAttribute('data-theme-preference', 'system');
 });
 
@@ -92,12 +109,12 @@ test('appearance control is keyboard accessible and contains only palette and co
   await control.focus();
   await page.keyboard.press('Enter');
   await expect(dialog(page)).toBeVisible();
-  await expect(page.getByRole('radio', { name: 'Mineral Research' })).toBeFocused();
+  await expect(page.getByRole('radio', { name: /Violet & Graphite/ })).toBeFocused();
   await expect(dialog(page).getByRole('group', { name: 'Palette' })).toBeVisible();
   await expect(dialog(page).getByRole('group', { name: 'Color mode' })).toBeVisible();
   await expect(dialog(page).getByRole('group', { name: /effects/i })).toHaveCount(0);
   await page.keyboard.press('ArrowDown');
-  await expect(page.getByRole('radio', { name: 'Oxblood Atelier' })).toBeFocused();
+  await expect(page.getByRole('radio', { name: 'One Dark' })).toBeFocused();
   await page.keyboard.press('Escape');
   await expect(dialog(page)).toBeHidden();
   await expect(control).toBeFocused();

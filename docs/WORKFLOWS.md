@@ -16,6 +16,24 @@ checklist, see `docs/RELEASE_READINESS.md`.
 5. Before considering work done, run `npm run test:all` (typecheck + lint + validate:content +
    validate:links + test) or the full `npm run check:release` gate.
 
+## Optional production performance check
+
+`npm run test:e2e` uses the existing development server on port 3100 (or
+`PLAYWRIGHT_PORT`) and excludes production performance measurements.
+
+For a release review, optionally run `npm run test:performance`. Playwright builds
+the site, starts its own production server at `http://127.0.0.1:3101`, waits for
+HTTP readiness, runs the four existing appearance performance cases, and stops
+the server when the run finishes or fails. Port 3101 must be free; the suite will
+not reuse a manually started server. Run it separately from development and
+other browser suites because the build and dev server share `.next`.
+
+This preserves the existing three-sample LCP/CLS budgets without adding a routine
+development or CI requirement. Diagnostics stay under
+`.my-dev-kit-workflow/tmp/performance-tests/`. Retain the earlier theme-port
+measurements as historical release-review evidence; this optional check does not
+replace that baseline or repeat the visual acceptance audit.
+
 ## Content update workflow
 
 1. Identify the source-of-truth file for the domain being changed (see the table in

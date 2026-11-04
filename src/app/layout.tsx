@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { DM_Sans } from 'next/font/google';
 import type { ReactNode } from 'react';
 
 import '@/app/globals.css';
@@ -6,11 +7,13 @@ import SiteShell from '@/components/layout/SiteShell';
 import ThemeProvider from '@/components/theme/ThemeProvider';
 import ThemeScript from '@/components/theme/theme-script';
 import JsonLd from '@/components/seo/JsonLd';
+import { DEFAULT_PALETTE, DEFAULT_THEME_PREFERENCE } from '@/lib/constants';
 import { getSiteMetadata } from '@/lib/seo/metadata';
 import { getSiteUrl } from '@/lib/seo/site-url';
 import { buildPersonJsonLd, buildWebSiteJsonLd } from '@/lib/seo/structured-data';
 
 const site = getSiteMetadata();
+const siteSans = DM_Sans({ subsets: ['latin'], variable: '--site-font-dm-sans', display: 'swap' });
 
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
@@ -35,7 +38,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      className={siteSans.variable}
+      data-palette={DEFAULT_PALETTE}
+      data-theme="light"
+      data-theme-preference={DEFAULT_THEME_PREFERENCE}
+      lang="en"
+      suppressHydrationWarning
+    >
       <head>
         <ThemeScript />
         <JsonLd data={buildPersonJsonLd()} />

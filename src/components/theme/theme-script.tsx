@@ -1,4 +1,5 @@
 import {
+  FIXED_DARK_PALETTES,
   PALETTE_IDS,
   PALETTE_STORAGE_KEY,
   THEME_PREFERENCES,
@@ -22,14 +23,17 @@ export const themeInitializationScript = `
   const preference = read('${THEME_STORAGE_KEY}', ${JSON.stringify(THEME_PREFERENCES)}, '${DEFAULT_APPEARANCE.theme}');
   const palette = read('${PALETTE_STORAGE_KEY}', ${JSON.stringify(PALETTE_IDS)}, '${DEFAULT_APPEARANCE.palette}');
 
+  const fixedDark = ${JSON.stringify(FIXED_DARK_PALETTES)}.indexOf(palette) !== -1;
   const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const effectiveTheme = preference === 'system'
-    ? (systemDark ? 'dark' : 'light')
-    : preference;
+  const effectiveTheme = fixedDark
+    ? 'dark'
+    : preference === 'system'
+      ? (systemDark ? 'dark' : 'light')
+      : preference;
 
   root.classList.toggle('dark', effectiveTheme === 'dark');
   root.dataset.theme = effectiveTheme;
-  root.dataset.themePreference = preference;
+  root.dataset.themePreference = fixedDark ? 'dark' : preference;
   root.dataset.palette = palette;
 })();
 `;

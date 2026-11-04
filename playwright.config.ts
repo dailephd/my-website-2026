@@ -4,6 +4,7 @@ const port = Number(process.env.PLAYWRIGHT_PORT ?? 3100);
 
 export default defineConfig({
   testDir: './tests/e2e',
+  testIgnore: '**/appearance-performance.spec.ts',
   webServer: {
     command: `npm run dev:web -- --port ${port}`,
     url: `http://127.0.0.1:${port}`,

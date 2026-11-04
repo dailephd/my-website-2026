@@ -11,7 +11,7 @@ export default function SiteShell({ children }: { children: ReactNode }) {
   const footerLinks = getFooterLinks();
 
   return (
-    <div className="theme-transition relative flex min-h-screen flex-col overflow-clip bg-transparent text-[var(--color-text-primary)]">
+    <div data-site-shell="" className="theme-transition relative flex min-h-screen flex-col overflow-clip bg-transparent text-[var(--color-text-primary)]">
       <a
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-[var(--radius-control)] focus:bg-[var(--color-elevated)] focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-[var(--color-text-primary)] focus:shadow-[var(--shadow-control)] focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-[var(--color-focus-ring)]"
         href="#main-content"

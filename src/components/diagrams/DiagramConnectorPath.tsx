@@ -10,8 +10,13 @@ interface DiagramConnectorPathProps {
   readonly markerEnd?: string;
 }
 
-/** Shared SVG connector styling. Renders the path only; viewport and coordinates stay local. */
+/** Shared SVG connector styling; viewport and coordinates stay local. */
 export default function DiagramConnectorPath({ d, variant, tone = 'data', markerEnd }: DiagramConnectorPathProps) {
   const toneClass = variant === 'feedback' ? '' : ' diagram-connector--' + tone;
-  return <path className={'diagram-connector diagram-connector--' + variant + toneClass} d={d} markerEnd={markerEnd} />;
+  return (
+    <>
+      <path aria-hidden="true" className={'diagram-connector-clearance diagram-connector-clearance--' + variant} d={d} />
+      <path className={'diagram-connector diagram-connector--' + variant + toneClass} d={d} markerEnd={markerEnd} />
+    </>
+  );
 }

@@ -67,13 +67,13 @@ afterEach(() => {
 describe('pre-hydration script', () => {
   const run = () => new Function(themeInitializationScript)();
 
-  it('applies mineral / system before React hydrates when nothing is stored', () => {
+  it('applies original / system before React hydrates when nothing is stored', () => {
     run();
     expect(rootState()).toEqual({
       dark: false,
       theme: 'light',
       preference: 'system',
-      palette: 'mineral',
+      palette: 'original',
     });
   });
 
@@ -82,7 +82,7 @@ describe('pre-hydration script', () => {
     const getItem = vi.spyOn(Storage.prototype, 'getItem');
     run();
     expect(getItem).not.toHaveBeenCalledWith('my-website-2026-fx');
-    expect(rootState()).toMatchObject({ palette: 'mineral', theme: 'light' });
+    expect(rootState()).toMatchObject({ palette: 'original', theme: 'light' });
     expect(document.documentElement.hasAttribute('data-fx')).toBe(false);
   });
 
@@ -126,7 +126,7 @@ describe('pre-hydration script', () => {
       dark: false,
       theme: 'light',
       preference: 'system',
-      palette: 'mineral',
+      palette: 'original',
     });
   });
 
@@ -172,13 +172,13 @@ describe('ThemeProvider + AppearanceControl', () => {
     for (const legend of ['Palette', 'Color mode']) {
       expect(screen.getByRole('group', { name: legend })).toBeInTheDocument();
     }
-    expect(screen.getAllByRole('radio')).toHaveLength(6 + 3);
+    expect(screen.getAllByRole('radio')).toHaveLength(7 + 3);
   });
 
   it('moves focus into the dialog on open and back to the trigger on Escape', () => {
     renderControl();
     fireEvent.click(trigger());
-    expect(document.activeElement).toBe(radio('Mineral Research'));
+    expect(document.activeElement).toBe(document.querySelector('input[name="appearance-palette"][value="original"]'));
 
     fireEvent.keyDown(document.activeElement as Element, { key: 'Escape' });
     expect(screen.queryByRole('dialog')).toBeNull();
@@ -233,7 +233,7 @@ describe('ThemeProvider + AppearanceControl', () => {
   it('falls back to defaults for invalid stored values', () => {
     window.localStorage.setItem(PALETTE_STORAGE_KEY, 'nope');
     renderControl();
-    expect(rootState().palette).toBe('mineral');
+    expect(rootState().palette).toBe('original');
   });
 
   it('follows system preference changes only in system mode', () => {

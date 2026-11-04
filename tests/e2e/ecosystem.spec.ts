@@ -52,7 +52,13 @@ test('diagram exposes visible semantic connectors and Observer correction direct
   const optional = diagram.locator('[data-diagram-connector="optional-assurance"]');
   await expect(optional).toContainText('optional assurance');
   await expect(optional.locator('svg path[marker-end]')).toHaveCount(0);
-  expect(await optional.locator('svg path').evaluate((element) => getComputedStyle(element).strokeDasharray)).not.toBe('none');
+  const optionalPath = optional.locator('svg path.diagram-connector');
+  const clearance = optional.locator('svg path.diagram-connector-clearance');
+  await expect(optionalPath).toHaveCount(1);
+  await expect(clearance).toHaveCount(1);
+  await expect(clearance).toHaveAttribute('aria-hidden', 'true');
+  expect(await clearance.getAttribute('d')).toBe(await optionalPath.getAttribute('d'));
+  expect(await optionalPath.evaluate((element) => getComputedStyle(element).strokeDasharray)).not.toBe('none');
 });
 
 test('boundaries and module links remain visible without implying tool execution', async ({ page }) => {

@@ -43,8 +43,8 @@ describe('theme contract', () => {
 });
 
 describe('appearance model', () => {
-  it('defines exactly the six palettes with Mineral Research as default', () => {
-    expect(PALETTE_IDS).toEqual(['mineral', 'oxblood', 'signal', 'cobalt', 'amber', 'original']);
+  it('defines the seven released palettes with Violet & Graphite as default', () => {
+    expect(PALETTE_IDS).toEqual(['mineral', 'oxblood', 'signal', 'cobalt', 'amber', 'original', 'onedark']);
     expect(PALETTES.map((palette) => palette.label)).toEqual([
       'Mineral Research',
       'Oxblood Atelier',
@@ -52,15 +52,16 @@ describe('appearance model', () => {
       'Cobalt & Terracotta',
       'Amber & Graphite',
       'Violet & Graphite',
+      'One Dark',
     ]);
-    expect(DEFAULT_PALETTE).toBe('mineral');
+    expect(DEFAULT_PALETTE).toBe('original');
     expect(PALETTE_IDS.every(isPaletteId)).toBe(true);
     expect(isPaletteId('violet')).toBe(false);
   });
 
 
-  it('defaults to mineral / system', () => {
-    expect(DEFAULT_APPEARANCE).toEqual({ palette: 'mineral', theme: 'system' });
+  it('defaults to original / system', () => {
+    expect(DEFAULT_APPEARANCE).toEqual({ palette: 'original', theme: 'system' });
     expect(readStoredAppearance(null)).toEqual(DEFAULT_APPEARANCE);
     expect(readStoredAppearance(storageOf({}))).toEqual(DEFAULT_APPEARANCE);
   });
@@ -84,7 +85,7 @@ describe('appearance model', () => {
           [THEME_STORAGE_KEY]: 'dark',
         }),
       ),
-    ).toEqual({ palette: 'mineral', theme: 'dark' });
+    ).toEqual({ palette: 'original', theme: 'dark' });
   });
 
   it('survives storage that throws', () => {

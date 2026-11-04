@@ -1,6 +1,7 @@
 import {
   DEFAULT_PALETTE,
   DEFAULT_THEME_PREFERENCE,
+  FIXED_DARK_PALETTES,
   PALETTE_IDS,
   PALETTE_STORAGE_KEY,
   THEME_PREFERENCES,
@@ -19,6 +20,10 @@ export function isThemePreference(value: unknown): value is ThemePreference {
 
 export function isPaletteId(value: unknown): value is PaletteId {
   return PALETTE_IDS.some((id) => id === value);
+}
+
+export function isFixedDarkPalette(palette: PaletteId): boolean {
+  return FIXED_DARK_PALETTES.includes(palette);
 }
 
 export function resolveEffectiveTheme(
@@ -65,11 +70,13 @@ export function applyAppearance(
   settings: AppearanceSettings,
   systemPrefersDark: boolean,
 ): EffectiveTheme {
-  const effectiveTheme = resolveEffectiveTheme(settings.theme, systemPrefersDark);
+  // Fixed-dark palettes ignore the stored mode (it is retained for when the user leaves them).
+  const fixedDark = isFixedDarkPalette(settings.palette);
+  const effectiveTheme = fixedDark ? 'dark' : resolveEffectiveTheme(settings.theme, systemPrefersDark);
 
   root.classList.toggle('dark', effectiveTheme === 'dark');
   root.dataset.theme = effectiveTheme;
-  root.dataset.themePreference = settings.theme;
+  root.dataset.themePreference = fixedDark ? 'dark' : settings.theme;
   root.dataset.palette = settings.palette;
 
   return effectiveTheme;

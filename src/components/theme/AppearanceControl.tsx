@@ -12,22 +12,27 @@ import {
 } from 'react';
 
 import { useTheme } from '@/components/theme/ThemeProvider';
-import { PALETTES, THEME_PREFERENCES } from '@/lib/constants';
+import { DEFAULT_PALETTE, PALETTES, THEME_PREFERENCES } from '@/lib/constants';
+import { isFixedDarkPalette } from '@/lib/theme';
 
 const themeLabels = { light: 'Light', dark: 'Dark', system: 'System' } as const;
 
 const optionLabel =
-  'theme-transition flex min-h-10 cursor-pointer items-center gap-2 rounded-[var(--radius-control)] border border-[var(--color-border-strong)] bg-[var(--color-card)] px-3 py-2 text-sm font-medium text-[var(--color-text-secondary)] hover:border-[var(--color-border-strong)] peer-checked:border-[var(--color-accent-primary)] peer-checked:bg-[var(--color-elevated)] peer-checked:text-[var(--color-text-primary)] peer-checked:shadow-[inset_0_0_0_1px_var(--color-accent-primary)] peer-focus-visible:outline peer-focus-visible:outline-[3px] peer-focus-visible:outline-offset-2 peer-focus-visible:outline-[var(--color-focus-ring)]';
+  'theme-transition flex min-h-10 cursor-pointer items-center gap-2 rounded-[var(--radius-control)] border border-[var(--color-border-strong)] bg-[var(--color-card)] px-3 py-2 text-sm font-medium text-[var(--color-text-secondary)] hover:border-[var(--color-border-strong)] peer-checked:border-[var(--color-accent-primary)] peer-checked:bg-[var(--color-elevated)] peer-checked:text-[var(--color-text-primary)] peer-checked:shadow-[inset_0_0_0_1px_var(--color-accent-primary)] peer-disabled:cursor-not-allowed peer-disabled:opacity-60 peer-focus-visible:outline peer-focus-visible:outline-[3px] peer-focus-visible:outline-offset-2 peer-focus-visible:outline-[var(--color-focus-ring)]';
 
 function RadioOption({
   checked,
   children,
+  describedBy,
+  disabled = false,
   name,
   onSelect,
   value,
 }: {
   checked: boolean;
   children: ReactNode;
+  describedBy?: string;
+  disabled?: boolean;
   name: string;
   onSelect: () => void;
   value: string;
@@ -35,8 +40,10 @@ function RadioOption({
   return (
     <div className="relative">
       <input
+        aria-describedby={describedBy}
         checked={checked}
         className="peer sr-only"
+        disabled={disabled}
         id={`${name}-${value}`}
         name={name}
         onChange={onSelect}
@@ -45,6 +52,11 @@ function RadioOption({
       />
       <label className={optionLabel} htmlFor={`${name}-${value}`}>
         {children}
+        {checked ? (
+          <span aria-hidden="true" className="ml-auto font-bold text-[var(--color-accent-primary)]">
+            ✓
+          </span>
+        ) : null}
       </label>
     </div>
   );
@@ -61,6 +73,9 @@ export default function AppearanceControl() {
   const panelRef = useRef<HTMLDivElement>(null);
   const panelId = useId();
   const titleId = useId();
+  const fixedId = useId();
+  const defaultId = useId();
+  const fixedDark = isFixedDarkPalette(palette);
 
   const close = useCallback((restoreFocus: boolean) => {
     setOpen(false);
@@ -120,7 +135,7 @@ export default function AppearanceControl() {
         </span>
         Appearance
         <span className="sr-only">
-          : {activePalette.label}, {themeLabels[theme]}
+          : {activePalette.label}, {fixedDark ? 'fixed dark' : themeLabels[theme]}
         </span>
       </button>
 
@@ -129,6 +144,7 @@ export default function AppearanceControl() {
           aria-labelledby={titleId}
           className="absolute inset-x-4 top-full z-50 mt-2 max-h-[calc(100vh-5rem)] overflow-y-auto rounded-[var(--radius-card)] border border-[var(--color-border-strong)] bg-[var(--color-elevated)] p-5 text-[var(--color-text-primary)] shadow-[var(--shadow-card-hover)] sm:inset-x-auto sm:right-6 sm:w-[24rem]"
           data-appearance-panel=""
+          data-surface="theme-popover"
           id={panelId}
           ref={panelRef}
           role="dialog"
@@ -152,33 +168,51 @@ export default function AppearanceControl() {
               {PALETTES.map((item) => (
                 <RadioOption
                   checked={palette === item.id}
+                  describedBy={item.id === DEFAULT_PALETTE ? defaultId : undefined}
                   key={item.id}
                   name="appearance-palette"
                   onSelect={() => setPalette(item.id)}
                   value={item.id}
                 >
-                  <span aria-hidden="true" className="flex -space-x-1">
-                    <span
-                      className="h-4 w-4 rounded-full border border-[var(--color-border-strong)]"
-                      style={{ background: item.swatch[0] }}
-                    />
-                    <span
-                      className="h-4 w-4 rounded-full border border-[var(--color-border-strong)]"
-                      style={{ background: item.swatch[1] }}
-                    />
+                  <span
+                    aria-hidden="true"
+                    className="palette-swatch flex h-6 w-12 shrink-0 overflow-hidden rounded-[4px] border border-[var(--color-border-strong)]"
+                    data-swatch={item.id}
+                  >
+                    <span className="flex-1 bg-[var(--swatch-hero)]" />
+                    <span className="flex-1 bg-[var(--swatch-section)]" />
+                    <span className="flex-1 bg-[var(--swatch-action)]" />
                   </span>
-                  {item.label}
+                  <span className="min-w-0">{item.label}</span>
+                  {item.id === DEFAULT_PALETTE ? (
+                    <span
+                      className="rounded-full border border-[var(--color-border-strong)] px-2 text-xs text-[var(--color-text-muted)]"
+                      id={defaultId}
+                    >
+                      Default
+                    </span>
+                  ) : null}
                 </RadioOption>
               ))}
             </div>
           </fieldset>
 
-          <fieldset className="mt-4 min-w-0">
+          <fieldset
+            aria-describedby={fixedDark ? fixedId : undefined}
+            className="mt-4 min-w-0"
+            disabled={fixedDark}
+          >
             <legend className={legendClass}>Color mode</legend>
+            {fixedDark ? (
+              <p className="mt-2 text-sm text-[var(--color-text-muted)]" id={fixedId}>
+                One Dark uses a fixed dark appearance; color mode does not apply. Your {themeLabels[theme]} choice is kept for the other palettes.
+              </p>
+            ) : null}
             <div className="mt-2 grid grid-cols-3 gap-2">
               {THEME_PREFERENCES.map((item) => (
                 <RadioOption
                   checked={theme === item}
+                  disabled={fixedDark}
                   key={item}
                   name="appearance-mode"
                   onSelect={() => setTheme(item)}

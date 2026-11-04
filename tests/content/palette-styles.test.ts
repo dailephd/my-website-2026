@@ -89,7 +89,9 @@ const required = [
 ];
 
 describe('ten palette/mode schemes', () => {
-  for (const palette of PALETTE_IDS) {
+  // These assertions guard the original six destination token sets. The fixed-dark
+  // art layer has its own thirteen-appearance coverage in art-direction.test.ts.
+  for (const palette of PALETTE_IDS.filter((id) => id !== 'onedark')) {
     for (const mode of ['light', 'dark'] as const) {
       describe(`${palette}/${mode}`, () => {
         const tokens = tokenMap(schemeBlock(palette, mode));

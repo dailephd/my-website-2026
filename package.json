@@ -23,6 +23,7 @@
     "validate:links": "node scripts/validate-links.mjs",
     "test:unit": "vitest run",
     "test:e2e": "playwright test",
+    "test:performance": "playwright test --config=playwright.performance.config.ts",
     "test": "npm run test:unit",
     "test:all": "npm run typecheck && npm run lint && npm run validate:content && npm run validate:links && npm run test:unit",
     "check:release": "node scripts/check-release-readiness.mjs",

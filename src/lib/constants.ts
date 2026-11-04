@@ -11,15 +11,19 @@ export const PALETTE_STORAGE_KEY = 'my-website-2026-palette';
 export const THEME_PREFERENCES = ['light', 'dark', 'system'] as const satisfies readonly ThemePreference[];
 
 export const PALETTES = [
-  { id: 'mineral', label: 'Mineral Research', swatch: ['#0f716a', '#b8683f'] },
-  { id: 'oxblood', label: 'Oxblood Atelier', swatch: ['#812c49', '#2d7168'] },
-  { id: 'signal', label: 'Signal Green', swatch: ['#3f6f47', '#a66f40'] },
-  { id: 'cobalt', label: 'Cobalt & Terracotta', swatch: ['#2751ac', '#c25b37'] },
-  { id: 'amber', label: 'Amber & Graphite', swatch: ['#93602b', '#256a64'] },
-  { id: 'original', label: 'Violet & Graphite', swatch: ['#087b91', '#6d3ee8'] },
-] as const satisfies readonly { id: PaletteId; label: string; swatch: readonly [string, string] }[];
+  { id: 'mineral', label: 'Mineral Research' },
+  { id: 'oxblood', label: 'Oxblood Atelier' },
+  { id: 'signal', label: 'Signal Green' },
+  { id: 'cobalt', label: 'Cobalt & Terracotta' },
+  { id: 'amber', label: 'Amber & Graphite' },
+  { id: 'original', label: 'Violet & Graphite' },
+  { id: 'onedark', label: 'One Dark' },
+] as const satisfies readonly { id: PaletteId; label: string }[];
 
 export const PALETTE_IDS = PALETTES.map((palette) => palette.id) as readonly PaletteId[];
 
 export const DEFAULT_THEME_PREFERENCE: ThemePreference = 'system';
-export const DEFAULT_PALETTE: PaletteId = 'mineral';
+export const DEFAULT_PALETTE: PaletteId = 'original';
+
+/** Palettes that render one fixed dark appearance; the stored color mode is retained but not applied. */
+export const FIXED_DARK_PALETTES: readonly PaletteId[] = ['onedark'];

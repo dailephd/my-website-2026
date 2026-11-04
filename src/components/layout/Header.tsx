@@ -14,7 +14,7 @@ export default function Header({
   navigationLinks: NavigationLink[];
 }) {
   return (
-    <header className="theme-transition sticky top-0 z-40 border-b border-[var(--color-border)] bg-[color-mix(in_srgb,var(--color-surface)_88%,transparent)] backdrop-blur-xl">
+    <header data-site-header="" className="theme-transition sticky top-0 z-40 border-b border-[var(--color-border)] bg-[color-mix(in_srgb,var(--color-surface)_88%,transparent)] backdrop-blur-xl">
       <Container className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 py-3.5">
         <Link
           className="group flex items-center gap-2.5 rounded-sm text-lg font-semibold tracking-tight text-[var(--color-text-primary)]"

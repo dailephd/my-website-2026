@@ -1,0 +1,877 @@
+/* Art direction consumers for the seven theme families.
+ *
+ * Every value is a role from art-tokens.css (--art-*, --color-*, --shadow-*); this file only decides where a
+ * role is painted. Palette selectors below express a family's graphic language and nothing else.
+ * Decoration lives on pseudo-elements with pointer-events:none, behind content, so the measured solid
+ * background colors stay intact and no image, input, button or focus ring is ever tinted or covered.
+ * Hooks: [data-site-shell] [data-site-header] [data-site-footer] .premium-card .hero-backdrop
+ *        [data-button] [data-badge] [data-appearance-panel] and semantic main/form/status elements. */
+
+/* ---------- Canvas atmosphere (page ground) ---------- */
+
+:root body {
+  background: var(--color-background);
+}
+
+[data-site-shell] {
+  isolation: isolate;
+}
+
+[data-site-shell]::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background-image: var(--art-canvas-image);
+  background-position: var(--art-canvas-position);
+  background-repeat: var(--art-canvas-repeat);
+  background-size: var(--art-canvas-size);
+  content: '';
+  pointer-events: none;
+}
+
+/* ---------- Typography expression ---------- */
+
+:root main h1 {
+  font-size: var(--art-page-title-size);
+  font-weight: var(--art-display-weight);
+  letter-spacing: var(--art-display-tracking);
+  line-height: var(--art-display-leading);
+  text-transform: var(--art-display-case);
+}
+
+:root main h2 {
+  font-family: var(--art-heading-font);
+  font-weight: var(--art-heading-weight);
+  letter-spacing: var(--art-heading-tracking);
+  text-transform: var(--art-heading-case);
+}
+
+:root main h3 {
+  font-family: var(--art-title-font);
+  font-weight: var(--art-title-weight);
+  letter-spacing: var(--art-heading-tracking);
+}
+
+:root .eyebrow {
+  font-family: var(--art-label-font);
+}
+
+:root main p > a,
+:root main li > a {
+  text-decoration-color: var(--color-accent-primary);
+}
+
+:root .hero-backdrop h1 {
+  font-size: var(--art-hero-title-size);
+}
+
+.hero-backdrop > * {
+  max-width: var(--art-hero-text-width);
+}
+
+:root .premium-card:not(.hero-backdrop) .eyebrow {
+  letter-spacing: var(--art-label-tracking);
+  text-transform: var(--art-label-case);
+}
+
+/* Color inversions must commit together: interpolating the card fill while
+ * its child text switches immediately measured 1.78:1 during a mode change. */
+:root body { transition: none; }
+:root .theme-transition,
+:root .diagram-node,
+:root .premium-link {
+  transition-property: box-shadow, transform, text-decoration-color;
+}
+
+:root main :is(input, textarea, select):focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 3px;
+}
+
+:root [data-site-header] nav a,
+:root [data-site-header] [data-appearance-trigger] {
+  font-family: var(--art-nav-font);
+  letter-spacing: var(--art-nav-tracking);
+  text-transform: var(--art-nav-case);
+}
+
+:root [data-site-header] nav a {
+  font-size: var(--art-nav-size);
+}
+
+@media (max-width: 420px) {
+  :root [data-site-header] [data-appearance-trigger] {
+    font-family: var(--font-sans);
+    letter-spacing: 0;
+    text-transform: none;
+  }
+}
+
+/* ---------- Site chrome ---------- */
+
+:root [data-site-header] {
+  border-color: var(--art-header-bg);
+  background-color: var(--art-header-bg);
+  backdrop-filter: none;
+  box-shadow: var(--art-header-shadow);
+}
+
+/* Released navigation roles: active links use the action fill and its label. */
+:root [data-site-header] nav a {
+  padding-inline: 0.125rem;
+  border-radius: var(--radius-control);
+}
+
+:root [data-site-header] nav [aria-current='page'] {
+  background-color: var(--color-accent-primary);
+  color: var(--color-on-accent);
+}
+
+:root [data-site-header] nav a:hover:not([aria-current='page']) {
+  background-color: var(--art-nav-hover);
+}
+
+:root[data-palette='mineral'] [data-site-header] nav [aria-current='page'] {
+  background-color: transparent;
+  color: var(--color-accent-primary);
+}
+
+[data-site-header]::after {
+  position: absolute;
+  inset-inline: 0;
+  top: 100%;
+  height: var(--art-header-edge-size);
+  background: var(--art-header-edge);
+  content: '';
+  pointer-events: none;
+}
+
+:root [data-site-footer] {
+  position: relative;
+  background-color: var(--art-footer-bg);
+}
+
+[data-site-footer]::before {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: var(--art-footer-edge-size);
+  background: var(--art-footer-edge);
+  content: '';
+  pointer-events: none;
+}
+
+/* ---------- Hero: a filled, art-directed panel with its own foreground pair ---------- */
+
+:root[data-palette] .hero-backdrop.premium-card {
+  --color-text-primary: var(--art-hero-fg);
+  --color-text-secondary: var(--art-hero-muted);
+  --color-text-muted: var(--art-hero-muted);
+  --color-accent-primary: var(--art-hero-fg);
+  --color-accent-primary-text: var(--art-hero-fg);
+  --color-accent-secondary: var(--art-hero-fg);
+  --color-accent-secondary-text: var(--art-hero-fg);
+  --color-surface: var(--art-hero-bg);
+  --color-card: var(--art-hero-bg);
+  --color-elevated: var(--art-hero-elevated);
+  --color-border: var(--art-hero-border);
+  --color-border-strong: color-mix(in srgb, var(--art-hero-fg) 70%, var(--art-hero-bg));
+  --color-action-hover: var(--art-hero-fg);
+  --color-on-accent: var(--art-hero-bg);
+  --color-focus-ring: var(--art-hero-fg);
+  --color-highlight: transparent;
+  --art-secondary-bg: var(--art-hero-elevated);
+  --art-secondary-border: color-mix(in srgb, var(--art-hero-fg) 70%, var(--art-hero-bg));
+  --art-input-fg: var(--art-hero-fg);
+  border: 0;
+  border-radius: var(--art-radius-hero);
+  background: var(--art-hero-bg);
+  color: var(--art-hero-fg);
+  box-shadow: inset 0 0 0 1px var(--art-hero-border);
+}
+
+:root[data-palette] .hero-backdrop.premium-card::before {
+  background: var(--art-hero-image);
+}
+
+:root[data-palette] .hero-backdrop.premium-card::after {
+  display: block;
+  inset: 0;
+  height: auto;
+  border: 0;
+  border-radius: inherit;
+  background-image: var(--art-hero-motif);
+  background-position: var(--art-hero-motif-position);
+  background-repeat: var(--art-hero-motif-repeat);
+  background-size: var(--art-hero-motif-size);
+  opacity: 1;
+}
+
+:root[data-palette] .hero-backdrop .quiet-grid {
+  display: none;
+}
+
+/* ---------- Cards: resting material (::before) and hover wash (::after) ---------- */
+
+:root[data-palette] .premium-card {
+  box-shadow: var(--shadow-card);
+}
+
+:root[data-palette] .premium-card:not(.hero-backdrop) {
+  --color-card: var(--art-card-bg);
+  --color-text-primary: var(--art-card-fg);
+  --color-text-secondary: var(--art-card-muted);
+  --color-text-muted: var(--art-card-muted);
+  --color-border: var(--art-card-border);
+  background-color: var(--art-card-bg);
+  color: var(--art-card-fg);
+  border-width: var(--art-border-card);
+}
+
+:root[data-palette='onedark'] .premium-card:not(.hero-backdrop) {
+  /* Released card material is lighter than the generic surface. */
+  --color-accent-primary-text: #eac5f6;
+  --color-accent-secondary-text: #9fd2fa;
+  --art-input-border: #9baac0;
+  --color-danger: #eb8a93;
+}
+
+:root[data-palette='oxblood'][data-theme='dark'] .premium-card:not(.hero-backdrop) {
+  /* Preserve a 3:1 control edge over the released card hover wash. */
+  --art-input-border: #93737d;
+}
+
+:root[data-palette='amber'][data-theme='dark'] .premium-card:not(.hero-backdrop) {
+  --art-input-border: #a29982;
+}
+
+:root[data-palette] .premium-card:not(.hero-backdrop)::before {
+  background: var(--art-card-image);
+}
+
+:root[data-palette] .premium-card:not(.hero-backdrop)::after {
+  display: block;
+  inset: 0;
+  height: auto;
+  border: 0;
+  border-radius: inherit;
+  background: var(--art-card-hover-image);
+  opacity: 0;
+  transition: opacity var(--art-motion-medium) var(--art-ease);
+}
+
+:root[data-palette] .premium-card-interactive:is(:hover, :focus-within)::after {
+  opacity: 1;
+}
+
+:root[data-palette] .premium-card-interactive {
+  transition:
+    box-shadow var(--art-motion-medium) var(--art-ease),
+    transform var(--art-motion-medium) var(--art-ease);
+}
+
+:root[data-palette] .premium-card-interactive:hover {
+  border-color: var(--color-accent-primary);
+  box-shadow: var(--shadow-card-hover);
+  transform: none;
+}
+
+:root [data-badge] {
+  border-radius: var(--art-radius-chip);
+  font-family: var(--art-label-font);
+  letter-spacing: var(--art-label-tracking);
+}
+
+/* ---------- Buttons, form controls and status surfaces ---------- */
+
+/* Diagram contours carry information; page/card borders are decorative roles. */
+:root[data-palette] .diagram-node {
+  border-color: var(--diagram-border-strong);
+}
+
+:root[data-palette] .diagram-node--primary:hover {
+  border-color: var(--diagram-flow-control);
+}
+
+/* Cobalt's hard shadow is adjacent to the contour, including on hover. */
+:root[data-palette='cobalt'] .diagram-node--primary:hover {
+  border-color: var(--diagram-border-strong);
+}
+
+:root[data-palette='cobalt'][data-theme='dark'] .diagram-node--primary,
+:root[data-palette='cobalt'][data-theme='dark'] .diagram-node--primary:hover {
+  border-color: var(--color-text-primary);
+}
+
+:root [data-button],
+:root main form button {
+  min-height: 2.75rem;
+  border-radius: var(--art-radius-control);
+  font-family: var(--art-button-font);
+  font-weight: var(--art-button-weight);
+  letter-spacing: var(--art-button-tracking);
+  text-transform: var(--art-button-case);
+}
+
+:root [data-button][data-emphasis='primary'] {
+  border-color: var(--color-accent-primary);
+  background-color: var(--color-accent-primary);
+  color: var(--color-on-accent);
+  background-image: var(--art-button-image);
+  box-shadow: var(--art-primary-shadow);
+}
+
+:root [data-button][data-emphasis='primary']:hover,
+:root main form button[type='submit']:hover:not(:disabled) {
+  background-color: var(--color-action-hover);
+  color: var(--color-on-accent);
+}
+
+:root [data-button][data-emphasis='secondary'] {
+  border-color: var(--art-secondary-border);
+  background-color: var(--art-secondary-bg);
+  color: var(--art-input-fg);
+}
+
+:root [data-button][data-emphasis='secondary']:hover {
+  background-color: var(--color-elevated);
+}
+
+:root main form button[type='submit'] {
+  border: 1px solid transparent;
+  background-color: var(--color-accent-primary);
+  background-image: var(--art-button-image);
+  color: var(--color-on-accent);
+  box-shadow: var(--art-primary-shadow);
+}
+
+:root main form button[type='button'] {
+  border-color: var(--art-secondary-border);
+  background-color: var(--art-secondary-bg);
+  color: var(--art-input-fg);
+  box-shadow: var(--shadow-control);
+}
+
+:root main form button[type='button']:hover:not(:disabled) {
+  background-color: var(--color-elevated);
+}
+
+:root [data-button]:active,
+:root main form button:active:not(:disabled) {
+  box-shadow: var(--art-pressed-shadow);
+}
+
+:root [data-button],
+:root main form button {
+  transition:
+    box-shadow var(--art-motion-short) var(--art-ease),
+    transform var(--art-motion-short) var(--art-ease);
+}
+
+:root main :is(input:not([type='hidden']), textarea, select) {
+  border-color: var(--art-input-border);
+  background-color: var(--art-input-bg);
+  color: var(--art-input-fg);
+  border-radius: var(--art-radius-control);
+  font-family: var(--art-control-font);
+  transition:
+    box-shadow var(--art-motion-short) var(--art-ease);
+}
+
+:root main :is(input, textarea)::placeholder {
+  color: var(--art-input-muted);
+}
+
+:root main form button:disabled {
+  border: 1px dashed var(--art-secondary-border);
+  background: transparent;
+  color: var(--art-input-muted);
+  box-shadow: none;
+}
+
+:root main :is(input:not([type='hidden']), textarea, select):hover:not(:disabled):not(:focus-visible) {
+  border-color: var(--color-accent-primary-text);
+}
+
+:root main :is(input, textarea, select)[aria-invalid='true'] {
+  border-color: var(--color-danger);
+}
+
+:root main [role='alert'] {
+  border-color: var(--color-danger);
+  background-color: var(--color-danger-soft);
+  color: var(--color-text-primary);
+}
+
+:root main [role='status'] {
+  border: 1px solid var(--color-success);
+  background-color: color-mix(in srgb, var(--color-success) 14%, var(--color-card));
+  color: var(--color-text-primary);
+}
+
+/* ---------- Appearance picker ---------- */
+
+:root [data-appearance-panel] {
+  border-radius: var(--art-radius-hero);
+  background-color: var(--color-surface);
+  box-shadow: var(--art-panel-shadow), var(--art-glass-highlight);
+  backdrop-filter: var(--art-glass-filter);
+}
+
+.palette-swatch {
+  --swatch-hero: #2b1c73;
+  --swatch-section: #fbfaff;
+  --swatch-action: #5b2ee0;
+}
+
+.palette-swatch[data-swatch='original'] { --swatch-hero: #2b1c73; --swatch-section: #fbfaff; --swatch-action: #5b2ee0; }
+.palette-swatch[data-swatch='mineral'] { --swatch-hero: #0f4a43; --swatch-section: #f7f4ea; --swatch-action: #0b5f55; }
+.palette-swatch[data-swatch='oxblood'] { --swatch-hero: #5a1229; --swatch-section: #fdf8f3; --swatch-action: #7a1f3d; }
+.palette-swatch[data-swatch='signal'] { --swatch-hero: #0c140d; --swatch-section: #f6f8ef; --swatch-action: #1f6b2d; }
+.palette-swatch[data-swatch='cobalt'] { --swatch-hero: #1c3fb0; --swatch-section: #fdf7ea; --swatch-action: #1f43b8; }
+.palette-swatch[data-swatch='amber'] { --swatch-hero: #24221e; --swatch-section: #fbf7ec; --swatch-action: #7f5210; }
+.palette-swatch[data-swatch='onedark'] { --swatch-hero: #2f2540; --swatch-section: #303743; --swatch-action: #c678dd; }
+
+:root[data-theme='dark'] .palette-swatch[data-swatch='original'] { --swatch-hero: #241a52; --swatch-section: #201c3a; --swatch-action: #a58bff; }
+:root[data-theme='dark'] .palette-swatch[data-swatch='mineral'] { --swatch-hero: #1c5a4e; --swatch-section: #1c2b29; --swatch-action: #74d6bf; }
+:root[data-theme='dark'] .palette-swatch[data-swatch='oxblood'] { --swatch-hero: #6b1733; --swatch-section: #281420; --swatch-action: #eb9db4; }
+:root[data-theme='dark'] .palette-swatch[data-swatch='signal'] { --swatch-hero: #0b1a0c; --swatch-section: #0f1a11; --swatch-action: #a6f25f; }
+:root[data-theme='dark'] .palette-swatch[data-swatch='cobalt'] { --swatch-hero: #d2603a; --swatch-section: #162150; --swatch-action: #8fa9ff; }
+:root[data-theme='dark'] .palette-swatch[data-swatch='amber'] { --swatch-hero: #e9a93a; --swatch-section: #26231c; --swatch-action: #f2b84b; }
+
+/* ========================================================================
+   Family flourishes
+   ======================================================================== */
+
+/* ---- Original: Prism. Soft bloom on the hero and active navigation; the most rounded family. ---- */
+
+:root[data-palette='original'] .hero-backdrop.premium-card {
+  box-shadow: inset 0 0 0 1px var(--art-hero-border), 0 28px 60px -34px rgb(62 36 170 / 75%);
+}
+
+:root[data-palette='original'] [data-site-header] nav [aria-current='page'] {
+  box-shadow: 0 6px 16px -6px color-mix(in srgb, var(--color-accent-primary) 70%, transparent);
+}
+
+/* ---- Mineral: Survey plate. Numbered plate captions, a square specimen chip on every card. ---- */
+
+:root[data-palette='mineral'] main {
+  counter-reset: art-plate;
+}
+
+:root[data-palette='mineral'] main h2 {
+  counter-increment: art-plate;
+}
+
+:root[data-palette='mineral'] main h2::before {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--color-accent-secondary-text);
+  content: 'PL.' counter(art-plate, decimal-leading-zero) / '';
+  font: 500 0.6875rem/1 var(--font-mono, ui-monospace, monospace);
+  letter-spacing: 0.1em;
+}
+
+:root[data-palette='mineral'] .premium-card:not(.hero-backdrop)::before {
+  inset: 0.75rem 0.75rem auto auto;
+  width: 0.625rem;
+  height: 0.625rem;
+  background: var(--color-accent-secondary);
+}
+
+:root[data-palette='mineral'] .hero-backdrop.premium-card {
+  box-shadow:
+    inset 0 0 0 1px var(--art-hero-border),
+    inset 0 0 0 4px var(--art-hero-bg),
+    inset 0 0 0 5px color-mix(in srgb, var(--art-hero-fg) 45%, transparent);
+}
+
+:root[data-palette='mineral'] [data-site-header] nav [aria-current='page'] {
+  border-radius: 0;
+  box-shadow: inset 0 -2px 0 var(--color-accent-primary);
+  color: var(--color-accent-primary);
+  font-weight: 600;
+}
+
+:root[data-palette='mineral'] [data-badge] {
+  box-shadow: inset 0 0 0 1px var(--color-accent-secondary);
+}
+
+/* ---- Oxblood: Lookbook. Magazine double rule, roman chapter numerals, large ampersand. ---- */
+
+:root[data-palette='oxblood'] main {
+  counter-reset: art-chapter;
+}
+
+:root[data-palette='oxblood'] main h2 {
+  counter-increment: art-chapter;
+  font-size: 1.625rem;
+  line-height: 1.15;
+}
+
+:root[data-palette='oxblood'] .premium-card:not(.hero-backdrop) h3 {
+  font-size: 1.1875rem;
+  line-height: 1.25;
+}
+
+:root[data-palette='oxblood'] main h2::before {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--color-accent-primary);
+  content: counter(art-chapter, upper-roman) / '';
+  font: italic 400 1.25rem/1 var(--art-display-font);
+}
+
+:root[data-palette='oxblood'] .section-shell + .section-shell::before {
+  top: -1px;
+  right: 0;
+  left: 0;
+  height: 3px;
+  border-top: 3px double var(--color-text-primary);
+  background: none;
+}
+
+:root[data-palette='oxblood'] .section-shell + .section-shell::after {
+  display: none;
+}
+
+:root[data-palette='oxblood'] .premium-card:not(.hero-backdrop) {
+  border-width: 0 0 1px;
+}
+
+:root[data-palette='oxblood'] .hero-backdrop.premium-card::after {
+  inset: auto 1.5rem -4.25rem auto;
+  color: color-mix(in srgb, var(--art-hero-fg) 13%, transparent);
+  content: '&' / '';
+  font: italic 400 clamp(9rem, 18vw, 17rem) / 1 var(--art-display-font);
+}
+
+:root[data-palette='oxblood'] [data-site-header] nav [aria-current='page'] {
+  box-shadow:
+    inset 0 1px 0 var(--color-accent-primary),
+    inset 0 -1px 0 var(--color-accent-primary);
+}
+
+:root[data-palette='oxblood'] [data-badge] {
+  background-color: var(--color-card);
+  box-shadow: inset 0 -1px 0 var(--color-accent-secondary);
+}
+
+/* ---- Signal: Console. Prompt chevron, block cursor, phosphor glow, scroll trace in the header. ---- */
+
+:root[data-palette='signal'] main h1::before {
+  display: inline-block;
+  width: 0.62em;
+  height: 0.62em;
+  margin-inline-end: 0.42em;
+  background-color: currentcolor;
+  clip-path: polygon(0 0, 100% 50%, 0 100%, 0 76%, 62% 50%, 0 24%);
+  content: '';
+}
+
+:root[data-palette='signal'] .hero-backdrop h1::after {
+  display: inline-block;
+  width: 0.56em;
+  height: 0.98em;
+  margin-inline-start: 0.2em;
+  background-color: currentcolor;
+  content: '';
+  vertical-align: -0.12em;
+}
+
+:root[data-palette='signal'][data-theme='dark'] .hero-backdrop h1 {
+  text-shadow: 0 0 18px rgb(185 247 124 / 42%);
+}
+
+:root[data-palette='signal'] .hero-backdrop.premium-card {
+  box-shadow:
+    inset 0 0 0 1px var(--art-hero-border),
+    inset 0 0 40px rgb(70 160 70 / 16%);
+}
+
+:root[data-palette='signal'] [data-site-header] nav [aria-current='page'] {
+  box-shadow: 3px 3px 0 color-mix(in srgb, var(--color-accent-primary) 34%, transparent);
+}
+
+:root[data-palette='signal'] [data-badge] {
+  background-color: var(--color-card);
+  box-shadow: inset 0 0 0 1px var(--color-accent-primary);
+}
+
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    :root[data-palette='signal'] [data-site-header]::after {
+      transform-origin: left center;
+      animation: art-trace linear both;
+      animation-timeline: scroll(root);
+    }
+  }
+}
+
+/* ---- Cobalt: Poster. Ink outline on every surface, hard offset shadows, press mechanics. ---- */
+
+.diagram-connector-clearance {
+  display: none;
+}
+
+/* Separate the connector and arrow tip from Cobalt's contrasting node edges.
+ * This decorative underlay preserves the topology and the released flow hues. */
+:root[data-palette] .diagram-connector-clearance {
+  display: block;
+  fill: none;
+  stroke: var(--diagram-canvas-bg);
+  stroke-width: calc(var(--diagram-primary-stroke) + 6px);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+  pointer-events: none;
+}
+
+:root[data-palette] .diagram-connector-clearance--secondary {
+  stroke-width: calc(var(--diagram-secondary-stroke) + 6px);
+}
+
+:root[data-palette] .diagram-connector-clearance--feedback {
+  stroke-width: calc(var(--diagram-feedback-stroke) + 6px);
+  stroke-dasharray: var(--diagram-feedback-dash);
+}
+
+:root[data-palette='cobalt'] .hero-backdrop.premium-card {
+  box-shadow: var(--art-hero-shadow);
+}
+
+:root[data-palette='cobalt'][data-theme='dark'] .hero-backdrop.premium-card {
+  box-shadow: var(--art-hero-shadow);
+}
+
+:root[data-palette='cobalt'] main h2::before {
+  display: inline-block;
+  width: 0.7em;
+  height: 0.7em;
+  margin-inline-end: 0.55em;
+  background-color: var(--color-accent-secondary);
+  box-shadow: 2px 2px 0 var(--color-text-primary);
+  content: '';
+}
+
+:root[data-palette='cobalt'] [data-site-header] nav [aria-current='page'] {
+  box-shadow: 3px 3px 0 var(--color-accent-secondary);
+}
+
+:root[data-palette='cobalt'] [data-badge] {
+  box-shadow:
+    inset 0 0 0 2px var(--color-accent-secondary),
+    2px 2px 0 var(--color-accent-secondary);
+  font-weight: 700;
+}
+
+:root[data-palette='cobalt'] [data-button],
+:root[data-palette='cobalt'] main form button {
+  border-width: 2px;
+}
+
+@media (max-width: 1023px) {
+  :root[data-palette='cobalt'][data-theme] {
+    --art-hero-motif-position: calc(100% + 10.5rem) calc(100% + 10rem), calc(100% + 15rem) -18rem, 0 0;
+  }
+}
+
+/* ---- Amber: Study. Brass inner hairline on the hero, lit active navigation, a lit tick before each section. ---- */
+
+:root[data-palette='amber'] main h2::before {
+  display: inline-block;
+  width: 3px;
+  height: 0.9em;
+  margin-inline-end: 0.6rem;
+  border-radius: 0 3px 3px 0;
+  background-color: var(--color-accent-primary);
+  box-shadow: 0 0 12px var(--color-accent-primary);
+  content: '';
+  vertical-align: -0.05em;
+}
+
+:root[data-palette='amber'] .hero-backdrop.premium-card {
+  box-shadow:
+    inset 0 0 0 1px var(--art-hero-border),
+    inset 0 0 0 5px var(--art-hero-bg),
+    inset 0 0 0 6px color-mix(in srgb, var(--art-hero-border) 55%, transparent),
+    0 24px 44px -28px rgb(70 44 8 / 75%);
+}
+
+:root[data-palette='amber'] [data-site-header] nav [aria-current='page'] {
+  box-shadow:
+    0 0 0 1px var(--color-accent-primary),
+    0 4px 16px -4px color-mix(in srgb, var(--color-accent-primary) 75%, transparent);
+}
+
+:root[data-palette='amber'] [data-badge] {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-accent-secondary) 45%, transparent);
+}
+
+/* ---- One Dark: Editor. Hero as an editor pane with window controls, tab-like active navigation. ---- */
+
+:root[data-palette='onedark'] .hero-backdrop.premium-card {
+  padding-top: 2.75rem;
+  box-shadow: inset 0 0 0 1px var(--art-panel-border), var(--art-panel-shadow);
+}
+
+:root[data-palette='onedark'] .hero-backdrop h1 {
+  color: #e5c07b;
+}
+
+:root[data-palette='onedark'] .premium-card:not(.hero-backdrop) h3 {
+  color: var(--color-accent-secondary-text);
+}
+
+:root[data-palette='onedark'] .section-shell {
+  isolation: isolate;
+}
+
+:root[data-palette='onedark'] .section-shell::after {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  width: auto;
+  height: auto;
+  border: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, transparent 0.4375rem, rgb(171 178 191 / 14%) 0.4375rem, rgb(171 178 191 / 14%) calc(0.4375rem + 1px), transparent calc(0.4375rem + 1px));
+  content: '';
+  transform: none;
+  pointer-events: none;
+}
+
+:root[data-palette='onedark'] [data-site-header] nav [aria-current='page'] {
+  border-radius: 0.25rem 0.25rem 0 0;
+  box-shadow: inset 0 2px 0 #f4e6fa;
+}
+
+:root[data-palette='onedark'] [data-button]:not([data-emphasis='primary']) {
+  box-shadow: var(--shadow-control);
+}
+
+/* Keyboard focus must win over every family-specific resting/hover depth. */
+:root[data-palette] :is(.premium-card, [data-button], main form button, main input, main textarea, main select, [data-site-header] a, [data-site-header] button):focus-visible {
+  box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 6px var(--color-text-primary);
+}
+
+/* ========================================================================
+   Motion: each family's tokens set duration, easing and movement. Nothing animates layout properties.
+   ======================================================================== */
+
+@keyframes art-fade { from { opacity: 0; } }
+@keyframes art-rise { from { opacity: 0; transform: translateY(14px); } }
+@keyframes art-develop { from { opacity: 0; filter: saturate(0.4); } }
+@keyframes art-boot { 0% { opacity: 0; } 40% { opacity: 0.7; } 60% { opacity: 0.25; } 100% { opacity: 1; } }
+@keyframes art-slide { from { opacity: 0; transform: translateX(-16px); } }
+@keyframes art-lamp { from { opacity: 0; filter: brightness(0.72); } }
+@keyframes art-pop { from { opacity: 0; transform: translateY(-4px); } }
+@keyframes art-trace { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes art-cursor { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+
+@media (prefers-reduced-motion: no-preference) {
+  .section-shell:not(:has(.hero-backdrop)) {
+    animation: art-fade var(--art-enter-duration) ease-out both;
+  }
+
+  .section-shell:nth-child(2) { animation-delay: 40ms; }
+  .section-shell:nth-child(3) { animation-delay: 80ms; }
+  .section-shell:nth-child(n + 4) { animation-delay: 120ms; }
+
+  .hero-backdrop.premium-card {
+    animation: var(--art-enter-name) var(--art-enter-duration) var(--art-ease) both;
+  }
+
+  [data-appearance-panel] {
+    animation: art-pop var(--art-motion-medium) var(--art-ease) both;
+  }
+
+
+  :root[data-palette='signal'] .hero-backdrop h1::after {
+    animation: art-cursor 1s step-end 3;
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  :root[data-palette] .premium-card-interactive:hover {
+    transform: var(--art-hover-lift);
+  }
+
+  :root[data-palette] .premium-card-interactive:active {
+    box-shadow: var(--art-pressed-shadow);
+    transform: var(--art-press-shift);
+  }
+
+  :root [data-button]:hover:not(:disabled),
+  :root main form button:hover:not(:disabled) {
+    transform: var(--art-hover-lift);
+  }
+
+  :root [data-button]:active:not(:disabled),
+  :root main form button:active:not(:disabled) {
+    transform: var(--art-press-shift);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root [data-button],
+  :root main form button,
+  :root main :is(input, textarea, select),
+  :root[data-palette] .premium-card-interactive,
+  :root[data-palette] .premium-card:not(.hero-backdrop)::after {
+    transition: none;
+  }
+}
+
+/* ========================================================================
+   Accessibility preferences
+   ======================================================================== */
+
+@media (prefers-reduced-transparency: reduce) {
+  [data-site-header] {
+    backdrop-filter: none;
+    background-color: var(--art-header-bg);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce), (forced-colors: active) {
+  :root[data-palette='onedark'] {
+    --art-glass-filter: none;
+    --shadow-card: 0 0 0 transparent;
+    --shadow-card-hover: 0 0 0 transparent;
+    --shadow-control: 0 0 0 transparent;
+    --art-primary-shadow: 0 0 0 transparent;
+    --art-pressed-shadow: 0 0 0 transparent;
+    --art-panel-shadow: 0 0 0 transparent;
+    --art-glass-highlight: 0 0 0 transparent;
+  }
+
+  :root[data-palette='onedark'] [data-appearance-panel] {
+    background-color: var(--color-surface);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce), (forced-colors: active), (prefers-contrast: more) {
+  :root[data-palette],
+  :root[data-palette][data-theme] {
+    --art-canvas-image: none;
+    --art-hero-image: none;
+    --art-hero-motif: none;
+    --art-panel-image: none;
+    --art-card-image: none;
+    --art-card-hover-image: none;
+    --art-button-image: none;
+  }
+}
+
+@media (forced-colors: active) {
+  [data-site-shell]::before,
+  .hero-backdrop.premium-card::before,
+  .hero-backdrop.premium-card::after,
+  .premium-card::before,
+  .premium-card::after,
+  [data-site-header]::after,
+  [data-site-footer]::before {
+    display: none;
+  }
+}

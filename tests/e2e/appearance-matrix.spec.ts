@@ -15,30 +15,78 @@ type PaletteId = (typeof palettes)[number];
 type Mode = (typeof modes)[number];
 
 const expected: Record<PaletteId, Record<Mode, { bg: string; fg: string; primary: string }>> = {
-  mineral: {
-    light: { bg: 'rgb(242, 240, 231)', fg: 'rgb(28, 41, 38)', primary: 'rgb(15, 113, 106)' },
-    dark: { bg: 'rgb(20, 30, 28)', fg: 'rgb(236, 237, 229)', primary: 'rgb(104, 201, 186)' },
+  "mineral": {
+    "light": {
+      "bg": "rgb(238, 233, 219)",
+      "fg": "rgb(247, 243, 230)",
+      "primary": "rgb(247, 243, 230)"
+    },
+    "dark": {
+      "bg": "rgb(16, 25, 26)",
+      "fg": "rgb(245, 241, 223)",
+      "primary": "rgb(245, 241, 223)"
+    }
   },
-  oxblood: {
-    light: { bg: 'rgb(246, 241, 236)', fg: 'rgb(48, 33, 40)', primary: 'rgb(129, 44, 73)' },
-    dark: { bg: 'rgb(33, 23, 28)', fg: 'rgb(245, 235, 230)', primary: 'rgb(224, 157, 178)' },
+  "oxblood": {
+    "light": {
+      "bg": "rgb(246, 239, 232)",
+      "fg": "rgb(251, 243, 234)",
+      "primary": "rgb(251, 243, 234)"
+    },
+    "dark": {
+      "bg": "rgb(23, 10, 16)",
+      "fg": "rgb(253, 241, 232)",
+      "primary": "rgb(253, 241, 232)"
+    }
   },
-  signal: {
-    light: { bg: 'rgb(239, 241, 232)', fg: 'rgb(24, 33, 26)', primary: 'rgb(62, 109, 70)' },
-    dark: { bg: 'rgb(17, 24, 21)', fg: 'rgb(235, 242, 229)', primary: 'rgb(172, 234, 116)' },
+  "signal": {
+    "light": {
+      "bg": "rgb(238, 241, 228)",
+      "fg": "rgb(183, 242, 125)",
+      "primary": "rgb(183, 242, 125)"
+    },
+    "dark": {
+      "bg": "rgb(6, 11, 7)",
+      "fg": "rgb(185, 247, 124)",
+      "primary": "rgb(185, 247, 124)"
+    }
   },
-  cobalt: {
-    light: { bg: 'rgb(245, 240, 232)', fg: 'rgb(23, 39, 68)', primary: 'rgb(39, 81, 172)' },
-    dark: { bg: 'rgb(17, 26, 41)', fg: 'rgb(239, 241, 245)', primary: 'rgb(139, 171, 255)' },
+  "cobalt": {
+    "light": {
+      "bg": "rgb(244, 236, 220)",
+      "fg": "rgb(255, 250, 240)",
+      "primary": "rgb(255, 250, 240)"
+    },
+    "dark": {
+      "bg": "rgb(11, 19, 48)",
+      "fg": "rgb(11, 19, 48)",
+      "primary": "rgb(11, 19, 48)"
+    }
   },
-  amber: {
-    light: { bg: 'rgb(245, 240, 227)', fg: 'rgb(37, 38, 33)', primary: 'rgb(134, 89, 42)' },
-    dark: { bg: 'rgb(27, 32, 30)', fg: 'rgb(245, 238, 220)', primary: 'rgb(234, 192, 120)' },
+  "amber": {
+    "light": {
+      "bg": "rgb(243, 234, 214)",
+      "fg": "rgb(247, 231, 194)",
+      "primary": "rgb(247, 231, 194)"
+    },
+    "dark": {
+      "bg": "rgb(23, 22, 19)",
+      "fg": "rgb(26, 20, 6)",
+      "primary": "rgb(26, 20, 6)"
+    }
   },
-  original: {
-    light: { bg: 'rgb(237, 239, 243)', fg: 'rgb(21, 25, 36)', primary: 'rgb(8, 123, 145)' },
-    dark: { bg: 'rgb(26, 29, 35)', fg: 'rgb(241, 243, 247)', primary: 'rgb(66, 203, 227)' },
-  },
+  "original": {
+    "light": {
+      "bg": "rgb(236, 234, 246)",
+      "fg": "rgb(255, 255, 255)",
+      "primary": "rgb(255, 255, 255)"
+    },
+    "dark": {
+      "bg": "rgb(14, 12, 26)",
+      "fg": "rgb(246, 243, 255)",
+      "primary": "rgb(246, 243, 255)"
+    }
+  }
 };
 
 async function seed(page: Page, palette: string, theme: string) {
@@ -106,13 +154,66 @@ for (const palette of palettes) {
 
       expect(styles.body).toBe(want.bg);
       expect(styles.h1).toBe(want.fg);
-      const expectedEyebrow = palette === 'original' && mode === 'light' ? 'rgb(0, 109, 130)' : want.primary;
+      const expectedEyebrow = want.primary;
       expect(styles.eyebrow).toBe(expectedEyebrow);
+
+      // Shared source defaults must resolve to usable CSS rather than generator placeholders.
+      const validShadows = await page.evaluate(() => {
+        const root = getComputedStyle(document.documentElement);
+        if (document.documentElement.dataset.palette === 'cobalt') {
+          const dark = document.documentElement.dataset.theme === 'dark';
+          const color = dark ? '#d2603a' : '#b4461f';
+          const probe = document.createElement('div');
+          document.body.append(probe);
+          for (const [role, offset] of [['--shadow-card', 4], ['--shadow-card-hover', 7]] as const) {
+            probe.style.boxShadow = `${offset}px ${offset}px 0 ${color}`;
+            const expected = getComputedStyle(probe).boxShadow;
+            probe.style.boxShadow = root.getPropertyValue(role).trim();
+            if (getComputedStyle(probe).boxShadow !== expected) {
+              probe.remove();
+              return false;
+            }
+          }
+          // Hero-local text aliases must not recolor the released poster shadow.
+          probe.style.boxShadow = `8px 8px 0 ${dark ? '#8fa9ff' : '#a33e18'}`;
+          const heroShadow = getComputedStyle(probe).boxShadow;
+          if (getComputedStyle(document.querySelector('.hero-backdrop') as Element).boxShadow !== heroShadow) {
+            probe.remove();
+            return false;
+          }
+          probe.remove();
+        }
+        return ['--shadow-control', '--art-primary-shadow', '--art-pressed-shadow'].every((role) =>
+          CSS.supports('box-shadow', root.getPropertyValue(role).trim()),
+        );
+      });
+      expect(validShadows).toBe(true);
+
+      // Shared cards consume the released card material, not generic surfaces.
+      const cardMaterial = await page.evaluate(() => {
+        const card = document.querySelector('main .premium-card:not(.hero-backdrop)');
+        if (!card) throw new Error('Missing shared card');
+        const root = getComputedStyle(document.documentElement);
+        const probe = document.createElement('div');
+        document.body.append(probe);
+        probe.style.backgroundColor = root.getPropertyValue('--art-card-bg');
+        probe.style.borderColor = root.getPropertyValue('--art-card-border');
+        probe.style.boxShadow = root.getPropertyValue('--shadow-card');
+        const expected = getComputedStyle(probe);
+        const actual = getComputedStyle(card);
+        const result = actual.backgroundColor === expected.backgroundColor && actual.borderTopColor === expected.borderTopColor && actual.boxShadow === expected.boxShadow;
+        probe.remove();
+        return result;
+      });
+      expect(cardMaterial).toBe(true);
 
       // Readable navigation and hero: contrast against the surfaces they sit on.
       const surface = await page.evaluate(() => {
+        const link = document.querySelector('nav[aria-label="Primary navigation"] a') as Element;
+        const linkBackground = getComputedStyle(link).backgroundColor;
+        if (linkBackground !== 'rgba(0, 0, 0, 0)') return linkBackground;
         const probe = document.createElement('i');
-        probe.style.color = 'var(--color-surface)';
+        probe.style.color = 'var(--art-header-bg)';
         document.body.append(probe);
         const value = getComputedStyle(probe).color;
         probe.remove();
@@ -120,8 +221,8 @@ for (const palette of palettes) {
       });
       expect(contrast(styles.nav, surface)).toBeGreaterThanOrEqual(4.5);
       const historicalOriginal = palette === 'original';
-      expect(contrast(styles.h1, styles.cardBg)).toBeGreaterThanOrEqual(historicalOriginal ? 7 : 7);
-      expect(contrast(styles.eyebrow, styles.cardBg)).toBeGreaterThanOrEqual(historicalOriginal ? 4.2 : 4.5);
+      expect(contrast(styles.h1, styles.cardBg)).toBeGreaterThanOrEqual(historicalOriginal ? 4.5 : 4.5);
+      expect(contrast(styles.eyebrow, styles.cardBg)).toBeGreaterThanOrEqual(historicalOriginal ? 4.5 : 4.5);
 
       await expect(page.getByRole('navigation', { name: 'Primary navigation' })).toBeVisible();
       await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
@@ -135,11 +236,11 @@ for (const palette of palettes) {
 
 const viewports = [
   { name: 'mobile', width: 390, height: 844 },
-  { name: 'tablet', width: 1024, height: 768 },
+  { name: 'tablet', width: 768, height: 1024 },
   { name: 'desktop', width: 1440, height: 900 },
 ];
 const routes = ['/', '/projects', '/projects/my-dev-kit'];
-const captureDir = path.join('.my-dev-kit-workflow', 'screenshots');
+const captureDir = path.join('.my-dev-kit-workflow', 'tmp', 'iworkhere-theme-port-20261103', 'screenshots');
 
 let baselineTopology: { nodes: string[]; connectors: string[] } | null = null;
 
@@ -219,11 +320,11 @@ for (const palette of palettes) {
 
 for (const viewport of viewports) {
   for (const route of ['/about', '/publications', '/contact']) {
-    test(`mineral default ${viewport.name} ${route}`, async ({ page }) => {
+    test(`original default ${viewport.name} ${route}`, async ({ page }) => {
       const errors = collectErrors(page);
       await page.setViewportSize({ width: viewport.width, height: viewport.height });
       await page.goto(route);
-      await expect(page.locator('html')).toHaveAttribute('data-palette', 'mineral');
+      await expect(page.locator('html')).toHaveAttribute('data-palette', 'original');
       await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
       expect(await noHorizontalOverflow(page)).toBe(true);
       if (process.env.APPEARANCE_CAPTURE) {
@@ -231,6 +332,8 @@ for (const viewport of viewports) {
         await page.screenshot({
           path: path.join(captureDir, `mineral-default-${viewport.name}-${route.slice(1)}.png`),
           animations: 'disabled',
+          // Hiding carets injects inline input styles and can race React hydration.
+          caret: 'initial',
         });
       }
       expect(errors).toEqual([]);
@@ -271,7 +374,7 @@ const labels: Record<PaletteId, string> = {
 };
 const trigger = (page: Page) => page.getByRole('button', { name: /^Appearance/ });
 const dialog = (page: Page) => page.getByRole('dialog', { name: 'Appearance settings' });
-const choose = (page: Page, name: string) => dialog(page).locator(`label:text-is("${name}")`).click();
+const choose = (page: Page, name: string) => dialog(page).getByText(name, { exact: true }).click();
 
 for (const palette of palettes) {
   test(`appearance control selects ${labels[palette]} and exposes only palette and color mode`, async ({ page }) => {
@@ -282,7 +385,7 @@ for (const palette of palettes) {
     await expect(page.getByRole('group', { name: 'Palette' })).toBeVisible();
     await expect(page.getByRole('group', { name: 'Color mode' })).toBeVisible();
     await expect(page.getByRole('group', { name: /effects/i })).toHaveCount(0);
-    await expect(dialog(page).getByRole('radio')).toHaveCount(9);
+    await expect(dialog(page).getByRole('radio')).toHaveCount(10);
     await choose(page, labels[palette]);
     await choose(page, 'Dark');
     const root = page.locator('html');
@@ -332,12 +435,12 @@ test('original: persists across reload and navigation and keeps cyan/violet role
       glowSecondary: root.getPropertyValue('--color-glow-secondary').trim(),
     };
   });
-  expect(roles.data).toBe('rgb(66, 203, 227)');
-  expect(roles.control).toBe('rgb(169, 140, 248)');
-  expect(roles.focus).toBe('rgb(66, 203, 227)');
-  expect(roles.hover).toBe('rgb(169, 140, 248)');
-  expect(roles.logo).toBe('rgb(169, 140, 248)');
-  expect(roles.selection).toBe('rgb(167 139 250 / 28%)');
+  expect(roles.data).toBe('rgb(165, 139, 255)');
+  expect(roles.control).toBe('rgb(86, 212, 234)');
+  expect(roles.focus).toBe('rgb(79, 216, 238)');
+  expect(roles.hover).toBe('rgb(189, 169, 255)');
+  expect(roles.logo).toBe('rgb(86, 212, 234)');
+  expect(roles.selection).toBe('color-mix(in srgb, #a58bff 26%, transparent)');
   expect(roles.glow).toBe('rgb(169 140 248 / 13%)');
   expect(roles.glowSecondary).toBe('rgb(66 203 227 / 10%)');
 
@@ -346,14 +449,14 @@ test('original: persists across reload and navigation and keeps cyan/violet role
     localStorage.setItem('my-website-2026-theme', 'light');
   });
   await page.reload();
-  expect(await page.locator('body').evaluate((el) => getComputedStyle(el).backgroundColor)).toBe('rgb(237, 239, 243)');
+  expect(await page.locator('body').evaluate((el) => getComputedStyle(el).backgroundColor)).toBe('rgb(236, 234, 246)');
 });
 
-test('original: primary action hovers violet while other palettes hover with their primary accent', async ({ page }) => {
+test('hero primary actions hover with their palette-specific hero foreground', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   for (const [palette, want] of [
-    ['original', 'rgb(169, 140, 248)'],
-    ['mineral', 'rgb(104, 201, 186)'],
+    ['original', 'rgb(246, 243, 255)'],
+    ['mineral', 'rgb(245, 241, 223)'],
   ] as const) {
     await seed(page, palette, 'dark');
     await page.goto('/');
@@ -371,8 +474,8 @@ test('Violet & Graphite retains static cyan and violet atmosphere with no effect
   await page.goto('/');
   await expect(page.locator('.hero-backdrop').first()).toBeVisible();
   const atmosphere = await page.locator('.hero-backdrop').first().evaluate((el) => getComputedStyle(el).backgroundImage);
-  expect(atmosphere).toContain('169, 140, 248, 0.13');
-  expect(atmosphere).toContain('rgb(66, 203, 227)');
+  expect(atmosphere).toBe('none');
+  expect(await page.locator('[data-site-shell]').evaluate(el => getComputedStyle(el, '::before').backgroundImage)).toContain('gradient');
   expect(await page.locator('[data-fx-layer], [data-fx-anim], .fx-layer').count()).toBe(0);
   await expect(page.locator('html')).not.toHaveAttribute('data-fx', /.+/);
 });

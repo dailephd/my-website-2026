@@ -9,7 +9,11 @@ const seed = async (page: Page, mode: 'light' | 'dark') => {
 
 const contrast = (a: string, b: string) => {
   const luminance = (color: string) => {
-    const channels = color.match(/[\d.]+/g)?.slice(0, 3).map(Number) ?? [];
+    // Chromium preserves color-mix() results as color(srgb ...), whose channels
+    // are fractions rather than the 0–255 channels serialized by rgb().
+    const channels = color.match(/[\d.]+/g)?.slice(0, 3).map(Number).map(
+      (channel) => color.startsWith('color(srgb ') ? channel * 255 : channel,
+    ) ?? [];
     const [r, g, blue] = channels.map((value) => {
       const channel = value / 255;
       return channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4;
@@ -48,26 +52,25 @@ for (const mode of ['light', 'dark'] as const) {
         const element = find(selector);
         return { foreground: getComputedStyle(element).color, background: background(element) };
       };
-      const mutedToken = (() => {
+      const mutedTexts = Array.from(document.querySelectorAll<HTMLElement>('main p')).flatMap((element) => {
+        // Cards and heroes resolve their own material foreground roles. Resolve
+        // the token inside each real consumer instead of assuming the body role.
         const probe = document.createElement('span');
         probe.style.color = 'var(--color-text-muted)';
-        document.body.append(probe);
-        const value = getComputedStyle(probe).color;
+        element.append(probe);
+        const mutedToken = getComputedStyle(probe).color;
         probe.remove();
-        return value;
-      })();
-      const mutedElement = Array.from(document.querySelectorAll<HTMLElement>('main p')).find(
-        (element) => getComputedStyle(element).color === mutedToken,
-      );
-      if (!mutedElement) throw new Error('No rendered muted text sample found');
-      const mutedText = { foreground: getComputedStyle(mutedElement).color, background: background(mutedElement) };
+        const foreground = getComputedStyle(element).color;
+        return foreground === mutedToken ? [{ foreground, background: background(element) }] : [];
+      });
+      if (!mutedTexts.length) throw new Error('No rendered muted text samples found');
       const boundary = (selector: string) => {
         const element = find(selector);
         return { foreground: getComputedStyle(element).borderTopColor, background: background(element) };
       };
       return {
         bodyText: text('main p'),
-        mutedText,
+        mutedTexts,
         accentLink: text('main a'),
         appearanceBoundary: boundary('[data-appearance-trigger]'),
         focusToken: root.getPropertyValue('--color-focus-ring').trim(),
@@ -76,13 +79,16 @@ for (const mode of ['light', 'dark'] as const) {
       };
     });
 
-    for (const role of ['bodyText', 'mutedText', 'accentLink'] as const) {
+    for (const role of ['bodyText', 'accentLink'] as const) {
       expect(contrast(samples[role].foreground, samples[role].background), role).toBeGreaterThanOrEqual(4.5);
+    }
+    for (const [index, sample] of samples.mutedTexts.entries()) {
+      expect(contrast(sample.foreground, sample.background), `mutedText ${index}`).toBeGreaterThanOrEqual(4.5);
     }
     for (const role of ['appearanceBoundary'] as const) {
       expect(contrast(samples[role].foreground, samples[role].background), role).toBeGreaterThanOrEqual(3);
     }
-    expect(samples.functionalAccent).toBe(mode === 'light' ? '#006d82' : samples.historicalAccent);
+    expect(samples.functionalAccent).toBe(mode === 'light' ? '#5b2ee0' : samples.historicalAccent);
 
     const trigger = page.getByRole('button', { name: /^Appearance/ });
     await page.keyboard.press('Tab');
@@ -121,7 +127,7 @@ for (const mode of ['light', 'dark'] as const) {
     const diagram = await page.evaluate(() => {
       const canvas = document.querySelector<HTMLElement>('[data-diagram="my-dev-kit-ecosystem"]');
       const label = canvas?.querySelector<HTMLElement>('[data-diagram-node]');
-      const connector = canvas?.querySelector<SVGPathElement>('path[class*="diagram-connector"]');
+      const connector = canvas?.querySelector<SVGPathElement>('path.diagram-connector');
       if (!canvas || !label || !connector) throw new Error('Ecosystem diagram contrast samples are missing');
       return {
         label: { color: getComputedStyle(label).color, background: getComputedStyle(label).backgroundColor },
