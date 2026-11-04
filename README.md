@@ -38,9 +38,7 @@ channel.
 
 - Single website repository — not a monorepo, no `apps/`/`packages/` split.
 - Website-owned content lives locally under `src/content`; no external CMS or content package.
-- Six selectable palettes with Mineral Research as default and Light, Dark, and System color modes.
-  Violet & Graphite preserves the historical graphite, violet, and cyan identity. There is no
-  special-effects preference.
+- Seven selectable palettes, with Violet & Graphite (`original`) and System as the defaults. Six palettes support Light, Dark, and System; One Dark is fixed dark and preserves the saved ordinary color-mode preference. There is no special-effects preference.
 
 ## Public routes
 

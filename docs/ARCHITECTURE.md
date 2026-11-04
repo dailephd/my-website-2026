@@ -44,7 +44,7 @@ docs/             this documentation
    in as props.
 7. **`components/layout` + `components/theme`** — `SiteShell`, `Header`, `Footer`, `NavLink`,
    `SiteLogoMark`, `ThemeProvider`/`AppearanceControl`/`theme-script`. Own the page shell, navigation,
-   and six-palette / light-dark-system switching persisted under the existing palette and theme keys. Shared static palette styling lives in `src/styles/utilities.css`.
+   and seven-palette switching persisted under the existing palette and theme keys. Six palettes support light/dark/system; One Dark renders fixed dark while retaining the ordinary preference. Art roles and consumers live in `src/styles/art-tokens.css` and `src/styles/art.css`, alongside existing semantic and utility styles.
 8. **`src/app`** — route pages compose feature components with data from adapters; owns
    route-level `metadata`, `sitemap.ts`, `robots.ts`, and the single API route.
 

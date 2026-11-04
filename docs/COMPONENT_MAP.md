@@ -126,7 +126,7 @@ screen-reader-only behavior uses existing accessible markup and the `sr-only` ut
 
 | Component | Owns | Status |
 |---|---|---|
-| `ThemeProvider.tsx` | Owns palette and light/dark/system mode; applies and persists both | Live |
+| `ThemeProvider.tsx` | Owns palette and ordinary mode, applies and persists both; One Dark fixes effective dark while retaining the ordinary mode | Live |
 | `AppearanceControl.tsx` | Header "Appearance" button and dialog (palette and color mode radio groups) | Live |
 | `theme-script.tsx` | Inline pre-hydration script that applies palette and mode before first paint | Live |
 

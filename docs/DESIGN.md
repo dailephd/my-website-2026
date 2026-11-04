@@ -53,7 +53,17 @@ Roadmaps are structured data, not copied markdown. The design must support rich 
 
 `my-dev-kit`, `my-dev-kit-orchestrator`, `my-frontend-observer`, and `my-dev-kit-lab` must read visually as one connected ecosystem with distinct responsibilities.
 
+## Current appearance port (2026-11-03)
+
+The current implementation offers seven palettes: Mineral Research, Oxblood Atelier, Signal Green, Cobalt & Terracotta, Amber & Graphite, Violet & Graphite (`original`), and One Dark (`onedark`). Original/System is the fresh default. The six ordinary palettes support light, dark and system; One Dark has fixed dark rendering while retaining the user's ordinary preference for later restoration. These yield thirteen effective appearances. `AppearanceControl` owns the header dialog, `ThemeProvider` owns interactive state and persistence, `src/lib/theme.ts` applies the appearance, and `theme-script.tsx` initializes before paint. The existing `my-website-2026-palette` and `my-website-2026-theme` keys are retained.
+
+`src/styles/art-tokens.css` maps the approved source materials onto semantic roles; `src/styles/art.css` applies the art direction alongside existing shared styles. Some transitions are atomic to preserve contrast, with reduced-motion and other preference support. The detailed source adaptations and bounded accessibility and performance evidence are in [COLOR_PALETTE_REPLICATION.md](COLOR_PALETTE_REPLICATION.md). The historical 78-case matrix remains UNVERIFIED; 129 baseline and 129 final individual inspections are the accepted replacement coverage.
+
+The following earlier core visual-system descriptions preserve the pre-port six-palette design and its rationale as historical reference; where they conflict, this current appearance section governs.
+
 ## Core visual system
+
+Historical pre-port reference: this section describes the six-palette baseline.
 
 The site has six selectable color palettes and three color modes. Palette and mode are the only
 appearance preferences. All six palettes share the same page structure, content, routes, typography
@@ -557,7 +567,7 @@ they are replaced, preventing broken or misleading social previews.
 
 Prohibited directions remain noisy cyberpunk, pure white/black main backgrounds, WebGL,
 particles, cursor gimmicks, fake metrics, testimonials, and social proof. Full responsive and
-accessibility hardening remains M13; performance and release readiness remain M14.
+accessibility hardening was delivered in M13; performance and release hardening were delivered in M14 (see the milestone status and release evidence).
 
 ## Design review checklist
 

@@ -6,7 +6,7 @@
 
 ## Delivered foundation
 
-The site has a six-palette appearance system and four-product ecosystem. `docs/milestones.json`
+The site has seven palette families (thirteen effective appearances) and a four-product ecosystem. `docs/milestones.json`
 preserves original milestone scope; it is not the current route or behavior contract.
 
 ## Next checkpoint

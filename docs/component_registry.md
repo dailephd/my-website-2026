@@ -17,7 +17,7 @@
 | `PlannedPage` | section | removed (Stage 2E) | Historical route placeholder; the App Router owns current pages and `not-found` handles unmatched paths |
 | `ThemeScript` | theme | implemented | Applies persisted palette and mode before visible paint (`theme-script.tsx`) |
 | `ThemeProvider` | theme | implemented | Owns palette and mode preference, effective theme, persistence, and system updates |
-| `AppearanceControl` | theme | implemented | Header dialog with palette and color mode radio groups |
+| `AppearanceControl` | theme | implemented | Header dialog with seven palette options and color mode radios; One Dark fixes dark while preserving the ordinary preference |
 | `ProjectCard` | selected work | implemented | Renders one project’s typed summary, status, role, stack, and links |
 | `ProjectGrid` | selected work | implemented | Renders featured/standard responsive project collections and empty state |
 | `ProjectLinkList` | selected work | implemented | Renders optional safe project links |
